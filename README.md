@@ -1,6 +1,6 @@
 # Trainer's journal (Frontend)
 
-_Developed for the UrFU Project Practice 2024 (5th semester)
+Developed for the UrFU Project Practice 2024 (5th semester)
 
 ## Contents
 

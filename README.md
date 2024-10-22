@@ -1,6 +1,8 @@
 # Trainer's journal (Frontend)
 
-Developed for the UrFU Project Practice 2024 (5th semester)
+[Link to the backend project](https://github.com/AnTaif/trainer-journal-backend)
+
+_Developed for the UrFU Project Practice 2024 (5th semester)_
 
 ## Contents
 

@@ -3,6 +3,7 @@ import {BrowserModule, provideClientHydration} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
+import {AuthorizationModule} from './children/authorization/authorization.module';
 import {AuthGuard} from './data/guards/auth.guard';
 import {AuthService} from './data/services/auth/auth.service';
 import {AuthManagerService} from './data/services/auth/auth.manager.service';
@@ -15,6 +16,8 @@ import {HttpClientModule} from '@angular/common/http';
     imports: [
         BrowserModule,
         AppRoutingModule,
+
+        AuthorizationModule,
 
         HttpClientModule,
     ],

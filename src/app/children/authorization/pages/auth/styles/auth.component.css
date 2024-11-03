@@ -1,0 +1,88 @@
+.auth-body {
+    min-height: 100vh;
+    background: var(--text-white);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+}
+
+.auth-label {
+    max-width: 408px;
+}
+
+.username {
+    margin-bottom: 24px;
+}
+
+.password {
+    margin-bottom: 48px;
+}
+
+.desktop-headline-2 {
+    margin-bottom: 60px;
+}
+
+.desktop-body-2 {
+    width: 340px;
+    margin-bottom: 4px;
+}
+
+.input-default {
+    width: 298px;
+    height: 24px;
+}
+
+.primary-button {
+    padding: 12px 32px;
+    width: 340px;
+    height: 56px;
+
+    margin-bottom: 60px;
+}
+
+.input-container {
+    position: relative;
+    width: 100%;
+}
+
+.eye-icon {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.eye-icon img {
+    display: block;
+}
+
+.error-message {
+    font-weight: var(--font-weight-light);
+    font-size: var(--font-body-2-size);
+    line-height: var(--font-body-2-line-height);
+    letter-spacing: var(--global-letter-spacing);
+    color: var(--bg-red);
+
+    border: 1px solid var(--border-notifications);
+    padding: 15px 20px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    margin-bottom: 8px;
+}
+
+.alert-icon {
+    margin-top: -3px;
+}

@@ -1,0 +1,52 @@
+<form [formGroup]="form" class="auth-body">
+    <div class="desktop-headline-2">Авторизация</div>
+    <div class="auth-label username">
+        <p class="desktop-body-2">Логин</p>
+        <input [ngClass]="{'input-error': isControlError('userName')}"
+               class="input-default"
+               formControlName="userName"
+               placeholder="I.I.Ivanov"
+               type="text"/>
+    </div>
+
+    <div class="auth-label password">
+        <p class="desktop-body-2">Пароль</p>
+        <div class="input-container">
+            <input (blur)="onFocus(false)"
+                   (focus)="onFocus(true)"
+                   (mouseenter)="onHover(true)"
+                   (mouseleave)="onHover(false)"
+                   [ngClass]="{'input-error': isControlError('password')}"
+                   [type]="passwordVisible ? 'text' : 'password'"
+                   class="input-default"
+                   formControlName="password"
+                   placeholder="••••••"/>
+            <button (click)="togglePasswordVisibility()" (mouseenter)="onHover(true)" (mouseleave)="onHover(false)"
+                    class="eye-icon"
+                    type="button">
+                <img [src]="eyeIcon" alt="пароль" height="24" width="24">
+            </button>
+        </div>
+    </div>
+
+    <button (click)="loginUser()" class="auth-label primary-button desktop-primary-button-text-active"
+            type="button"
+    >
+        Войти
+    </button>
+
+    <div *ngIf="isControlError('userName')" class="error-message">
+        <img alt="ошибка" class="alert-icon" height="24" src="/assets/alert-triangle.svg" width="24">
+        Поле логин обязательно для заполнения.
+    </div>
+
+    <div *ngIf="isControlError('password')" class="error-message">
+        <img alt="ошибка" class="alert-icon" height="24" src="/assets/alert-triangle.svg" width="24">
+        Пароль должен быть от 6 до 15 символов.
+    </div>
+
+    <div *ngIf="loginError" class="error-message">
+        <img alt="ошибка" class="alert-icon" height="24" src="/assets/alert-triangle.svg" width="24">
+        {{ loginError }}
+    </div>
+</form>

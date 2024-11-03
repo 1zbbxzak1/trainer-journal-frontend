@@ -17,11 +17,19 @@
     --text-white: #fff;
     --text-secondary-grey: #999;
     --text-disable-light-grey: #c2c2c2;
+    --bg-red: #f93232;
     --bg-white: #fff;
     --bg-grey: #f5f5f5;
     --border-default: #ebebeb;
     --border-hover: #e0e0e0;
     --border-focused: #232323;
+    --primary-button-default: #232323;
+    --primary-button-hover: #404040;
+    --primary-button-focus: #5e5e5e;
+    --secondary-button-default: #f5f5f5;
+    --secondary-button-hover: #ebebeb;
+    --secondary-button-focus: #e0e0e0;
+    --button-disabled: #f5f5f5;
 
     /* Desktop font sizes */
 
@@ -186,4 +194,143 @@
     font-family: var(--font-family), sans-serif;
     letter-spacing: var(--global-letter-spacing);
     color: var(--text-black);
+}
+
+/* Desktop button text style */
+
+.desktop-primary-button-text-active {
+    font-weight: var(--font-weight-light);
+    font-size: var(--font-body-1-size);
+    color: var(--text-white);
+}
+
+.desktop-secondary-button-text-active {
+    font-weight: var(--font-weight-light);
+    font-size: var(--font-body-1-size);
+    color: var(--text-black);
+}
+
+.desktop-button-text-disabled {
+    font-weight: var(--font-weight-light);
+    font-size: var(--font-body-1-size);
+    color: var(--text-disable-light-grey);
+}
+
+/* Mobile button text style */
+
+.mobile-primary-button-text-active {
+    font-weight: var(--font-weight-light);
+    font-size: var(--mobile-font-body-1-size);
+    line-height: var(--mobile-font-body-1-line-height);
+    color: var(--text-white);
+}
+
+.mobile-secondary-button-text-active {
+    font-weight: var(--font-weight-light);
+    font-size: var(--mobile-font-body-1-size);
+    line-height: var(--mobile-font-body-1-line-height);
+    color: var(--text-black);
+}
+
+.mobile-button-disabled {
+    font-weight: var(--font-weight-light);
+    font-size: var(--mobile-font-body-1-size);
+    line-height: var(--mobile-font-body-1-line-height);
+    color: var(--text-disable-light-grey);
+}
+
+.desktop-primary-button-text-active,
+.desktop-secondary-button-text-active,
+.desktop-button-text-disabled,
+.mobile-primary-button-text-active,
+.mobile-secondary-button-text-active,
+.mobile-button-disabled {
+    font-family: var(--font-family), sans-serif;
+    letter-spacing: var(--global-letter-spacing);
+}
+
+/* Button style */
+
+.primary-button {
+    background: var(--primary-button-default);
+}
+
+.primary-button:hover {
+    background: var(--primary-button-hover);
+
+}
+
+.primary-button:active {
+    background: var(--primary-button-focus);
+}
+
+.secondary-button {
+    background: var(--secondary-button-default);
+}
+
+.secondary-button:hover {
+    background: var(--secondary-button-hover);
+}
+
+.secondary-button:active {
+    background: var(--secondary-button-focus);
+}
+
+.desktop-button-disabled {
+    background: var(--button-disabled);
+}
+
+.primary-button,
+.secondary-button,
+.desktop-button-disabled {
+    border: none;
+    cursor: pointer;
+}
+
+/* Icon Desktop style */
+/* Icon Mobile style */
+
+/* Input style */
+
+.input-default {
+    border: 1px solid var(--bg-grey);
+}
+
+.input-default:hover {
+    border: 1px solid var(--border-hover);
+    border-radius: 0;
+}
+
+.input-default:focus {
+    outline: none;
+    border: 1px solid var(--border-focused);
+    border-radius: 0;
+
+    color: var(--text-black);
+}
+
+.input-default:disabled {
+    outline: var(--bg-grey);
+    border: 1px solid var(--bg-grey);
+
+    color: var(--text-disable-light-grey);
+}
+
+.input-error {
+    outline: var(--bg-red);
+    border: 1px solid var(--bg-red);
+}
+
+.input-default,
+.input-error {
+    font-family: var(--font-family), sans-serif;
+    font-weight: var(--font-weight-light);
+    font-size: var(--font-body-2-size);
+    line-height: var(--font-body-2-line-height);
+    letter-spacing: var(--global-letter-spacing);
+    color: var(--text-secondary-grey);
+
+    background: var(--bg-grey);
+    padding: 15px 20px;
+    border-radius: 0;
 }

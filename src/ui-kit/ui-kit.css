@@ -15,14 +15,16 @@
 
     --text-black: #232323;
     --text-white: #fff;
-    --text-secondary-grey: #999;
+    --text-secondary-grey: #999999;
     --text-disable-light-grey: #c2c2c2;
     --bg-red: #f93232;
+    --bg-notifications: #fff5f5;
     --bg-white: #fff;
-    --bg-grey: #f5f5f5;
+    --bg-grey: #F5F5F5;
     --border-default: #ebebeb;
     --border-hover: #e0e0e0;
     --border-focused: #232323;
+    --border-notifications: #ffd8d8;
     --primary-button-default: #232323;
     --primary-button-hover: #404040;
     --primary-button-focus: #5e5e5e;

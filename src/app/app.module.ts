@@ -8,7 +8,9 @@ import {DashboardModule} from './children/dashboard/dashboard.module';
 import {AuthGuard} from './data/guards/auth.guard';
 import {AuthService} from './data/services/auth/auth.service';
 import {AuthManagerService} from './data/services/auth/auth.manager.service';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {JwtTokenInterceptor} from './interceptors/jwt-token.interceptor';
+import {CookieService} from 'ngx-cookie-service';
 
 @NgModule({
     declarations: [
@@ -28,8 +30,14 @@ import {HttpClientModule} from '@angular/common/http';
         AuthService,
         AuthManagerService,
 
+        CookieService,
         provideClientHydration(),
         {provide: LOCALE_ID, useValue: 'ru'},
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: JwtTokenInterceptor,
+            multi: true
+        },
     ],
     bootstrap: [AppComponent]
 })

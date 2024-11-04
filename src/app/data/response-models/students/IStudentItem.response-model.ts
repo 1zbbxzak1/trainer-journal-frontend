@@ -6,5 +6,5 @@ export interface IStudentItemResponseModel {
     readonly birthDate: Date,
     readonly age: number,
     readonly schoolGrade: number,
-    readonly aikidoGrade: number,
+    readonly kyu: number,
 }

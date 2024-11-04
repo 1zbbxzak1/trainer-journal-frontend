@@ -2,12 +2,13 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
 import {Observable} from 'rxjs';
-import {IGroupResponseModel} from '../../response-models/groups/IGroup.response-model';
+import {IGetGroupResponseModel} from '../../response-models/groups/IGetGroup.response-model';
 import {ICreateGroupRequestModel} from '../../request-models/groups/ICreateGroup.request-model';
-import {IChangeGroupRequestModel} from '../../request-models/groups/IChangeGroup.request-model';
+import {IUpdateGroupInfoRequestModel} from '../../request-models/groups/IUpdateGroupInfoRequestModel';
 import {IStudentItemResponseModel} from '../../response-models/students/IStudentItem.response-model';
 import {ICreateStudentRequestModel} from '../../request-models/students/ICreateStudent.request-model';
 import {ICreateStudentResponseModel} from '../../response-models/students/ICreateStudent.response-model';
+import {IGroupResponseModel} from '../../response-models/groups/IGroup.response-model';
 
 @Injectable()
 export class GroupsService {
@@ -15,8 +16,8 @@ export class GroupsService {
     private readonly _http: HttpClient = inject(HttpClient);
     private readonly _apiUrl: string = `${environment.apiUrl}/groups`;
 
-    public getAllGroups(): Observable<IGroupResponseModel[]> {
-        return this._http.get<IGroupResponseModel[]>(`${this._apiUrl}`);
+    public getAllGroups(): Observable<IGetGroupResponseModel[]> {
+        return this._http.get<IGetGroupResponseModel[]>(`${this._apiUrl}`);
     }
 
     public createGroup(group: ICreateGroupRequestModel): Observable<IGroupResponseModel> {
@@ -27,7 +28,7 @@ export class GroupsService {
         return this._http.get<IGroupResponseModel>(`${this._apiUrl}/${id}`);
     }
 
-    public changeGroupById(id: string, group: IChangeGroupRequestModel): Observable<IGroupResponseModel> {
+    public updateGroupById(id: string, group: IUpdateGroupInfoRequestModel): Observable<IGroupResponseModel> {
         return this._http.put<IGroupResponseModel>(`${this._apiUrl}/${id}`, group);
     }
 

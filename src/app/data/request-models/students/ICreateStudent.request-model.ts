@@ -1,7 +1,8 @@
-export interface ParentInfo {
+export interface IExtraContact {
     readonly name: string,
     readonly contact: string,
 }
+
 
 export interface ICreateStudentRequestModel {
     readonly fullName: string,
@@ -10,8 +11,5 @@ export interface ICreateStudentRequestModel {
     readonly schoolGrade: number,
     readonly kyu: number,
     readonly address: string,
-    readonly email: string,
-    readonly phone: string,
-    readonly firstParentInfo?: ParentInfo,
-    readonly secondParentInfo?: ParentInfo,
+    readonly extraContacts: IExtraContact[],
 }

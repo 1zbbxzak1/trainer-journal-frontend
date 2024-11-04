@@ -1,0 +1,63 @@
+<nav class="sidebar">
+    <ul class="sidebar-menu-list">
+        <li class="sidebar-menu-list-item">
+            <button [class.active]="statesSidebar['isScheduleClicked']"
+                    class="sidebar-router"
+                    routerLink="/dashboard/schedule"
+                    routerLinkActive
+            >
+                <img alt="Расписание"
+                     class="sidebar-item-img"
+                     height="16"
+                     ngSrc="/assets/schedule-icon.svg"
+                     width="16">
+                <p class="desktop-body-2">Расписание</p>
+            </button>
+        </li>
+
+        <li class="sidebar-menu-list-item">
+            <button [class.active]="statesSidebar['isGroupsClicked']"
+                    class="sidebar-router"
+                    routerLink="/dashboard/teams"
+                    routerLinkActive
+            >
+                <img alt="Команды"
+                     class="sidebar-item-img"
+                     height="16"
+                     ngSrc="/assets/groups-icon.svg"
+                     width="16">
+                <p class="desktop-body-2">Команды</p>
+            </button>
+        </li>
+
+        <li class="sidebar-menu-list-item">
+            <button [class.active]="statesSidebar['isChecksClicked']"
+                    class="sidebar-router"
+                    routerLink="/dashboard/checks"
+                    routerLinkActive
+            >
+                <img alt="Чеки"
+                     class="sidebar-item-img"
+                     height="16"
+                     ngSrc="/assets/checks-icon.svg"
+                     width="16">
+                <p class="desktop-body-2">Чеки</p>
+            </button>
+        </li>
+    </ul>
+
+    <div class="sidebar-menu-list-item-profile">
+        <button [class.active]="statesSidebar['isProfileClicked']"
+                class="sidebar-router profile"
+                routerLink="/dashboard/profile"
+                routerLinkActive
+        >
+            <img alt="Профиль"
+                 class="sidebar-item-img"
+                 height="16"
+                 ngSrc="/assets/profile-icon.svg"
+                 width="16">
+            <p class="desktop-body-2">Профиль</p>
+        </button>
+    </div>
+</nav>

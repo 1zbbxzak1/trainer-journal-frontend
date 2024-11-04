@@ -13,6 +13,7 @@ import {JwtTokenInterceptor} from './interceptors/jwt-token.interceptor';
 import {GroupsService} from './data/services/groups/groups.service';
 import {GroupsManagerService} from './data/services/groups/groups.manager.service';
 import {CookieService} from 'ngx-cookie-service';
+import {StateBarService} from './children/services/state-bar/state-bar.service';
 
 @NgModule({
     declarations: [
@@ -35,6 +36,7 @@ import {CookieService} from 'ngx-cookie-service';
         GroupsService,
         GroupsManagerService,
 
+        StateBarService,
         CookieService,
         provideClientHydration(),
         {provide: LOCALE_ID, useValue: 'ru'},

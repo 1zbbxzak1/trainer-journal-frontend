@@ -10,6 +10,8 @@ import {AuthService} from './data/services/auth/auth.service';
 import {AuthManagerService} from './data/services/auth/auth.manager.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {JwtTokenInterceptor} from './interceptors/jwt-token.interceptor';
+import {GroupsService} from './data/services/groups/groups.service';
+import {GroupsManagerService} from './data/services/groups/groups.manager.service';
 import {CookieService} from 'ngx-cookie-service';
 
 @NgModule({
@@ -29,6 +31,9 @@ import {CookieService} from 'ngx-cookie-service';
         AuthGuard,
         AuthService,
         AuthManagerService,
+
+        GroupsService,
+        GroupsManagerService,
 
         CookieService,
         provideClientHydration(),

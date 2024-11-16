@@ -5,9 +5,8 @@ import {IGetGroupResponseModel} from '../../response-models/groups/IGetGroup.res
 import {ICreateGroupRequestModel} from '../../request-models/groups/ICreateGroup.request-model';
 import {IUpdateGroupInfoRequestModel} from '../../request-models/groups/IUpdateGroupInfoRequestModel';
 import {IStudentItemResponseModel} from '../../response-models/students/IStudentItem.response-model';
-import {ICreateStudentRequestModel} from '../../request-models/students/ICreateStudent.request-model';
-import {ICreateStudentResponseModel} from '../../response-models/students/ICreateStudent.response-model';
 import {IGroupResponseModel} from '../../response-models/groups/IGroup.response-model';
+import {IAddStudentRequestModel} from '../../request-models/students/IAddStudent.request-model';
 
 @Injectable()
 export class GroupsManagerService {
@@ -15,7 +14,7 @@ export class GroupsManagerService {
     private readonly _groupService: GroupsService = inject(GroupsService);
     private readonly _errorHandler: ErrorHandler = inject(ErrorHandler);
 
-    public getAllGroups(): Observable<IGetGroupResponseModel[]> {
+    public getAllGroups(): Observable<IGetGroupResponseModel> {
         return this._groupService.getAllGroups().pipe(
             catchError(err => {
                 this._errorHandler.handleError(err);
@@ -60,8 +59,8 @@ export class GroupsManagerService {
         );
     }
 
-    public getAllStudentsByIdGroup(id: string): Observable<IStudentItemResponseModel[]> {
-        return this._groupService.getAllStudentsByIdGroup(id).pipe(
+    public getAllStudentsByGroup(id: string): Observable<IStudentItemResponseModel[]> {
+        return this._groupService.getAllStudentsByGroup(id).pipe(
             catchError(err => {
                 this._errorHandler.handleError(err);
                 return NEVER;
@@ -69,12 +68,21 @@ export class GroupsManagerService {
         );
     }
 
-    public createStudentByIdGroup(id: string, student: ICreateStudentRequestModel): Observable<ICreateStudentResponseModel> {
-        return this._groupService.createStudentByIdGroup(id, student).pipe(
+    public AddStudentToGroup(id: string, student: IAddStudentRequestModel): Observable<void> {
+        return this._groupService.addStudentToGroup(id, student).pipe(
             catchError(err => {
                 this._errorHandler.handleError(err);
                 return NEVER;
             }),
-        );
+        )
+    }
+
+    public excludeStudentFromGroup(id: string, username: string): Observable<void> {
+        return this._groupService.excludeStudentFromGroup(id, username).pipe(
+            catchError(err => {
+                this._errorHandler.handleError(err);
+                return NEVER;
+            }),
+        )
     }
 }

@@ -46,6 +46,21 @@
         </li>
 
         <li class="sidebar-menu-list-item">
+            <button [class.active]="statesSidebar['isStudentsClicked']"
+                    class="sidebar-router"
+                    routerLink="/dashboard/students"
+                    routerLinkActive
+            >
+                <img alt="Ученики"
+                     class="sidebar-item-img"
+                     height="16"
+                     ngSrc="/assets/students-icon.svg"
+                     width="16">
+                <p class="desktop-body-2">Ученики</p>
+            </button>
+        </li>
+
+        <li class="sidebar-menu-list-item">
             <button [class.active]="statesSidebar['isChecksClicked']"
                     class="sidebar-router"
                     routerLink="/dashboard/checks"

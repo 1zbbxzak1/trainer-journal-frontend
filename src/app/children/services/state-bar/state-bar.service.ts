@@ -11,6 +11,7 @@ export class StateBarService {
         isScheduleClicked: false,
         isGroupsClicked: false,
         isJournalClicked: false,
+        isStudentsClicked: false,
         isChecksClicked: false,
         isProfileClicked: false
     };
@@ -35,6 +36,8 @@ export class StateBarService {
             this.statesSidebar['isGroupsClicked'] = true;
         } else if (url.includes('dashboard/journal')) {
             this.statesSidebar['isJournalClicked'] = true;
+        } else if (url.includes('dashboard/students')) {
+            this.statesSidebar['isStudentsClicked'] = true;
         } else if (url.includes('dashboard/checks')) {
             this.statesSidebar['isChecksClicked'] = true;
         } else if (url.includes('dashboard/profile')) {

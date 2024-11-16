@@ -7,6 +7,7 @@ import {RouterLink, RouterLinkActive} from "@angular/router";
 import {ChecksComponent} from './pages/checks/checks.component';
 import {ProfileComponent} from './pages/profile/profile.component';
 import {JournalComponent} from './pages/journal/journal.component';
+import {StudentsComponent} from './pages/students/students.component';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import {JournalComponent} from './pages/journal/journal.component';
         SidebarComponent,
         GroupsComponent,
         JournalComponent,
+        StudentsComponent,
         ScheduleComponent,
         ChecksComponent,
         ProfileComponent,

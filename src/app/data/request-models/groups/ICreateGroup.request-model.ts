@@ -1,4 +1,5 @@
 export interface ICreateGroupRequestModel {
     readonly name: string,
-    readonly hexColor?: string,
+    readonly hallAddress: string | null,
+    readonly hexColor: string | null,
 }

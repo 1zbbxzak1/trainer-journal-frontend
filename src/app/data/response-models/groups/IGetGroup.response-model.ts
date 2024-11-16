@@ -1,11 +1,6 @@
-export interface IGroupItem {
-    readonly id: string,
-    readonly name: string,
-    readonly hexColor: string,
-    readonly studentsCount: string,
-}
+import {IGroupItemModel} from '../../models/groups/IGroupItem.model';
 
 export interface IGetGroupResponseModel {
-    readonly studentCount: number,
-    readonly groups: IGroupItem[],
+    readonly studentsCount: number,
+    readonly groups: IGroupItemModel[],
 }

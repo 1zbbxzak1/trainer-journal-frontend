@@ -1,15 +1,12 @@
-export interface IExtraContact {
-    readonly name: string,
-    readonly contact: string,
-}
-
+import {IContactsModel} from '../../models/students/IContacts.model';
 
 export interface ICreateStudentRequestModel {
     readonly fullName: string,
     readonly gender: string,
     readonly birthDate: Date,
     readonly schoolGrade: number,
-    readonly kyu: number,
-    readonly address: string,
-    readonly extraContacts: IExtraContact[],
+    readonly kyu: number | null,
+    readonly address: string | null,
+    readonly groupIds: string[],
+    readonly contacts: IContactsModel[],
 }

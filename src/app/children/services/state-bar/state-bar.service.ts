@@ -10,6 +10,7 @@ export class StateBarService {
     protected statesSidebar: Record<string, boolean> = {
         isScheduleClicked: false,
         isGroupsClicked: false,
+        isJournalClicked: false,
         isChecksClicked: false,
         isProfileClicked: false
     };
@@ -32,6 +33,8 @@ export class StateBarService {
             this.statesSidebar['isScheduleClicked'] = true;
         } else if (url.includes('dashboard/groups')) {
             this.statesSidebar['isGroupsClicked'] = true;
+        } else if (url.includes('dashboard/journal')) {
+            this.statesSidebar['isJournalClicked'] = true;
         } else if (url.includes('dashboard/checks')) {
             this.statesSidebar['isChecksClicked'] = true;
         } else if (url.includes('dashboard/profile')) {

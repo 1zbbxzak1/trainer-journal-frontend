@@ -6,12 +6,14 @@ import {ScheduleComponent} from './pages/schedule/schedule.component';
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import {ChecksComponent} from './pages/checks/checks.component';
 import {ProfileComponent} from './pages/profile/profile.component';
+import {JournalComponent} from './pages/journal/journal.component';
 
 
 @NgModule({
     declarations: [
         SidebarComponent,
         GroupsComponent,
+        JournalComponent,
         ScheduleComponent,
         ChecksComponent,
         ProfileComponent,

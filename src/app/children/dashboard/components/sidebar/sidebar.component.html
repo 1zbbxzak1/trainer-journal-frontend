@@ -16,6 +16,21 @@
         </li>
 
         <li class="sidebar-menu-list-item">
+            <button [class.active]="statesSidebar['isJournalClicked']"
+                    class="sidebar-router"
+                    routerLink="/dashboard/journal"
+                    routerLinkActive
+            >
+                <img alt="Журнал"
+                     class="sidebar-item-img"
+                     height="16"
+                     ngSrc="/assets/journal-icon.svg"
+                     width="16">
+                <p class="desktop-body-2">Журнал</p>
+            </button>
+        </li>
+
+        <li class="sidebar-menu-list-item">
             <button [class.active]="statesSidebar['isGroupsClicked']"
                     class="sidebar-router"
                     routerLink="/dashboard/groups"

@@ -13,7 +13,7 @@ export class AuthGuard {
 
         if (state.url === '/auth') {
             if (isAuthorized) {
-                this._router.navigate(["dashboard/teams"]);
+                this._router.navigate(["dashboard/groups"]);
                 return of(false);
             }
             return of(true);

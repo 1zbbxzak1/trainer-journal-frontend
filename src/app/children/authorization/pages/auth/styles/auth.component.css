@@ -70,7 +70,9 @@
     letter-spacing: var(--global-letter-spacing);
     color: var(--bg-red);
 
+    background: var(--bg-notifications);
     border: 1px solid var(--border-notifications);
+    border-radius: 6px;
     padding: 15px 20px;
 
     display: flex;

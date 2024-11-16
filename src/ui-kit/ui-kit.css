@@ -288,6 +288,7 @@
 .desktop-button-disabled {
     border: none;
     cursor: pointer;
+    border-radius: 10px;
 }
 
 /* Icon Desktop style */
@@ -301,13 +302,13 @@
 
 .input-default:hover {
     border: 1px solid var(--border-hover);
-    border-radius: 0;
+    border-radius: 6px;
 }
 
 .input-default:focus {
     outline: none;
     border: 1px solid var(--border-focused);
-    border-radius: 0;
+    border-radius: 6px;
 
     color: var(--text-black);
 }
@@ -315,6 +316,7 @@
 .input-default:disabled {
     outline: var(--bg-grey);
     border: 1px solid var(--bg-grey);
+    border-radius: 6px;
 
     color: var(--text-disable-light-grey);
 }
@@ -335,5 +337,5 @@
 
     background: var(--bg-grey);
     padding: 15px 20px;
-    border-radius: 0;
+    border-radius: 6px;
 }

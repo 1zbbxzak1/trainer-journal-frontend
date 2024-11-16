@@ -2,13 +2,13 @@ import {ActivatedRouteSnapshot, RouterStateSnapshot, Routes} from '@angular/rout
 import {AuthGuard} from './data/guards/auth.guard';
 import {inject} from '@angular/core';
 import {AuthComponent} from './children/authorization/pages/auth/auth.component';
-import {TeamsComponent} from './children/dashboard/pages/teams/teams.component';
+import {GroupsComponent} from './children/dashboard/pages/groups/groups.component';
 import {ScheduleComponent} from './children/dashboard/pages/schedule/schedule.component';
 import {ChecksComponent} from './children/dashboard/pages/checks/checks.component';
 import {ProfileComponent} from './children/dashboard/pages/profile/profile.component';
 
 export const routes: Routes = [
-    {path: '', redirectTo: 'dashboard/teams', pathMatch: 'full'},
+    {path: '', redirectTo: 'dashboard/groups', pathMatch: 'full'},
     {
         path: 'auth',
         component: AuthComponent,
@@ -20,8 +20,8 @@ export const routes: Routes = [
         canActivate: [(router: ActivatedRouteSnapshot, state: RouterStateSnapshot) => inject(AuthGuard).canActivate(router, state)],
     },
     {
-        path: 'dashboard/teams',
-        component: TeamsComponent,
+        path: 'dashboard/groups',
+        component: GroupsComponent,
         canActivate: [(router: ActivatedRouteSnapshot, state: RouterStateSnapshot) => inject(AuthGuard).canActivate(router, state)],
     },
     {

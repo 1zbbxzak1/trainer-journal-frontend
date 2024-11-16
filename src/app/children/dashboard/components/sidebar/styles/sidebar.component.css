@@ -36,6 +36,7 @@
 .sidebar-router {
     text-decoration: none;
     border: none;
+    border-radius: 10px;
     display: flex;
     width: 100%;
     padding: 12px 32px;

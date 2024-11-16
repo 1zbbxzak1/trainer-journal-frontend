@@ -30,7 +30,7 @@ export class StateBarService {
         this.resetStates(this.statesSidebar);
         if (url.includes('dashboard/schedule')) {
             this.statesSidebar['isScheduleClicked'] = true;
-        } else if (url.includes('dashboard/teams')) {
+        } else if (url.includes('dashboard/groups')) {
             this.statesSidebar['isGroupsClicked'] = true;
         } else if (url.includes('dashboard/checks')) {
             this.statesSidebar['isChecksClicked'] = true;

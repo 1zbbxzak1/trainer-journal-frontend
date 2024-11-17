@@ -12,6 +12,7 @@
     padding-left: 8px;
     padding-right: 8px;
     padding-bottom: 30px;
+
     box-sizing: border-box;
 
     align-items: center;
@@ -31,6 +32,8 @@
 .sidebar-menu-list-item {
     display: flex;
     width: 100%;
+
+    margin-bottom: 16px;
 }
 
 .sidebar-router {

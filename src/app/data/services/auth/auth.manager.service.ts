@@ -6,6 +6,7 @@ import {IAuthResponseModel} from '../../response-models/auth/IAuth.response-mode
 import {Router} from '@angular/router';
 import {environment} from '../../../../environments/environment';
 import {CookieService} from 'ngx-cookie-service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Injectable()
 export class AuthManagerService {
@@ -64,15 +65,21 @@ export class AuthManagerService {
         }, timeRemaining);
     }
 
-    private handleLoginError(err: any): Observable<never> {
+    private handleLoginError(err: HttpErrorResponse): Observable<never> {
         const errorMessage: string = this.getErrorMessage(err);
-        return throwError(() => new Error(errorMessage));
+        return throwError((): Error => new Error(errorMessage));
     }
 
-    private getErrorMessage(err: any): string {
-        if (err.status == 404) {
+    private getErrorMessage(err: HttpErrorResponse): string {
+        if (err.status === 404) {
             return "Ошибка. Неправильный логин и/или пароль.";
         }
+
+        // Дополнительная обработка других статусов
+        if (err.status === 500) {
+            return "Внутренняя ошибка сервера. Пожалуйста, попробуйте позже.";
+        }
+
         return "Произошла ошибка. Попробуйте еще раз.";
     }
 

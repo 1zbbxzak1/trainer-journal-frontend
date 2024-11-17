@@ -8,6 +8,7 @@ import {ChecksComponent} from './children/dashboard/pages/checks/checks.componen
 import {ProfileComponent} from './children/dashboard/pages/profile/profile.component';
 import {JournalComponent} from './children/dashboard/pages/journal/journal.component';
 import {StudentsComponent} from './children/dashboard/pages/students/students.component';
+import {GroupDetailsComponent} from './children/dashboard/pages/groups/children/group-details/group-details.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'dashboard/groups', pathMatch: 'full'},
@@ -24,6 +25,11 @@ export const routes: Routes = [
     {
         path: 'dashboard/groups',
         component: GroupsComponent,
+        canActivate: [(router: ActivatedRouteSnapshot, state: RouterStateSnapshot) => inject(AuthGuard).canActivate(router, state)],
+    },
+    {
+        path: 'dashboard/groups/group-details/:id',
+        component: GroupDetailsComponent,
         canActivate: [(router: ActivatedRouteSnapshot, state: RouterStateSnapshot) => inject(AuthGuard).canActivate(router, state)],
     },
     {

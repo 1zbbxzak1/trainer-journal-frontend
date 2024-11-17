@@ -8,6 +8,7 @@ import {ChecksComponent} from './pages/checks/checks.component';
 import {ProfileComponent} from './pages/profile/profile.component';
 import {JournalComponent} from './pages/journal/journal.component';
 import {StudentsComponent} from './pages/students/students.component';
+import { GroupDetailsComponent } from './pages/groups/children/group-details/group-details.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import {StudentsComponent} from './pages/students/students.component';
         ScheduleComponent,
         ChecksComponent,
         ProfileComponent,
+        GroupDetailsComponent,
     ],
     imports: [
         CommonModule,

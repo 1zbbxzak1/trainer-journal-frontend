@@ -6,6 +6,48 @@
     font-family: var(--font-family), sans-serif;
 }
 
+/* Font */
+
+@font-face {
+    font-family: 'Vela Sans';
+    src: url('/assets/fonts/VelaSans-Light.woff2') format('woff2'),
+    url('/assets/fonts/VelaSans-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Vela Sans';
+    src: url('/assets/fonts/VelaSans-Regular.woff2') format('woff2'),
+    url('/assets/fonts/VelaSans-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Vela Sans';
+    src: url('/assets/fonts/VelaSans-Medium.woff2') format('woff2'),
+    url('/assets/fonts/VelaSans-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Vela Sans';
+    src: url('/assets/fonts/VelaSans-SemiBold.woff2') format('woff2'),
+    url('/assets/fonts/VelaSans-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Vela Sans';
+    src: url('/assets/fonts/VelaSans-Bold.woff2') format('woff2'),
+    url('/assets/fonts/VelaSans-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+}
+
 :root {
     /* Font-family */
 
@@ -53,6 +95,9 @@
     --font-body-1-line-height: 160%;
     --font-body-2-size: 16px;
     --font-body-2-line-height: 160%;
+
+    --font-description-size: 12px;
+    --font-description-line-height: 160%;
 
     /* Mobile font sizes */
 
@@ -135,6 +180,12 @@
     line-height: var(--font-body-2-line-height);
 }
 
+.desktop-description {
+    font-weight: var(--font-weight-light);
+    font-size: var(--font-description-size);
+    line-height: var(--font-description-line-height);
+}
+
 /* Mobile font headlines and body */
 
 .mobile-headline-1 {
@@ -187,6 +238,7 @@
 .desktop-headline-6,
 .desktop-body-1,
 .desktop-body-2,
+.desktop-description,
 .mobile-headline-1,
 .mobile-headline-2,
 .mobile-headline-3,
@@ -267,24 +319,70 @@
     background: var(--primary-button-focus);
 }
 
-.secondary-button {
+.secondary-1-button {
     background: var(--secondary-button-default);
 }
 
-.secondary-button:hover {
+.secondary-1-button:hover {
     background: var(--secondary-button-hover);
 }
 
-.secondary-button:active {
+.secondary-1-button:active {
     background: var(--secondary-button-focus);
+}
+
+.secondary-2-button {
+    border: 1px solid var(--border-focused);
+    border-radius: 10px;
+    cursor: pointer;
+
+    background: none;
+}
+
+.secondary-2-button:hover {
+    background: var(--secondary-button-default);
+}
+
+.secondary-2-button:active {
+    background: var(--secondary-button-hover);
+}
+
+.tertiary-button {
+    border: 1px solid var(--border-default);
+    border-radius: 10px;
+    cursor: pointer;
+
+    background: none;
+}
+
+.tertiary-button:hover {
+    border: 1px solid var(--border-hover);
+    background: var(--secondary-button-default);
+}
+
+.tertiary-button:active {
+    background: var(--secondary-button-hover);
 }
 
 .desktop-button-disabled {
     background: var(--button-disabled);
 }
 
+.secondary-2-button-disabled {
+    border: 1px solid var(--text-disable-light-grey);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.tertiary-button-disabled {
+    color: var(--text-disable-light-grey);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
 .primary-button,
-.secondary-button,
+.secondary-1-button,
+.tertiary-button-icon,
 .desktop-button-disabled {
     border: none;
     cursor: pointer;
@@ -292,6 +390,19 @@
 }
 
 /* Icon Desktop style */
+
+.tertiary-button-icon {
+    background: none;
+}
+
+.tertiary-button-icon:hover {
+    background: var(--secondary-button-hover);
+}
+
+.tertiary-button-icon:active {
+    background: var(--secondary-button-focus);
+}
+
 /* Icon Mobile style */
 
 /* Input style */
@@ -338,4 +449,91 @@
     background: var(--bg-grey);
     padding: 15px 20px;
     border-radius: 6px;
+}
+
+/* stroke tables */
+
+.stroke-table-groups {
+    transition: background-color 0.3s ease, border-radius 0.3s ease;
+    cursor: pointer;
+}
+
+.stroke-table-groups:hover td {
+    background: var(--bg-grey);
+}
+
+.stroke-table-groups:active td {
+    background: var(--bg-grey);
+}
+
+.stroke-table-groups:hover td:first-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.stroke-table-groups:hover td:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.stroke-table-groups:active td:first-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.stroke-table-groups:active td:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+/* dropdown */
+
+.dropdown-menu {
+    position: absolute;
+    right: 45px;
+
+    border-radius: 10px;
+    border: 1px solid var(--border-default);
+    box-shadow: 0 4px 8px 0 rgba(35, 35, 35, 0.16);
+    background: var(--bg-white);
+    display: flex;
+    flex-direction: column;
+    padding: 8px 0;
+    width: 160px;
+    z-index: 10;
+
+    animation: fadeIn 0.3s ease;
+}
+
+.dropdown-menu button {
+    background: none;
+
+    border: none;
+    border-radius: 10px;
+
+    padding: 10px 16px;
+    margin-left: 4px;
+    margin-right: 4px;
+
+    text-align: left;
+    cursor: pointer;
+}
+
+.dropdown-menu button:hover {
+    background: var(--secondary-button-default);
+}
+
+.dropdown-menu button:active {
+    background: var(--border-default);
+}
+
+/* animation */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }

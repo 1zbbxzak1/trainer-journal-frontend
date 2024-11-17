@@ -1,0 +1,47 @@
+<div *ngIf="isVisible" class="modal-overlay">
+    <div (click)="$event.stopPropagation()" class="modal-container">
+        <button (click)="closeModal()" class="tertiary-button-icon x-close">
+            <img alt="Закрыть" height="24" ngSrc="../../../../../../../assets/x-close.svg" width="24">
+        </button>
+        <div class="modal-header">
+            <p class="desktop-headline-5">{{ title }}</p>
+            <p class="desktop-description desc">Поля, отмеченные звездочкой, обязательны для заполнения</p>
+        </div>
+        <form [formGroup]="formGroup" class="modal-content">
+            <div class="group-label name">
+                <p class="desktop-body-2">Название*</p>
+                <input [ngClass]="{'input-error': isControlError('name')}"
+                       class="input-default"
+                       formControlName="name"
+                       placeholder="Взрослая группа"
+                       type="text"/>
+            </div>
+
+            <div class="group-label price">
+                <p class="desktop-body-2">Цена, ₽*</p>
+                <input [ngClass]="{'input-error': isControlError('price')}"
+                       class="input-default"
+                       formControlName="price"
+                       placeholder="Стоимость одного занятия"
+                       type="text"/>
+            </div>
+
+            <div class="group-label">
+                <p class="desktop-body-2">Адрес*</p>
+                <input [ngClass]="{'input-error': isControlError('hallAddress')}"
+                       class="input-default"
+                       formControlName="hallAddress"
+                       placeholder="Место проведения"
+                       type="text"/>
+            </div>
+        </form>
+        <div class="modal-footer">
+            <button (click)="confirm()" class="desktop-primary-button-text-active primary-button confirm">
+                {{ confirmTitle }}
+            </button>
+            <button (click)="closeModal()" class="desktop-secondary-button-text-active tertiary-button cancel">
+                Отменить
+            </button>
+        </div>
+    </div>
+</div>

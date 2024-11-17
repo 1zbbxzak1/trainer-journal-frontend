@@ -8,6 +8,8 @@ import {ChecksComponent} from './pages/checks/checks.component';
 import {ProfileComponent} from './pages/profile/profile.component';
 import {JournalComponent} from './pages/journal/journal.component';
 import {StudentsComponent} from './pages/students/students.component';
+import {GroupPopUpComponent} from './pages/groups/components/group-pop-up/group-pop-up.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { GroupDetailsComponent } from './pages/groups/children/group-details/group-details.component';
 
 
@@ -20,13 +22,16 @@ import { GroupDetailsComponent } from './pages/groups/children/group-details/gro
         ScheduleComponent,
         ChecksComponent,
         ProfileComponent,
+        GroupPopUpComponent,
         GroupDetailsComponent,
     ],
     imports: [
         CommonModule,
         RouterLink,
         RouterLinkActive,
-        NgOptimizedImage
+        NgOptimizedImage,
+        FormsModule,
+        ReactiveFormsModule
     ]
 })
 export class DashboardModule {

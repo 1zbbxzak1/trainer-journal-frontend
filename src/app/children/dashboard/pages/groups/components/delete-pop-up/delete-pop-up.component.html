@@ -1,0 +1,20 @@
+<div *ngIf="isVisible" class="modal-overlay">
+    <div (click)="$event.stopPropagation()" class="modal-container">
+        <button (click)="closeModal()" class="tertiary-button-icon x-close">
+            <img alt="Закрыть" height="24" ngSrc="../../../../../../../assets/x-close.svg" width="24">
+        </button>
+
+        <div class="modal-header">
+            <p class="desktop-headline-5">{{ title }}</p>
+        </div>
+
+        <div class="modal-footer">
+            <button (click)="confirm()" class="desktop-primary-button-text-active primary-button confirm">
+                Удалить
+            </button>
+            <button (click)="closeModal()" class="desktop-secondary-button-text-active tertiary-button cancel">
+                Отменить
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,109 @@
+.tertiary-button-icon {
+    width: 56px;
+    height: 56px;
+
+    padding: 16px;
+    align-items: center;
+}
+
+.second-button {
+    width: 48px;
+    height: 48px;
+
+    padding: 12px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-right: 12px;
+
+    position: relative;
+}
+
+.tertiary-button-icon.active {
+    background: var(--secondary-button-focus);
+}
+
+.table-groups {
+    height: 100%;
+    width: 100%;
+
+    margin-top: 60px;
+    border-collapse: separate;
+
+    border-spacing: 0 12px;
+}
+
+.name {
+    padding-left: 12px;
+}
+
+.table-groups-name {
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    padding-left: 12px;
+}
+
+.table-groups-more {
+    margin-right: 12px;
+}
+
+.ellipse {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 100%;
+
+    margin-right: 16px;
+}
+
+.table-groups th {
+    text-align: left;
+
+    padding-top: 14px;
+    padding-bottom: 14px;
+
+    border-bottom: 2px solid var(--border-default);
+}
+
+.table-groups th:nth-child(2),
+.table-groups th:nth-child(4) {
+    text-align: center;
+}
+
+.table-groups th:last-child {
+    text-align: right;
+}
+
+.table-groups td {
+    text-align: left;
+}
+
+.table-groups td:nth-child(2),
+.table-groups td:nth-child(4) {
+    text-align: center;
+}
+
+.table-groups td:last-child {
+    text-align: right;
+}
+
+.no-groups {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    height: 100%;
+}
+
+.second-text {
+    color: var(--text-secondary-grey);
+}
+
+.create {
+    padding: 12px 32px;
+
+    margin-top: 24px;
+}

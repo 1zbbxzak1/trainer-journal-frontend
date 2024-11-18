@@ -14,6 +14,8 @@ import {GroupsService} from './data/services/groups/groups.service';
 import {GroupsManagerService} from './data/services/groups/groups.manager.service';
 import {CookieService} from 'ngx-cookie-service';
 import {StateBarService} from './children/services/state-bar/state-bar.service';
+import {StudentsService} from './data/services/students/students.service';
+import {StudentsManagerService} from './data/services/students/students.manager.service';
 
 @NgModule({
     declarations: [
@@ -35,6 +37,9 @@ import {StateBarService} from './children/services/state-bar/state-bar.service';
 
         GroupsService,
         GroupsManagerService,
+
+        StudentsService,
+        StudentsManagerService,
 
         StateBarService,
         CookieService,

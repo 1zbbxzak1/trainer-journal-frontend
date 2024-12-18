@@ -1,9 +1,11 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
     selector: 'app-delete-pop-up',
+    standalone: false,
     templateUrl: './delete-pop-up.component.html',
-    styleUrl: './styles/delete-pop-up.component.css'
+    styleUrl: './styles/delete-pop-up.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DeletePopUpComponent {
     @Input()

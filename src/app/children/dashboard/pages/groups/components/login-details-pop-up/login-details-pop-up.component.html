@@ -1,0 +1,30 @@
+<div *ngIf="isVisible" class="modal-overlay">
+    <div (click)="$event.stopPropagation()" class="modal-container">
+        <button (click)="closeModal()" class="tertiary-button-icon x-close">
+            <img alt="Закрыть" height="24" ngSrc="../../../../../../../assets/x-close.svg" width="24">
+        </button>
+        <div class="modal-header">
+            <p class="desktop-headline-5">Данные для входа</p>
+        </div>
+        <form class="modal-content">
+            <div class="group-label name">
+                <p class="desktop-body-2">Логин</p>
+                <div class="input-default">
+                    {{ details?.username }}
+                </div>
+            </div>
+
+            <div class="group-label price">
+                <p class="desktop-body-2">Пароль</p>
+                <div class="input-default">
+                    {{ details?.password }}
+                </div>
+            </div>
+        </form>
+        <div class="modal-footer">
+            <button (click)="confirm()" class="desktop-primary-button-text-active primary-button confirm">
+                Скопировать логин и пароль
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,11 +1,14 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Validator} from '../../../../../../validators/validator';
 
 @Component({
     selector: 'app-group-pop-up',
+    standalone: false,
+
     templateUrl: './group-pop-up.component.html',
-    styleUrl: './styles/group-pop-up.component.css'
+    styleUrl: './styles/group-pop-up.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GroupPopUpComponent {
     @Input()

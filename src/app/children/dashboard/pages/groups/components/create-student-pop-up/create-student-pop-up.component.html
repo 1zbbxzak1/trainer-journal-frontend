@@ -1,0 +1,160 @@
+<div *ngIf="isVisible" class="modal-overlay">
+    <div (click)="$event.stopPropagation()" class="modal-container">
+        <!-- Форма -->
+        <form [formGroup]="formGroup" class="modal-content">
+            <button (click)="closeModal()" class="tertiary-button-icon x-close">
+                <img alt="Закрыть" height="24" ngSrc="../../../../../../../assets/x-close.svg" width="24">
+            </button>
+
+            <div class="modal-header">
+                <p class="desktop-headline-5">{{ title }}</p>
+                <p class="desktop-description desc">{{ desc }}</p>
+            </div>
+
+            <div class="group-label name">
+                <p class="desktop-body-2">ФИО*</p>
+                <input [ngClass]="{'input-error': isControlError('fullName')}"
+                       class="input-default"
+                       formControlName="fullName"
+                       id="fullName"
+                       name="fullName"
+                       placeholder="Фамилия Имя Отчество"
+                       type="text"/>
+            </div>
+
+            <div class="container-label">
+                <div class="group-label gender">
+                    <p class="desktop-body-2">Пол*</p>
+                    <input [ngClass]="{'input-error': isControlError('gender')}"
+                           class="input-default gender-drop"
+                           formControlName="gender"
+                           placeholder="-"
+                           type="text"/>
+                </div>
+
+                <!-- День рождения -->
+                <div class="group-label gender">
+                    <p class="desktop-body-2">День рождения*</p>
+                    <input [ngClass]="{'input-error': isControlError('birthDate')}"
+                           class="input-default birthDate"
+                           formControlName="birthDate"
+                           placeholder="12.09.2000"
+                           type="text"/>
+                </div>
+            </div>
+
+            <div class="container-label">
+                <!-- Номер класса в школе -->
+                <div class="group-label gender">
+                    <p class="desktop-body-2">Номер класса в школе</p>
+                    <input [ngClass]="{'input-error': isControlError('schoolGrade')}"
+                           class="input-default school"
+                           formControlName="schoolGrade"
+                           placeholder="-"
+                           type="text"/>
+                </div>
+
+                <!-- Кю -->
+                <div class="group-label gender">
+                    <p class="desktop-body-2">Кю</p>
+                    <input [ngClass]="{'input-error': isControlError('kyu')}"
+                           class="input-default birthDate"
+                           formControlName="kyu"
+                           placeholder="-"
+                           type="text"/>
+                </div>
+            </div>
+
+            <div *ngIf="showGroupSelector" class="container-label">
+                <div class="group-label">
+                    <p class="desktop-body-2">Адрес проживания*</p>
+                    <input [ngClass]="{'input-error': isControlError('address')}"
+                           class="input-default address-with-group"
+                           formControlName="address"
+                           placeholder="-"
+                           type="text"/>
+                </div>
+
+                <div class="group-label group">
+                    <p class="desktop-body-2">Группа</p>
+                    <div class="dropdown-container">
+                        <!-- Поле для выбора группы -->
+                        <input
+                            (click)="toggleDropdown()"
+                            [value]="selectedGroup?.name || ''"
+                            class="input-default address-with-group"
+                            placeholder="Выберите группу"
+                            readonly
+                            type="text"
+                        />
+
+                        <!-- Выпадающее меню -->
+                        <div *ngIf="isDropdownOpen" class="dropdown-menu">
+                            <button (click)="selectGroup(group)" *ngFor="let group of groups" class="desktop-body-2">
+                                {{ group.name }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="!showGroupSelector" class="group-label address">
+                <p class="desktop-body-2">Адрес проживания*</p>
+                <input [ngClass]="{'input-error': isControlError('address')}"
+                       class="input-default"
+                       formControlName="address"
+                       placeholder="-"
+                       type="text"/>
+            </div>
+
+            <!-- Контакты -->
+            <div class="group-label contacts">
+                <p class="desktop-body-2">Контакты*</p>
+                <div formArrayName="contacts">
+                    <div *ngFor="let contact of contacts.controls; let i = index" [formGroupName]="i"
+                         class="contact-group">
+                        <!-- ФИО -->
+                        <input [ngClass]="{'input-error': isControlError('name')}"
+                               class="input-default"
+                               formControlName="name"
+                               placeholder="Фамилия Имя Отчество"
+                               type="text"/>
+
+                        <div class="container-label contacts-details">
+                            <!-- Телефон -->
+                            <input [ngClass]="{'input-error': isControlError('phone')}"
+                                   class="input-default phone"
+                                   formControlName="phone"
+                                   placeholder="+7"
+                                   type="text"/>
+
+                            <!-- Роль -->
+                            <input [ngClass]="{'input-error': isControlError('relation')}"
+                                   class="input-default role"
+                                   formControlName="relation"
+                                   placeholder="Введите роль"
+                                   type="text"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Кнопка добавления/удаления дополнительного контакта -->
+            <button (click)="addContact()" *ngIf="contacts.length === 1" class="secondary-1-button contacts-button">
+                <img alt="Добавить" height="24" ngSrc="assets/plus.svg" width="24">
+            </button>
+            <button (click)="removeContact(1)" *ngIf="contacts.length === 2" class="secondary-1-button contacts-button">
+                <img alt="Удалить" height="24" ngSrc="assets/minus.svg" width="24">
+            </button>
+        </form>
+
+        <div class="modal-footer">
+            <button (click)="confirm()" class="desktop-primary-button-text-active primary-button confirm">
+                Зарегистрировать
+            </button>
+            <button (click)="closeModal()" class="desktop-secondary-button-text-active tertiary-button cancel">
+                Отменить
+            </button>
+        </div>
+    </div>
+</div>

@@ -14,7 +14,7 @@ export class GroupsManagerService {
     private readonly _groupService: GroupsService = inject(GroupsService);
     private readonly _errorHandler: ErrorHandler = inject(ErrorHandler);
 
-    public getAllGroups(): Observable<IGetGroupResponseModel> {
+    public getAllGroups(): Observable<IGetGroupResponseModel | null> {
         return this._groupService.getAllGroups().pipe(
             catchError(err => {
                 this._errorHandler.handleError(err);
@@ -32,7 +32,7 @@ export class GroupsManagerService {
         );
     }
 
-    public getGroupById(id: string): Observable<IGroupResponseModel> {
+    public getGroupById(id: string | null): Observable<IGroupResponseModel> {
         return this._groupService.getGroupById(id).pipe(
             catchError(err => {
                 this._errorHandler.handleError(err);
@@ -59,7 +59,7 @@ export class GroupsManagerService {
         );
     }
 
-    public getAllStudentsByGroup(id: string): Observable<IStudentItemResponseModel[]> {
+    public getAllStudentsByGroup(id: string | null): Observable<IStudentItemResponseModel[] | null> {
         return this._groupService.getAllStudentsByGroup(id).pipe(
             catchError(err => {
                 this._errorHandler.handleError(err);

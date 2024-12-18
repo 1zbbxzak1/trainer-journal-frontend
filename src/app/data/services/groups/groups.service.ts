@@ -15,15 +15,15 @@ export class GroupsService {
     private readonly _http: HttpClient = inject(HttpClient);
     private readonly _apiUrl: string = `${environment.apiUrl}/groups`;
 
-    public getAllGroups(): Observable<IGetGroupResponseModel> {
-        return this._http.get<IGetGroupResponseModel>(`${this._apiUrl}`);
+    public getAllGroups(): Observable<IGetGroupResponseModel | null> {
+        return this._http.get<IGetGroupResponseModel | null>(`${this._apiUrl}`);
     }
 
     public createGroup(group: ICreateGroupRequestModel): Observable<IGroupResponseModel> {
         return this._http.post<IGroupResponseModel>(`${this._apiUrl}`, group);
     }
 
-    public getGroupById(id: string): Observable<IGroupResponseModel> {
+    public getGroupById(id: string | null): Observable<IGroupResponseModel> {
         return this._http.get<IGroupResponseModel>(`${this._apiUrl}/${id}`);
     }
 
@@ -35,8 +35,8 @@ export class GroupsService {
         return this._http.delete<void>(`${this._apiUrl}/${id}`);
     }
 
-    public getAllStudentsByGroup(id: string): Observable<IStudentItemResponseModel[]> {
-        return this._http.get<IStudentItemResponseModel[]>(`${this._apiUrl}/${id}/students`);
+    public getAllStudentsByGroup(id: string | null): Observable<IStudentItemResponseModel[] | null> {
+        return this._http.get<IStudentItemResponseModel[] | null>(`${this._apiUrl}/${id}/students`);
     }
 
     public addStudentToGroup(id: string, student: IAddStudentRequestModel): Observable<void> {

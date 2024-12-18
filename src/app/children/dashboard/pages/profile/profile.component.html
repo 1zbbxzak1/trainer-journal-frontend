@@ -1,1 +1,42 @@
-<app-sidebar/>
+<div class="global-container">
+    <app-sidebar/>
+
+    <div class="second-container">
+        <div class="header">
+            <div class="second-header">
+                <p class="desktop-headline-4">Профиль</p>
+            </div>
+
+            <button (click)="removeCookies()"
+                    class="secondary-2-button desktop-secondary-button-text-active">
+                <p>Выйти из аккаунта</p>
+            </button>
+        </div>
+
+        <div class="desktop-headline-5 fullName">{{ infoMe?.userInfo?.fullName }}</div>
+
+        <div class="info">
+            <div class="desktop-headline-6 headline">Личные данные</div>
+
+            <div class="info-container">
+                <p class="desktop-body-2 info-headline">Пол</p>
+                <p class="desktop-body-1">{{ infoMe?.userInfo?.gender }}</p>
+            </div>
+
+            <div class="info-container">
+                <p class="desktop-body-2 info-headline">Email</p>
+                <p class="desktop-body-1">{{ infoMe?.trainerInfo?.email || 'Отсутствует' }}</p>
+            </div>
+
+            <div class="info-container">
+                <p class="desktop-body-2 info-headline">Telegram</p>
+                <p class="desktop-body-1">{{ infoMe?.userInfo?.telegramUsername || 'Отсутствует' }}</p>
+            </div>
+
+            <div class="info-container">
+                <p class="desktop-body-2 info-headline">Телефон</p>
+                <p class="desktop-body-1">{{ infoMe?.trainerInfo?.phone || 'Отсутствует' }}</p>
+            </div>
+        </div>
+    </div>
+</div>

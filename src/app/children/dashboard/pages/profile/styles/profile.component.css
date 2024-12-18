@@ -1,0 +1,39 @@
+.second-container {
+    max-height: calc(100vh - 80px);
+}
+
+.second-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+
+    gap: 16px;
+}
+
+.fullName {
+    margin-top: 40px;
+}
+
+.info {
+    margin-top: 60px;
+}
+
+.headline {
+    margin-bottom: 24px;
+}
+
+.info-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 16px;
+
+    margin-bottom: 12px;
+}
+
+.info-headline {
+    color: var(--text-secondary-grey);
+}
+
+

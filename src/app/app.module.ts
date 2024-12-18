@@ -16,6 +16,7 @@ import {CookieService} from 'ngx-cookie-service';
 import {StateBarService} from './children/services/state-bar/state-bar.service';
 import {StudentsService} from './data/services/students/students.service';
 import {StudentsManagerService} from './data/services/students/students.manager.service';
+import {FormatterService} from './children/services/formatter/formatter.service';
 
 @NgModule({
     declarations: [
@@ -42,6 +43,7 @@ import {StudentsManagerService} from './data/services/students/students.manager.
         StudentsManagerService,
 
         StateBarService,
+        FormatterService,
         CookieService,
         provideClientHydration(),
         {provide: LOCALE_ID, useValue: 'ru'},
@@ -51,6 +53,7 @@ import {StudentsManagerService} from './data/services/students/students.manager.
             multi: true
         },
     ],
+    exports: [],
     bootstrap: [AppComponent]
 })
 

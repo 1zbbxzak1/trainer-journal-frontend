@@ -4,7 +4,7 @@
     <div class="second-container">
         <div class="header">
             <p class="desktop-headline-4">Группы</p>
-            <button (click)="openModalGroup()" class="tertiary-button-icon">
+            <button (click)="toggleModal('group', true)" class="tertiary-button-icon">
                 <img alt="Добавить" height="24" ngSrc="assets/plus.svg" width="24">
             </button>
         </div>
@@ -31,15 +31,20 @@
                     <td class="desktop-body-1">{{ group.hallAddress }}</td>
                     <td class="desktop-body-1">{{ group.price }}</td>
                     <td class="table-groups-more">
-                        <button (click)="toggleDropdown(group.id)"
+                        <button (click)="toggleDropdown(group.id); $event.stopPropagation()"
                                 [ngClass]="{'active': selectedGroupId === group.id}"
                                 class="tertiary-button-icon second-button">
                             <img alt="Дополнительно" height="24" ngSrc="assets/dots-horizontal.svg" width="24">
                         </button>
 
                         <div *ngIf="selectedGroupId === group.id" class="dropdown-menu">
-                            <button (click)="openModalGroupEdit(group.id)" class="desktop-body-2">Редактировать</button>
-                            <button (click)="openModalDelete(group.id)" class="desktop-body-2">Удалить</button>
+                            <button (click)="toggleModal('groupEdit', true, group.id); $event.stopPropagation()"
+                                    class="desktop-body-2">
+                                Редактировать
+                            </button>
+                            <button (click)="toggleModal('delete', true, group.id); $event.stopPropagation()"
+                                    class="desktop-body-2">Удалить
+                            </button>
                         </div>
                     </td>
                 </tr>
@@ -50,34 +55,35 @@
         <ng-template #noGroups>
             <div class="no-groups">
                 <p class="desktop-body-1 second-text">Создайте группу для начала работы</p>
-                <button (click)="openModalGroup()" class="primary-button create desktop-primary-button-text-active">
+                <button (click)="toggleModal('group', true)"
+                        class="primary-button create desktop-primary-button-text-active">
                     Создать группу
                 </button>
             </div>
         </ng-template>
 
         <app-group-pop-up
-            (close)="closeModalGroup()"
+            (close)="toggleModal('group', false)"
             (confirmAction)="createGroup()"
             [confirmTitle]="'Создать'"
             [formGroup]="formGroups"
-            [isVisible]="isModalGroupVisible"
+            [isVisible]="modalStates.group"
             [title]="'Создание группы'">
         </app-group-pop-up>
 
         <app-group-pop-up
-            (close)="closeModalGroupEdit()"
-            (confirmAction)="updateGroupById()"
+            (close)="toggleModal('groupEdit', false)"
+            (confirmAction)="updateGroupById(); selectedGroupId = null"
             [confirmTitle]="'Сохранить'"
             [formGroup]="formGroups"
-            [isVisible]="isModalGroupEditVisible"
+            [isVisible]="modalStates.groupEdit"
             [title]="'Редактирование группы'">
         </app-group-pop-up>
 
         <app-delete-pop-up
-            (close)="closeModalDelete()"
+            (close)="toggleModal('delete', false)"
             (confirmAction)="deleteGroupById()"
-            [isVisible]="isModalDeleteVisible"
+            [isVisible]="modalStates.delete"
             [title]="'Удалить группу?'">
         </app-delete-pop-up>
     </div>

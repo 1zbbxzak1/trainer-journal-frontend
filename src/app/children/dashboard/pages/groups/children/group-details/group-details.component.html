@@ -1,3 +1,195 @@
 <div class="global-container">
     <app-sidebar/>
+
+    <div class="second-container">
+        <div class="header">
+            <div class="second-header">
+                <div [style.background-color]="groupById?.hexColor" class="ellipse"></div>
+                <p class="desktop-headline-4">{{ groupById?.name }}</p>
+                <button (click)="toggleModal('groupEdit', true, selectedGroupId)" class="tertiary-button-icon">
+                    <img alt="Редактировать" height="24" ngSrc="assets/edit-05.svg" width="24">
+                </button>
+            </div>
+
+            <button (click)="toggleModal('add', true)"
+                    class="secondary-2-button desktop-secondary-button-text-active">
+                <p>Добавить ученика</p>
+            </button>
+        </div>
+
+        <div class="details-group">
+            <div class="details-group-item">
+                <p class="desktop-headline-6 desc">Количество учеников</p>
+                <p class="desktop-body-1">{{ groupById?.studentsCount }}</p>
+            </div>
+
+            <div class="details-group-item">
+                <p class="desktop-headline-6 desc">Цена одного занятия</p>
+                <p class="desktop-body-1">{{ groupById?.price }}</p>
+            </div>
+
+            <div class="details-group-item">
+                <p class="desktop-headline-6 desc">Место проведения</p>
+                <p class="desktop-body-1">{{ groupById?.hallAddress }}</p>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <input [(ngModel)]="search" class="input-default search" placeholder="" type="text">
+            <img alt="Поиск" class="search-icon" height="24" ngSrc="assets/search.svg" width="24"/>
+        </div>
+
+        <div *ngIf="students && students.length > 0; else noStudents">
+            <div class="table-scroll-container">
+                <table class="table-students">
+                    <thead>
+                    <tr>
+                        <th *ngIf="columnsVisibility['number']" class="desktop-headline-6 number">№</th>
+                        <th *ngIf="columnsVisibility['fullName']" class="desktop-headline-6 fullName">ФИО</th>
+                        <th (click)="toggleGenderSort()" *ngIf="columnsVisibility['gender']"
+                            class="desktop-headline-6 center-tr gender">
+                            <div class="sort">
+                                <p class="label">Пол</p>
+                                <img alt="Сортировка" class="icon" height="24" ngSrc="{{ getGenderSortIcon() }}"
+                                     width="24">
+                            </div>
+                        </th>
+                        <th *ngIf="columnsVisibility['schoolGrade']" class="desktop-headline-6 center-tr class">Класс
+                        </th>
+                        <th *ngIf="columnsVisibility['birthDate']" class="desktop-headline-6 center-tr birth">Д.Р.</th>
+                        <th (click)="toggleAgeSort()" *ngIf="columnsVisibility['age']"
+                            class="desktop-headline-6 center-tr age">
+                            <div class="sort">
+                                <p class="label">Возраст</p>
+                                <img alt="Сортировка" class="icon" height="24" ngSrc="{{ getAgeSortIcon() }}"
+                                     width="24">
+                            </div>
+                        </th>
+                        <th (click)="toggleKyuSort()" *ngIf="columnsVisibility['kyu']"
+                            class="desktop-headline-6 center-tr kyu">
+                            <div class="sort">
+                                <p class="label">Кю</p>
+                                <img alt="Сортировка" class="icon" height="24" ngSrc="{{ getKyuSortIcon() }}"
+                                     width="24">
+                            </div>
+                        </th>
+                        <th *ngIf="columnsVisibility['address']" class="desktop-headline-6 address">Адрес</th>
+                        <th *ngIf="columnsVisibility['contact']" class="desktop-headline-6 contacts">Контакт</th>
+                        <th>
+                            <button (click)="toggleDropdownSettings()" class="tertiary-button-icon settings">
+                                <img alt="Редактировать" height="24" ngSrc="assets/settings.svg" width="24">
+                            </button>
+
+                            <div *ngIf="dropdownOpen"
+                                 class="dropdown-menu settings-dropdown">
+                                <div *ngFor="let column of columnNames">
+                                    <input [(ngModel)]="columnsVisibility[column.key]"
+                                           class="custom-checkbox-mini"
+                                           id="checkbox-{{ column.key }}"
+                                           type="checkbox"/>
+                                    <label class="desktop-body-2" for="checkbox-{{ column.key }}">
+                                        {{ column.label }}
+                                    </label>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let student of searchStudents(); let index = index"
+                        class="stroke-table-students">
+                        <td *ngIf="columnsVisibility['number']" class="table-groups-name number">
+                            <p class="desktop-body-1">{{ index + 1 }}</p>
+                        </td>
+                        <td *ngIf="columnsVisibility['fullName']"
+                            class="desktop-body-1 fullName">{{ student.fullName }}
+                        </td>
+                        <td *ngIf="columnsVisibility['gender']"
+                            class="desktop-body-1 center-tr gender">{{ student.gender }}
+                        </td>
+                        <td *ngIf="columnsVisibility['schoolGrade']" class="desktop-body-1 center-tr class">
+                            {{ student.schoolGrade }}
+                        </td>
+                        <td *ngIf="columnsVisibility['birthDate']" class="desktop-body-1 center-tr birth">
+                            {{ formatBirthDate(student.birthDate) }}
+                        </td>
+                        <td *ngIf="columnsVisibility['age']" class="desktop-body-1 center-tr age">{{ student.age }}</td>
+                        <td *ngIf="columnsVisibility['kyu']" class="desktop-body-1 center-tr kyu">
+                            {{ student.kyu === null ? "нет" : student.kyu }}
+                        </td>
+                        <td *ngIf="columnsVisibility['address']" class="desktop-body-1 address">{{ student.address }}
+                        </td>
+                        <td *ngIf="columnsVisibility['contact']" class="desktop-body-1 contacts">
+                            {{ formatPhoneNumber(student.contact.phone || '') }}
+                            <p class="desktop-description">{{ student.contact.relation }}
+                                · {{ student.contact.name }}</p>
+                        </td>
+
+                        <td class="table-students-more">
+                            <button (click)="toggleDropdown(student.username); $event.stopPropagation()"
+                                    [ngClass]="{'active': selectedStudentUsername === student.username}"
+                                    class="tertiary-button-icon second-button">
+                                <img alt="Дополнительно" height="24" ngSrc="assets/dots-horizontal.svg" width="24">
+                            </button>
+
+                            <div *ngIf="selectedStudentUsername === student.username"
+                                 class="dropdown-menu more">
+                                <button
+                                    (click)="toggleModal('delete', true, selectedGroupId, student.username); $event.stopPropagation()"
+                                    class="desktop-body-2">
+                                    Удалить из группы
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #noStudents>
+        <div class="no-students">
+            <p class="desktop-body-1 second-text">Добавьте ученика</p>
+        </div>
+    </ng-template>
+
+    <app-group-pop-up
+        (close)="toggleModal('groupEdit', false)"
+        (confirmAction)="updateGroupById()"
+        [confirmTitle]="'Сохранить'"
+        [formGroup]="formGroups"
+        [isVisible]="modalStates.groupEdit"
+        [title]="'Редактирование группы'">
+    </app-group-pop-up>
+
+    <app-delete-pop-up
+        (close)="toggleModal('delete', false)"
+        (confirmAction)="excludeStudentFromGroup()"
+        [isVisible]="modalStates.delete"
+        [title]="'Удалить из группы?'">
+    </app-delete-pop-up>
+
+    <app-add-student-pop-up
+        (close)="toggleModal('add', false)"
+        (firstButtonClick)="toggleModal('create', true)"
+        (secondButtonClick)="toggleModal('create', true)"
+        [firstButton]="'Зарегистрировать'"
+        [isVisible]="modalStates.add"
+        [secondButton]="'Добавить существующего'">
+    </app-add-student-pop-up>
+
+
+    <app-create-student-pop-up
+        (close)="toggleModal('create', false); getAllStudentsByGroup(selectedGroupId)"
+        [groupsId]="groupsId"
+        [isVisible]="modalStates.create"
+    >
+
+    </app-create-student-pop-up>
+
+    <app-login-details-pop-up
+        [details]="details"
+        [isVisible]="modalStates.loginDetails"
+    />
 </div>

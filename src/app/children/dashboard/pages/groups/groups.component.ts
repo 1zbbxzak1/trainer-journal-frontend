@@ -1,12 +1,7 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, HostListener} from '@angular/core';
-import {Router} from '@angular/router';
-import {GroupsManagerService} from '../../../../data/services/groups/groups.manager.service';
-import {IGetGroupResponseModel} from '../../../../data/response-models/groups/IGetGroup.response-model';
+import {ChangeDetectionStrategy, Component, HostListener} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ICreateGroupRequestModel} from '../../../../data/request-models/groups/ICreateGroup.request-model';
-import {IGroupResponseModel} from '../../../../data/response-models/groups/IGroup.response-model';
-import {IUpdateGroupInfoRequestModel} from '../../../../data/request-models/groups/IUpdateGroupInfoRequestModel';
+import {PopUpGroupService} from '../../../services/groups/pop-up-group.service';
 
 @Component({
     selector: 'app-groups',
@@ -14,58 +9,10 @@ import {IUpdateGroupInfoRequestModel} from '../../../../data/request-models/grou
     styleUrls: ['./styles/groups.component.css', '../../styles/dashboard-styles.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GroupsComponent {
-    protected groups: IGetGroupResponseModel | null = null;
-    protected groupById: IGroupResponseModel | null = null;
-    protected hexColor: string | null = null;
-    protected selectedGroupId: string | null = null;
-    protected isModalGroupVisible: boolean = false;
-    protected isModalGroupEditVisible: boolean = false;
-    protected isModalDeleteVisible: boolean = false;
-
-    protected formGroups: FormGroup = new FormGroup({
-        name: new FormControl('', Validators.required),
-        price: new FormControl('', Validators.required),
-        hallAddress: new FormControl('', Validators.required),
-    });
-
-    constructor(
-        private readonly _router: Router,
-        private readonly _destroyRef: DestroyRef,
-        private readonly _cdr: ChangeDetectorRef,
-        private readonly _groupsManagerService: GroupsManagerService,
-    ) {
+export class GroupsComponent extends PopUpGroupService {
+    constructor() {
+        super();
         this.getAllGroups();
-    }
-
-    protected openModalGroup(): void {
-        this.formGroups.reset();
-        this.isModalGroupVisible = true;
-    }
-
-    protected closeModalGroup(): void {
-        this.isModalGroupVisible = false;
-    }
-
-    protected openModalGroupEdit(groupId: string): void {
-        this.isModalGroupEditVisible = true;
-        this.selectedGroupId = groupId;
-
-        this.getGroupById(groupId);
-    }
-
-    protected closeModalGroupEdit(): void {
-        this.isModalGroupEditVisible = false;
-        this.formGroups.reset();
-    }
-
-    protected openModalDelete(groupId: string): void {
-        this.isModalDeleteVisible = true;
-        this.selectedGroupId = groupId;
-    }
-
-    protected closeModalDelete(): void {
-        this.isModalDeleteVisible = false;
     }
 
     @HostListener('document:click', ['$event'])
@@ -80,11 +27,7 @@ export class GroupsComponent {
     }
 
     protected toggleDropdown(groupId: string): void {
-        if (this.selectedGroupId === groupId) {
-            this.selectedGroupId = null; // Закрыть dropdown, если снова нажали на текущую кнопку
-        } else {
-            this.selectedGroupId = groupId; // Открыть dropdown для выбранной группы
-        }
+        this.selectedGroupId = this.selectedGroupId === groupId ? null : groupId;
     }
 
     protected createGroup(): void {
@@ -104,37 +47,10 @@ export class GroupsComponent {
                 takeUntilDestroyed(this._destroyRef)
             ).subscribe({
                 next: (): void => {
-                    this.closeModalGroup();
+                    this.toggleModal('group', false);
                     this.getAllGroups();
                 }
             });
-        }
-    }
-
-    // Метод для редактирования
-    protected updateGroupById(): void {
-        if (this.selectedGroupId) {
-            const name: string = this.formGroups.get('name')?.value;
-            const price: number = this.formGroups.get('price')?.value;
-            const hallAddress: string = this.formGroups.get('hallAddress')?.value;
-
-            if (name && price && hallAddress) {
-                const groupById: IUpdateGroupInfoRequestModel = {
-                    name,
-                    price,
-                    hallAddress,
-                    hexColor: this.hexColor,
-                };
-
-                this._groupsManagerService.updateGroupById(this.selectedGroupId, groupById).pipe(
-                    takeUntilDestroyed(this._destroyRef)
-                ).subscribe({
-                    next: (): void => {
-                        this.closeModalGroupEdit();
-                        this.getAllGroups();
-                    }
-                });
-            }
         }
     }
 
@@ -145,7 +61,8 @@ export class GroupsComponent {
                 takeUntilDestroyed(this._destroyRef)
             ).subscribe({
                 next: (): void => {
-                    this.closeModalDelete();
+                    this.selectedGroupId = null;
+                    this.toggleModal('delete', false);
                     this.getAllGroups();
                 }
             });
@@ -154,36 +71,5 @@ export class GroupsComponent {
 
     protected navigateToGroupDetails(groupId: string): void {
         this._router.navigate(['dashboard/groups/group-details/', groupId])
-    }
-
-    private getAllGroups(): void {
-        this._groupsManagerService.getAllGroups().pipe(
-            takeUntilDestroyed(this._destroyRef)
-        ).subscribe({
-            next: (groups: IGetGroupResponseModel): void => {
-                this.groups = groups;
-                this._cdr.detectChanges();
-            },
-        });
-    }
-
-    // Метод для получения данных о группе
-    private getGroupById(groupId: string): void {
-        this._groupsManagerService.getGroupById(groupId).pipe(
-            takeUntilDestroyed(this._destroyRef)
-        ).subscribe((groupById: IGroupResponseModel): void => {
-            this.groupById = groupById;
-
-            if (groupById) {
-                this.formGroups.patchValue({
-                    name: groupById.name,
-                    price: groupById.price,
-                    hallAddress: groupById.hallAddress,
-                })
-                this.hexColor = groupById.hexColor;
-
-                this._cdr.detectChanges();
-            }
-        });
     }
 }

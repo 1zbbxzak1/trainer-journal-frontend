@@ -1,0 +1,211 @@
+.second-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+
+    gap: 16px;
+}
+
+.ellipse {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 100%;
+
+    margin-right: 16px;
+}
+
+.tertiary-button-icon {
+    width: 56px;
+    height: 56px;
+
+    padding: 16px;
+    align-items: center;
+}
+
+.tertiary-button-icon.active {
+    background: var(--secondary-button-focus);
+}
+
+.settings {
+    padding: 12px;
+    width: 48px;
+    height: 48px;
+
+    align-items: center;
+}
+
+.details-group {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    gap: 8px;
+
+    margin-top: 13px;
+}
+
+.details-group-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+}
+
+.desc {
+    color: var(--text-secondary-grey);
+}
+
+.input-container {
+    position: relative;
+}
+
+.input-default.search {
+    max-width: 340px;
+    width: 100%;
+    padding: 16px 20px;
+}
+
+.search {
+    margin-top: 48px;
+    margin-bottom: 20px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 20px;
+    top: 52%;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.input-default:focus + .search-icon,
+.input-default:not(:placeholder-shown) + .search-icon {
+    opacity: 0;
+}
+
+.table-scroll-container {
+    width: calc(100%);
+    overflow-x: auto;
+}
+
+.table-students {
+    height: 100%;
+    width: 100%;
+
+    border-collapse: separate;
+
+    border-spacing: 0 12px;
+}
+
+.table-students-more {
+    margin-right: 12px;
+}
+
+.second-button {
+    width: 48px;
+    height: 48px;
+
+    padding: 12px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-right: 12px;
+
+    position: relative;
+}
+
+.table-students th {
+    text-align: left;
+
+    padding-top: 14px;
+    padding-bottom: 14px;
+
+    border-bottom: 2px solid var(--border-default);
+
+    white-space: nowrap;
+}
+
+.label {
+    display: inline-block;
+    margin-right: 12px;
+}
+
+.icon {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.table-students .center-tr {
+    text-align: center;
+}
+
+.table-students .sort {
+    cursor: pointer;
+    padding: 6px 16px;
+}
+
+.table-students .sort:hover {
+    background: var(--bg-grey);
+    border-radius: 8px;
+}
+
+.table-students th {
+    padding: 8px 16px;
+}
+
+.table-students th:nth-child(1) {
+    padding-left: 12px;
+}
+
+.table-students th:nth-child(2) {
+    margin-left: 24px;
+}
+
+.table-students th:last-child {
+    text-align: right;
+    padding-right: 14px;
+}
+
+.table-students td {
+    text-align: left;
+
+    white-space: nowrap;
+}
+
+.table-students td:nth-child(1) {
+    padding-left: 12px;
+}
+
+.table-students td:nth-child(2) {
+    margin-left: 24px;
+}
+
+.table-students td:last-child {
+    text-align: right;
+}
+
+.no-students {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    height: 100%;
+}
+
+.second-text {
+    color: var(--text-secondary-grey);
+}
+
+.more {
+    width: 190px;
+}
+
+.settings-dropdown {
+    padding: 9px 20px;
+    row-gap: 7px;
+
+    text-align: left;
+}

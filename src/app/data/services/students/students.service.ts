@@ -13,8 +13,15 @@ export class StudentsService {
     private readonly _http: HttpClient = inject(HttpClient);
     private readonly _apiUrl: string = `${environment.apiUrl}/students`;
 
-    public getStudents(withGroup: boolean = true): Observable<IStudentItemResponseModel[]> {
-        return this._http.get<IStudentItemResponseModel[]>(`${this._apiUrl}?withGroup=${withGroup}`);
+    public getStudents(withGroup: boolean | null = null): Observable<IStudentItemResponseModel[]> {
+        let url: string = `${this._apiUrl}`;  // Базовый URL
+
+        // Если withGroup не равен null, добавляем параметр в запрос
+        if (withGroup !== null) {
+            url = `${url}?withGroup=${withGroup}`;
+        }
+
+        return this._http.get<IStudentItemResponseModel[]>(url);
     }
 
     public createStudentInGroup(student: ICreateStudentRequestModel): Observable<ICreateStudentResponseModel> {

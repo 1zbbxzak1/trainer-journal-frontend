@@ -11,8 +11,8 @@ export class StudentsManagerService {
     private readonly _studentsService: StudentsService = inject(StudentsService);
     private readonly _errorHandler: ErrorHandler = inject(ErrorHandler);
 
-    public getStudents(): Observable<IStudentItemResponseModel[]> {
-        return this._studentsService.getStudents().pipe(
+    public getStudents(withGroup: boolean | null = null): Observable<IStudentItemResponseModel[]> {
+        return this._studentsService.getStudents(withGroup).pipe(
             catchError(err => {
                 this._errorHandler.handleError(err);
                 return NEVER;

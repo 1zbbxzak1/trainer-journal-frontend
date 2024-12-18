@@ -16,6 +16,7 @@ import {CookieService} from 'ngx-cookie-service';
 import {StateBarService} from './children/services/state-bar/state-bar.service';
 import {StudentsService} from './data/services/students/students.service';
 import {StudentsManagerService} from './data/services/students/students.manager.service';
+import {PopUpGroupService} from './children/services/groups/pop-up-group.service';
 import {FormatterService} from './children/services/formatter/formatter.service';
 
 @NgModule({
@@ -38,6 +39,7 @@ import {FormatterService} from './children/services/formatter/formatter.service'
 
         GroupsService,
         GroupsManagerService,
+        PopUpGroupService,
 
         StudentsService,
         StudentsManagerService,

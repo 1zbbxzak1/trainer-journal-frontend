@@ -18,6 +18,8 @@ import {StudentsService} from './data/services/students/students.service';
 import {StudentsManagerService} from './data/services/students/students.manager.service';
 import {PopUpGroupService} from './children/services/groups/pop-up-group.service';
 import {FormatterService} from './children/services/formatter/formatter.service';
+import {ProfileService} from './data/services/profile/profile.service';
+import {ProfileManagerService} from './data/services/profile/profile.manager.service';
 
 @NgModule({
     declarations: [
@@ -43,6 +45,9 @@ import {FormatterService} from './children/services/formatter/formatter.service'
 
         StudentsService,
         StudentsManagerService,
+
+        ProfileService,
+        ProfileManagerService,
 
         StateBarService,
         FormatterService,

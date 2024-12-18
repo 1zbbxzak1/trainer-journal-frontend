@@ -25,8 +25,15 @@
 
 .sidebar-menu-list {
     width: 100%;
-    margin-top: 90px;
+    margin-top: 40px;
     flex-grow: 1;
+}
+
+.sidebar-menu-list-item:nth-child(1) {
+    display: flex;
+    width: 100%;
+
+    margin-bottom: 60px;
 }
 
 .sidebar-menu-list-item {

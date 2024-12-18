@@ -1,6 +1,15 @@
 <nav class="sidebar">
     <ul class="sidebar-menu-list">
         <li class="sidebar-menu-list-item">
+
+            <img alt="Лого"
+                 class="sidebar-item-img"
+                 height="28"
+                 ngSrc="/assets/logo.svg"
+                 width="200">
+        </li>
+
+        <li class="sidebar-menu-list-item">
             <button [class.active]="statesSidebar['isScheduleClicked']"
                     class="sidebar-router"
                     routerLink="/dashboard/schedule"

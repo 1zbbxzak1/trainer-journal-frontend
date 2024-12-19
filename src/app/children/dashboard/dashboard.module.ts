@@ -17,6 +17,7 @@ import {
     LoginDetailsPopUpComponent
 } from './pages/groups/components/login-details-pop-up/login-details-pop-up.component';
 import {AddStudentsPopUpComponent} from './pages/groups/components/add-students-pop-up/add-students-pop-up.component';
+import {JournalDetailsComponent} from './pages/journal/children/journal-details/journal-details.component';
 import {
     CreateStudentPopUpComponent
 } from './pages/groups/components/create-student-pop-up/create-student-pop-up.component';
@@ -30,6 +31,7 @@ import {
         GroupDetailsComponent,
 
         JournalComponent,
+        JournalDetailsComponent,
 
         StudentsComponent,
 

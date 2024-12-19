@@ -34,4 +34,21 @@ export class FormatterService {
 
         return `${day}.${month}.${year}`;
     }
+
+    public formatFullName(fullName: string): string {
+        if (!fullName) return '';
+
+        const nameParts: string[] = fullName.trim().split(/\s+/);
+
+        if (nameParts.length === 1) {
+            return nameParts[0]
+        }
+
+        const [surname, firstName, lastName] = nameParts;
+
+        const formattedName: string = `${surname} ${firstName?.charAt(0).toUpperCase()}. ` +
+            (lastName ? `${lastName?.charAt(0).toUpperCase()}.` : '');
+
+        return formattedName;
+    }
 }

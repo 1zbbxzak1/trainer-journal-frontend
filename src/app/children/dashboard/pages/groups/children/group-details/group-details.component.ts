@@ -67,18 +67,6 @@ export class GroupDetailsComponent extends PopUpGroupService implements OnInit {
         });
     }
 
-    onStudentCreated(details: ICreateStudentResponseModel): void {
-        this.details = details;
-        // Дальше можно использовать эти данные, например, отображать их в UI или отправлять на сервер
-    }
-
-    protected onScroll(event: { isEndEvent: boolean; isScrollingEvent: boolean }): void {
-        if (event.isScrollingEvent || event.isEndEvent) {
-            this.dropdownOpen = false; // Закрываем настройки
-            this.selectedStudentUsername = null; // Закрываем другие дропдауны (если применимо)
-        }
-    }
-
     protected toggleDropdownSettings(): void {
         this.dropdownOpen = !this.dropdownOpen;
         if (this.dropdownOpen) {

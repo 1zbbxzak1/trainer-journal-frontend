@@ -624,6 +624,8 @@ body::-webkit-scrollbar-button {
     margin-right: 12px;
     top: 5px;
     align-items: center;
+
+    cursor: pointer;
 }
 
 .custom-checkbox-mini::after {

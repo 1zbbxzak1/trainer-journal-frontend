@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {environment} from '../../../../environments/environment';
 import {CookieService} from 'ngx-cookie-service';
 import {HttpErrorResponse} from '@angular/common/http';
+import {jwtDecode} from 'jwt-decode';
 
 @Injectable()
 export class AuthManagerService {
@@ -34,6 +35,15 @@ export class AuthManagerService {
         this.removeAccessToken(); // Удаляем токен из куки
         this.removeLoginTimestamp(); // Удаляем время логина
         this._router.navigate(['auth']); // Перенаправляем на страницу логина
+    }
+
+    public getUserRoles(): string[] | null {
+        const token = this.getAccessToken();
+        if (token) {
+            const decoded: any = jwtDecode(token);
+            return decoded?.['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] || null;
+        }
+        return null;
     }
 
     // Метод для получения токена из приватного замыкания

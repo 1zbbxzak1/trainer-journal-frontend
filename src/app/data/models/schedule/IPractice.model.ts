@@ -4,6 +4,7 @@ import {IPracticeTrainerModel} from './IPracticeTrainer.model';
 export interface IPracticeModel {
     readonly id: string,
     readonly state: string,
+    readonly start: string,
     readonly end: string,
     readonly group: IPracticeGroupModel,
     readonly trainer: IPracticeTrainerModel,

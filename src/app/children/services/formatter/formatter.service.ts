@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class FormatterService {
-    public formatPhoneNumber(phone: string): string {
+    public formatPhoneNumber(phone: string | null): string {
         if (!phone) return '';
 
         const cleanedPhone: string = phone.replace(/\D/g, '');
@@ -65,5 +65,22 @@ export class FormatterService {
         const minutes: string = String(parsedDate.getMinutes()).padStart(2, '0');
 
         return `${hour}:${minutes}`;
+    }
+
+    public formatDateFull(date: string | Date): string {
+        if (!date) {
+            return '';
+        }
+
+        const parsedDate: Date = new Date(date);
+        if (isNaN(parsedDate.getTime())) {
+            console.warn('Invalid date:', date);
+            return '';
+        }
+        const day: string = String(parsedDate.getDate()).padStart(2, '0');
+        const month: string = new Intl.DateTimeFormat('ru-RU', {month: 'short'}).format(parsedDate).replace(".", '');
+        const year: number = parsedDate.getFullYear();
+
+        return `${day} ${month} ${year}`;
     }
 }

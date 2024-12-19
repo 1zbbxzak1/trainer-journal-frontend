@@ -24,6 +24,7 @@ import {ProfileService} from './data/services/profile/profile.service';
 import {ProfileManagerService} from './data/services/profile/profile.manager.service';
 import {JournalService} from './data/services/journal/journal.service';
 import {JournalManagerService} from './data/services/journal/journal.manager.service';
+import {StudentDashboardModule} from './children/student-dashboard/student-dashboard.module';
 
 @NgModule({
     declarations: [
@@ -35,6 +36,7 @@ import {JournalManagerService} from './data/services/journal/journal.manager.ser
 
         AuthorizationModule,
         DashboardModule,
+        StudentDashboardModule,
 
         HttpClientModule,
     ],

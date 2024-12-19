@@ -1,1 +1,166 @@
-<app-sidebar/>
+<div class="global-container">
+    <app-sidebar/>
+
+    <div class="second-container">
+        <div class="header">
+            <div class="second-header">
+                <p class="desktop-headline-4">Расписание</p>
+            </div>
+
+            <button (click)="toggleSidebar()" class="tertiary-button create">
+                <img alt="Создать" height="24" ngSrc="assets/edit-05.svg" width="24">
+            </button>
+        </div>
+
+        <div class="button-week">
+            <button (click)="changeWeek(-1)" class="secondary-2-button left">
+                <img alt="назад" height="24" ngSrc="assets/chevron-left.svg" width="24">
+            </button>
+
+            <button (click)="changeWeek(1)" class="secondary-2-button right">
+                <img alt="назад" height="24" ngSrc="assets/chevron-right.svg" width="24">
+            </button>
+
+            <p class="desktop-headline-6">{{ currentWeek }}</p>
+        </div>
+
+        <div class="calendar">
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th *ngFor="let day of weekDays" [class.today-th]="day.isToday">
+                        <p [class.today-th]="day.isToday" class="desktop-headline-6 inactive">{{ day.day }}</p>
+                        <p [class.today-th]="day.isToday" class="desktop-description inactive">{{ day.weekDay }}</p>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let slot of timeSlots">
+                    <td class="desktop-description time-slot">{{ slot }}</td>
+                    <td *ngFor="let day of weekDays" [class.today]="day.isToday" class="table-cell">
+                        <div (click)="toggleSidebarInfo(item.id, item.startTime)"
+                             *ngFor="let item of getScheduleForSlot(day.date, slot)"
+                             [ngStyle]="{'top': calculateTop(item.startTime) + 'px', 'height': item.duration + 'px'}"
+                             class="schedule-item">
+                            <p class="time">{{ _formatter.formatTime(item.startTime) + " - " + _formatter.formatTime(item.endTime) }}</p>
+                            <p class="name-team">{{ item.groupName }}</p>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div *ngIf="isSidebarOpen" class="sidebar">
+        <div class="sidebar-header">
+            <p class="desktop-headline-6">Редактирование расписания</p>
+            <button (click)="toggleSidebar()" class="tertiary-button close-sidebar">
+                <img alt="Закрыть" height="24" ngSrc="assets/x-close.svg" width="24">
+            </button>
+        </div>
+        <div class="sidebar-content">
+            <!-- Dropdown для выбора группы -->
+            <label class="desktop-description" for="group-select">Выберите группу:</label>
+            <select (change)="onGroupChange($event)" [(ngModel)]="selectedGroup" id="group-select">
+                <option *ngFor="let group of groups?.groups" [value]="group.id">
+                    {{ group.name }}
+                </option>
+            </select>
+
+            <!-- Выбор недели и кнопки добавления/удаления -->
+            <div *ngIf="!isAddingSession">
+                <div class="button-week">
+                    <button (click)="changeWeek(-1)" class="secondary-2-button left">
+                        <img alt="назад" height="24" ngSrc="assets/chevron-left.svg" width="24">
+                    </button>
+
+                    <button (click)="changeWeek(1)" class="secondary-2-button right">
+                        <img alt="вперед" height="24" ngSrc="assets/chevron-right.svg" width="24">
+                    </button>
+
+                    <p class="desktop-headline-6">{{ currentWeek }}</p>
+                </div>
+
+                <div class="sidebar-buttons">
+                    <button (click)="startAddingSession()" class="tertiary-button add-session">
+                        <img alt="Добавить занятие" height="24" ngSrc="assets/plus.svg" width="24">
+                    </button>
+                    <button class="tertiary-button delete-schedule">
+                        <!--                        <img alt="Очистить расписание" height="24" ngSrc="assets/.svg" width="24">-->
+                    </button>
+                </div>
+            </div>
+
+            <!-- Выбор дня и временных интервалов -->
+            <div *ngIf="isAddingSession" class="add-session-form">
+                <div class="days-buttons">
+                    <button (click)="selectDay(day)"
+                            *ngFor="let day of weekDays"
+                            [class.selected]="day === selectedDay"
+                            class="secondary-2-button day-button">
+                        {{ day.weekDay }}
+                    </button>
+                </div>
+
+                <div class="time-inputs">
+                    <label class="desktop-description">Начало:</label>
+                    <input [(ngModel)]="sessionStartTime" class="time-input" type="time">
+
+                    <label class="desktop-description">Конец:</label>
+                    <input [(ngModel)]="sessionEndTime" class="time-input" type="time">
+                </div>
+
+                <div class="additional-fields">
+                    <label class="desktop-description">Адрес зала:</label>
+                    <input [(ngModel)]="hallAddress" class="text-input" type="text">
+
+                    <label class="desktop-description">Цена:</label>
+                    <input [(ngModel)]="price" class="text-input" type="number">
+                </div>
+
+                <button (click)="saveSession()" class="primary-button save-session">
+                    Сохранить
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="isSidebarInfoOpen" class="sidebar">
+        <div class="sidebar-header">
+            <p class="desktop-headline-6">Описание занятия</p>
+            <button (click)="closeSidebarInfo()" class="tertiary-button close-sidebar">
+                <img alt="Закрыть" height="24" ngSrc="assets/x-close.svg" width="24">
+            </button>
+        </div>
+
+        <div class="sidebar-container">
+            <div class="sidebar-item">
+                <p class="desktop-body-2 sidebar-title">Группа</p>
+                <p class="desktop-body-1">{{ practice!.group.name }}</p>
+            </div>
+
+            <div class="sidebar-item">
+                <p class="desktop-body-2 sidebar-title">Цена</p>
+                <p class="desktop-body-1">{{ practice!.price }} ₽</p>
+            </div>
+
+            <div class="sidebar-item">
+                <p class="desktop-body-2 sidebar-title">Начало</p>
+                <p class="desktop-body-1">{{ _formatter.formatTime(practice!.start) }}</p>
+            </div>
+
+            <div class="sidebar-item">
+                <p class="desktop-body-2 sidebar-title">Конец</p>
+                <p class="desktop-body-1">{{ _formatter.formatTime(practice!.end) }}</p>
+            </div>
+
+            <div class="sidebar-item">
+                <p class="desktop-body-2 sidebar-title">Адрес</p>
+                <p class="desktop-body-1">{{ practice!.hallAddress }}</p>
+            </div>
+        </div>
+    </div>
+</div>

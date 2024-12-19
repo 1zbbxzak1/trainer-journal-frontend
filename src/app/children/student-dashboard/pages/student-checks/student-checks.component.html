@@ -1,0 +1,80 @@
+<div class="global-container">
+    <app-student-sidebar/>
+
+    <div class="second-container">
+        <div class="header">
+            <div class="second-header">
+                <p class="desktop-headline-4">Чеки</p>
+            </div>
+
+            <button (click)="openModal()" class="primary-button desktop-primary-button-text-active">
+                <p>Отправить чек</p>
+            </button>
+        </div>
+
+        <div class="desktop-headline-5 balance">
+            <p>Сумма к оплате в декабре:</p>
+            <p>{{ infoMe?.studentInfo?.balance + " ₽" }}</p>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th class="mobile-headline-5 desc">Баланс на начало месяца</th>
+                    <th class="mobile-headline-5 desc">
+                        <p>Списано</p>
+                        <p class="desktop-description desc">Посещено</p>
+                    </th>
+                    <th class="mobile-headline-5 desc">Зачислено</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="desktop-body-1">{{ balanceReport?.startBalance }}</td>
+                    <td class="desktop-body-1">{{ balanceReport?.expenses }}</td>
+                    <td class="desktop-body-1">{{ balanceReport?.payments }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-container-checks">
+            <table>
+                <thead>
+                <tr>
+                    <th class="desktop-headline-6">Фото</th>
+                    <th class="desktop-headline-6">Статус</th>
+                    <th class="desktop-headline-6">Сумма</th>
+                    <th class="desktop-headline-6">Дата</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let check of checks">
+                    <td>
+                        <img alt="Receipt Image" class="check-img" height="54" ngSrc="{{ check.imageUrl }}"
+                             width="54"/>
+                    </td>
+                    <td class="desktop-description">
+                        <div [style.background-color]="getBackgroundStatus(check.isAccepted)"
+                             [style.color]="getTitleStatusStyle(check.isAccepted)" class="status">
+                            {{ getTitleStatus(check.isAccepted) }}
+                        </div>
+                    </td>
+                    <td class="desktop-body-1">{{ check.amount }}</td>
+                    <td class="desktop-body-1">{{ formatter.formatDateFull(check.uploadDate) }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<app-send-check
+    (close)="closeModal()"
+    (confirmAction)="uploadReceipt()"
+    [confirmTitle]="'Отправить'"
+    [formGroup]="modalFormGroup"
+    [isVisible]="isModalVisible"
+    [title]="'Отправка чека'">
+</app-send-check>

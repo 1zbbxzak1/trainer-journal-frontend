@@ -1,0 +1,129 @@
+.second-container {
+    max-height: calc(100vh - 80px);
+}
+
+.second-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+
+    gap: 16px;
+}
+
+.balance {
+    display: flex;
+    align-items: center;
+
+    column-gap: 20px;
+
+    margin-top: 41px;
+}
+
+.desc {
+    color: var(--text-secondary-grey);
+}
+
+.table-container,
+.table-container-checks {
+    display: flex;
+    column-gap: 28px;
+
+    margin-top: 24px;
+
+    height: 100%;
+    width: 100%;
+    border-collapse: separate;
+
+    border-spacing: 0 12px;
+}
+
+.table-container th {
+    text-align: right;
+
+    padding-top: 14px;
+    padding-bottom: 14px;
+
+    border-bottom: 2px solid var(--border-default);
+}
+
+.table-container th:nth-child(1),
+.table-container td:nth-child(1) {
+    width: 124px;
+}
+
+.table-container th:nth-child(2),
+.table-container td:nth-child(2) {
+    width: 70px;
+}
+
+.table-container th:nth-child(3),
+.table-container td:nth-child(3) {
+    width: 90px;
+}
+
+.table-container td {
+    text-align: right;
+    padding: 7px 20px;
+}
+
+.table-container-checks {
+    margin-top: 60px;
+}
+
+.table-container-checks th {
+    text-align: left;
+
+    padding-top: 14px;
+    padding-bottom: 14px;
+
+    border-bottom: 2px solid var(--border-default);
+}
+
+.table-container-checks td {
+    text-align: left;
+
+    padding-top: 14px;
+    padding-bottom: 14px;
+}
+
+.table-container-checks th:nth-child(3),
+.table-container-checks td:nth-child(3),
+.table-container-checks th:nth-child(4),
+.table-container-checks td:nth-child(4) {
+    text-align: right;
+}
+
+.table-container-checks th:nth-child(1),
+.table-container-checks td:nth-child(1) {
+    width: 84px;
+}
+
+.table-container-checks th:nth-child(2),
+.table-container-checks td:nth-child(2) {
+    width: 574px;
+}
+
+.table-container-checks th:nth-child(3),
+.table-container-checks td:nth-child(3) {
+    width: 400px;
+}
+
+.table-container-checks th:nth-child(4),
+.table-container-checks td:nth-child(4) {
+    width: 500px;
+}
+
+.check-img {
+    border-radius: 57px;
+}
+
+.status {
+    border-radius: 36px;
+    padding: 2px 16px;
+    width: 75px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

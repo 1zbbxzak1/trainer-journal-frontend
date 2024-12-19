@@ -5,6 +5,8 @@ import {IStudentItemResponseModel} from '../../response-models/students/IStudent
 import {ICreateStudentRequestModel} from '../../request-models/students/ICreateStudent.request-model';
 import {ICreateStudentResponseModel} from '../../response-models/students/ICreateStudent.response-model';
 import {IGroupResponseModel} from '../../response-models/groups/IGroup.response-model';
+import {IGetStudentBalanceResposeModel} from '../../response-models/students/IGetStudentBalance.respose-model';
+import {IBalanceChangeResponseModel} from '../../response-models/students/IBalanceChange.response-model';
 
 @Injectable()
 export class StudentsManagerService {
@@ -31,6 +33,41 @@ export class StudentsManagerService {
 
     public getStudentGroups(username: string): Observable<IGroupResponseModel[]> {
         return this._studentsService.getStudentGroups(username).pipe(
+            catchError(err => {
+                this._errorHandler.handleError(err);
+                return NEVER;
+            }),
+        );
+    }
+
+    public getBalanceChanges(username: string, start: Date, end: Date): Observable<IGetStudentBalanceResposeModel[]> {
+        return this._studentsService.getBalanceChanges(username, start, end).pipe(
+            catchError(err => {
+                this._errorHandler.handleError(err);
+                return NEVER;
+            }),
+        );
+    }
+
+    public getBalanceChangesReport(username: string, start: Date, end: Date): Observable<IBalanceChangeResponseModel> {
+        return this._studentsService.getBalanceChangesReport(username, start, end).pipe(
+            catchError(err => {
+                this._errorHandler.handleError(err);
+                return NEVER;
+            }),
+        );
+    }
+
+    public getCurrentMonthBalanceChangesReport(username: string): Observable<IBalanceChangeResponseModel> {
+        const now = new Date();
+
+        // Start of the current month
+        const start = new Date(now.getFullYear(), now.getMonth(), 1);
+
+        // End of the current month
+        const end = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
+
+        return this._studentsService.getBalanceChangesReport(username, start, end).pipe(
             catchError(err => {
                 this._errorHandler.handleError(err);
                 return NEVER;

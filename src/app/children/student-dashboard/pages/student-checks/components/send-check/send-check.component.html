@@ -1,0 +1,46 @@
+<div *ngIf="isVisible" class="modal-overlay">
+    <div (click)="$event.stopPropagation()" class="modal-container">
+        <button (click)="closeModal()" class="tertiary-button-icon x-close">
+            <img alt="Закрыть" height="24" ngSrc="../../../../../../../assets/x-close.svg" width="24">
+        </button>
+        <div class="modal-header">
+            <p class="desktop-headline-5">{{ title }}</p>
+        </div>
+        <form [formGroup]="formGroup" class="modal-content">
+            <div (click)="fileInput.click()" [ngClass]="{'file-uploaded': selectedFile}" class="group-label file">
+                <img *ngIf="!selectedFile" alt="загрузка файла" height="24" ngSrc="assets/upload.svg" width="24">
+                <p *ngIf="!selectedFile" class="desktop-body-2 file-desc">Перетащите файлы сюда или нажмите, чтобы
+                    загрузить</p>
+
+                <div *ngIf="selectedFile">
+                    <img alt="uploaded image" height="410" ngSrc="{{ selectedFilePreview }}" width="275"/>
+                </div>
+
+                <input
+                    #fileInput
+                    (change)="onFileSelected($event)"
+                    [ngClass]="{'input-error': isControlError('file')}"
+                    formControlName="file"
+                    style="display: none"
+                    type="file"/>
+            </div>
+
+            <div class="group-label description">
+                <p class="desktop-body-2">Сумма</p>
+                <input [ngClass]="{'input-error': isControlError('amount')}"
+                       class="input-default"
+                       formControlName="amount"
+                       placeholder="Продублируйте сумму из чека"
+                       type="text"/>
+            </div>
+        </form>
+        <div class="modal-footer">
+            <button (click)="confirm()" class="desktop-primary-button-text-active primary-button confirm">
+                {{ confirmTitle }}
+            </button>
+            <button (click)="closeModal()" class="desktop-secondary-button-text-active tertiary-button cancel">
+                Отменить
+            </button>
+        </div>
+    </div>
+</div>

@@ -51,4 +51,19 @@ export class FormatterService {
 
         return formattedName;
     }
+
+    public formatTime(date: string | Date): string {
+        if (!date) {
+            return '';
+        }
+        const parsedDate: Date = new Date(date);
+        if (isNaN(parsedDate.getTime())) {
+            console.warn('Invalid date:', date);
+            return '';
+        }
+        const hour: string = String(parsedDate.getHours()).padStart(2, '0');
+        const minutes: string = String(parsedDate.getMinutes()).padStart(2, '0');
+
+        return `${hour}:${minutes}`;
+    }
 }

@@ -1,0 +1,92 @@
+<div class="global-container">
+    <app-student-sidebar/>
+
+    <div class="second-container">
+        <div class="header">
+            <div class="second-header">
+                <p class="desktop-headline-4">Расписание</p>
+            </div>
+        </div>
+
+        <div class="button-week">
+            <button (click)="changeWeek(-1)" class="secondary-2-button left">
+                <img alt="назад" height="24" ngSrc="assets/chevron-left.svg" width="24">
+            </button>
+
+            <button (click)="changeWeek(1)" class="secondary-2-button right">
+                <img alt="назад" height="24" ngSrc="assets/chevron-right.svg" width="24">
+            </button>
+
+            <p class="desktop-headline-6">{{ currentWeek }}</p>
+        </div>
+
+        <div class="calendar">
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th *ngFor="let day of weekDays" [class.today-th]="day.isToday">
+                        <p [class.today-th]="day.isToday" class="desktop-headline-6 inactive">{{ day.day }}</p>
+                        <p [class.today-th]="day.isToday" class="desktop-description inactive">{{ day.weekDay }}</p>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let slot of timeSlots">
+                    <td class="desktop-description time-slot">{{ slot }}</td>
+                    <td *ngFor="let day of weekDays" [class.today]="day.isToday" class="table-cell">
+                        <div (click)="toggleSidebarInfo(item.id, item.startTime)"
+                             *ngFor="let item of getScheduleForSlot(day.date, slot)"
+                             [ngStyle]="{'top': calculateTop(item.startTime) + 'px', 'height': item.duration + 'px'}"
+                             class="schedule-item">
+                            <p class="time">{{ _formatter.formatTime(item.startTime) + " - " + _formatter.formatTime(item.endTime) }}</p>
+                            <p class="name-team">{{ item.groupName }}</p>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div *ngIf="isSidebarInfoOpen" class="sidebar">
+        <div class="sidebar-header">
+            <p class="desktop-headline-6">Описание занятия</p>
+            <button (click)="closeSidebarInfo()" class="tertiary-button close-sidebar">
+                <img alt="Закрыть" height="24" ngSrc="assets/x-close.svg" width="24">
+            </button>
+        </div>
+
+        <div class="sidebar-container">
+            <div class="sidebar-item">
+                <p class="desktop-body-2 sidebar-title">Группа</p>
+                <p class="desktop-body-1">{{ practice!.group.name }}</p>
+            </div>
+
+            <div class="sidebar-item">
+                <p class="desktop-body-2 sidebar-title">Тренер</p>
+                <p class="desktop-body-1">{{ practice!.trainer.fullName }}</p>
+            </div>
+
+            <div class="sidebar-item">
+                <p class="desktop-body-2 sidebar-title">Цена</p>
+                <p class="desktop-body-1">{{ practice!.price }} ₽</p>
+            </div>
+
+            <div class="sidebar-item">
+                <p class="desktop-body-2 sidebar-title">Начало</p>
+                <p class="desktop-body-1">{{ _formatter.formatTime(practice!.start) }}</p>
+            </div>
+
+            <div class="sidebar-item">
+                <p class="desktop-body-2 sidebar-title">Конец</p>
+                <p class="desktop-body-1">{{ _formatter.formatTime(practice!.end) }}</p>
+            </div>
+
+            <div class="sidebar-item">
+                <p class="desktop-body-2 sidebar-title">Адрес</p>
+                <p class="desktop-body-1">{{ practice!.hallAddress }}</p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -25,6 +25,8 @@ import {ProfileManagerService} from './data/services/profile/profile.manager.ser
 import {JournalService} from './data/services/journal/journal.service';
 import {JournalManagerService} from './data/services/journal/journal.manager.service';
 import {StudentDashboardModule} from './children/student-dashboard/student-dashboard.module';
+import {ChecksService} from './data/services/checks/checks.service';
+import {ChecksManagerService} from './data/services/checks/checks.manager.service';
 
 @NgModule({
     declarations: [
@@ -60,6 +62,9 @@ import {StudentDashboardModule} from './children/student-dashboard/student-dashb
 
         JournalService,
         JournalManagerService,
+
+        ChecksService,
+        ChecksManagerService,
 
         StateBarService,
         FormatterService,

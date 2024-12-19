@@ -21,6 +21,8 @@
     border-right: 1px solid var(--text-white);
 
     background: var(--bg-sidebar);
+
+    z-index: 1000;
 }
 
 .sidebar-menu-list {

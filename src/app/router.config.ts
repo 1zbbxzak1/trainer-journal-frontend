@@ -9,6 +9,9 @@ import {ProfileComponent} from './children/dashboard/pages/profile/profile.compo
 import {JournalComponent} from './children/dashboard/pages/journal/journal.component';
 import {StudentsComponent} from './children/dashboard/pages/students/students.component';
 import {GroupDetailsComponent} from './children/dashboard/pages/groups/children/group-details/group-details.component';
+import {
+    JournalDetailsComponent
+} from './children/dashboard/pages/journal/children/journal-details/journal-details.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'dashboard/groups', pathMatch: 'full'},
@@ -35,6 +38,11 @@ export const routes: Routes = [
     {
         path: 'dashboard/journal',
         component: JournalComponent,
+        canActivate: [(router: ActivatedRouteSnapshot, state: RouterStateSnapshot) => inject(AuthGuard).canActivate(router, state)],
+    },
+    {
+        path: 'dashboard/journal/journal-details/:id',
+        component: JournalDetailsComponent,
         canActivate: [(router: ActivatedRouteSnapshot, state: RouterStateSnapshot) => inject(AuthGuard).canActivate(router, state)],
     },
     {

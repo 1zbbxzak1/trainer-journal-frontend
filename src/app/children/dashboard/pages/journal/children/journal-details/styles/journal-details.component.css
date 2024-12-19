@@ -1,0 +1,162 @@
+.second-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+
+    gap: 16px;
+}
+
+.ellipse {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 100%;
+
+    margin-right: 16px;
+}
+
+.button-week {
+    display: flex;
+    gap: 12px;
+
+    align-items: center;
+    text-align: right;
+}
+
+.left,
+.right {
+    padding: 6px;
+
+    width: 36px;
+    height: 36px;
+}
+
+.month {
+    text-align: right;
+}
+
+.stroke-table-groups {
+    cursor: default;
+}
+
+.table-container {
+    display: flex;
+    column-gap: 28px;
+    overflow: hidden;
+
+    margin-top: 20px;
+}
+
+.static-table,
+.scrollable-table {
+    display: flex;
+    flex-direction: column;
+}
+
+.static-table table,
+.scrollable-table table {
+    border-collapse: collapse;
+    border-spacing: 0 12px;
+    width: 100%;
+}
+
+.static-table table th,
+.scrollable-table table th {
+    text-align: left;
+    height: 80px;
+
+    padding: 14px 24px;
+
+    border-bottom: 2px solid var(--border-default);
+
+    white-space: nowrap;
+}
+
+.static-table table td,
+.scrollable-table table td {
+    height: 90px;
+}
+
+.static-table table th:nth-child(1),
+.static-table table td:nth-child(1) {
+    width: 27px;
+}
+
+.static-table table th:nth-child(2),
+.static-table table td:nth-child(2) {
+    max-width: 240px;
+}
+
+.static-table table th:nth-child(3),
+.static-table table td:nth-child(3) {
+    max-width: 170px;
+    text-wrap: auto;
+    text-align: right;
+}
+
+.static-table table th:nth-child(4),
+.static-table table td:nth-child(4) {
+    width: 69px;
+    text-wrap: auto;
+    text-align: right;
+}
+
+.static-table table th:nth-child(5),
+.static-table table td:nth-child(5) {
+    width: 85px;
+    text-wrap: auto;
+    text-align: right;
+}
+
+.static-table table th:nth-child(6),
+.static-table table td:nth-child(6) {
+    width: 70px;
+    text-wrap: auto;
+    text-align: right;
+}
+
+.static-table table td:first-child,
+.static-table table td:nth-child(2) {
+    text-align: left;
+}
+
+.static-table table td {
+    padding: 16px 24px;
+    text-align: right;
+
+    text-wrap: auto;
+}
+
+.scrollable-table table td {
+    padding: 16px 24px;
+    text-align: center;
+}
+
+.scrollable-table table th {
+    color: var(--text-secondary-grey);
+}
+
+.scrollable-table table th,
+.scrollable-table table td {
+    max-width: 62px;
+    text-align: center;
+}
+
+.static-table {
+    flex: 0 0 auto;
+}
+
+.scrollable-table {
+    flex: 1;
+    overflow: hidden;
+}
+
+.scrollable-table-wrapper {
+    overflow-x: auto;
+}
+
+.table-container > .scrollable-table .scrollable-table-wrapper,
+.table-container > .static-table {
+    height: 100%;
+}

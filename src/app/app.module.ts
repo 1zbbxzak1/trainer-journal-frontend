@@ -18,8 +18,12 @@ import {StudentsService} from './data/services/students/students.service';
 import {StudentsManagerService} from './data/services/students/students.manager.service';
 import {PopUpGroupService} from './children/services/groups/pop-up-group.service';
 import {FormatterService} from './children/services/formatter/formatter.service';
+import {ScheduleService} from './data/services/schedule/schedule.service';
+import {ScheduleManagerService} from './data/services/schedule/schedule.manager.service';
 import {ProfileService} from './data/services/profile/profile.service';
 import {ProfileManagerService} from './data/services/profile/profile.manager.service';
+import {JournalService} from './data/services/journal/journal.service';
+import {JournalManagerService} from './data/services/journal/journal.manager.service';
 
 @NgModule({
     declarations: [
@@ -46,8 +50,14 @@ import {ProfileManagerService} from './data/services/profile/profile.manager.ser
         StudentsService,
         StudentsManagerService,
 
+        ScheduleService,
+        ScheduleManagerService,
+
         ProfileService,
         ProfileManagerService,
+
+        JournalService,
+        JournalManagerService,
 
         StateBarService,
         FormatterService,

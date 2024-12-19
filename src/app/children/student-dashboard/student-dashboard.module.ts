@@ -2,21 +2,25 @@ import {NgModule} from '@angular/core';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {StudentSidebarComponent} from './components/student-sidebar/student-sidebar.component';
 import {StudentScheduleComponent} from './pages/student-schedule/student-schedule.component';
+import {StudentProfileComponent} from './pages/student-profile/student-profile.component';
 import {RouterLink, RouterLinkActive} from '@angular/router';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { SendCheckComponent } from './pages/student-checks/components/send-check/send-check.component';
 
 
 @NgModule({
     declarations: [
         StudentSidebarComponent,
         StudentScheduleComponent,
+        StudentProfileComponent,
     ],
     imports: [
         CommonModule,
         NgOptimizedImage,
         RouterLink,
         RouterLinkActive,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        FormsModule
     ]
 })
 export class StudentDashboardModule {

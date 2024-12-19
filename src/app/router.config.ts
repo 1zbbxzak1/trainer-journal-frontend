@@ -12,6 +12,7 @@ import {GroupDetailsComponent} from './children/dashboard/pages/groups/children/
 import {
     JournalDetailsComponent
 } from './children/dashboard/pages/journal/children/journal-details/journal-details.component';
+import {StudentProfileComponent} from './children/student-dashboard/pages/student-profile/student-profile.component';
 import {StudentScheduleComponent} from './children/student-dashboard/pages/student-schedule/student-schedule.component';
 
 export const routes: Routes = [
@@ -59,6 +60,11 @@ export const routes: Routes = [
     {
         path: 'dashboard/profile',
         component: ProfileComponent,
+        canActivate: [(router: ActivatedRouteSnapshot, state: RouterStateSnapshot) => inject(AuthGuard).canActivate(router, state)],
+    },
+    {
+        path: 'student-dashboard/profile',
+        component: StudentProfileComponent,
         canActivate: [(router: ActivatedRouteSnapshot, state: RouterStateSnapshot) => inject(AuthGuard).canActivate(router, state)],
     },
     {

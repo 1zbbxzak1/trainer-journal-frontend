@@ -173,7 +173,7 @@
     <app-add-student-pop-up
         (close)="toggleModal('add', false)"
         (firstButtonClick)="toggleModal('create', true)"
-        (secondButtonClick)="toggleModal('create', true)"
+        (secondButtonClick)="toggleModal('addStudent', true)"
         [firstButton]="'Зарегистрировать'"
         [isVisible]="modalStates.add"
         [secondButton]="'Добавить существующего'">
@@ -187,6 +187,14 @@
     >
 
     </app-create-student-pop-up>
+
+    <app-add-students-pop-up
+        (close)="toggleModal('addStudent', false);
+        getAllStudentsByGroup(selectedGroupId);
+        this.getGroupById(selectedGroupId)"
+        [isVisible]="modalStates.addStudent"
+    >
+    </app-add-students-pop-up>
 
     <app-login-details-pop-up
         [details]="details"

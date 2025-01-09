@@ -1,0 +1,123 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-container {
+    position: relative;
+
+    background: var(--bg-white);
+    border-radius: 16px;
+
+    padding: 60px 60px 40px;
+
+    width: 400px;
+
+    box-shadow: 0 8px 16px 0 rgba(35, 35, 35, 0.12);
+    overflow: hidden;
+    animation: fadeIn 0.3s ease;
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    gap: 24px;
+}
+
+.students {
+    width: 400px;
+}
+
+.input-default {
+    width: 345px;
+
+    margin-top: 24px;
+}
+
+.dropdown-menu {
+    width: 387px;
+    height: 345px;
+    overflow-y: auto;
+    left: auto;
+    right: auto;
+    margin-top: 430px;
+    margin-left: -12px;
+
+    padding-top: 0;
+}
+
+.dropdown-container {
+    position: relative;
+}
+
+.input-default.address-with-group {
+    cursor: pointer;
+}
+
+.students-no-with-group {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+
+    padding: 5px 16px;
+
+    position: fixed;
+    background: var(--bg-white);
+    width: 345px;
+    height: 46px;
+
+    margin-top: 0;
+
+    border-bottom: 1px solid var(--border-default);
+}
+
+.custom-checkbox-mini {
+    top: 0;
+    margin: 0 8px 0 0;
+}
+
+.student {
+    margin-top: 61px;
+}
+
+.primary-button {
+    height: 56px;
+}
+
+.secondary-2-button {
+    height: 56px;
+}
+
+.x-close {
+    width: 48px;
+    height: 48px;
+
+    padding: 12px;
+
+    position: absolute;
+    top: 16px;
+    right: 16px;
+}
+
+.modal-footer {
+    width: 388px;
+    margin-top: 24px;
+    display: flex;
+    gap: 12px;
+}
+
+.confirm,
+.cancel {
+    padding: 12px 32px;
+    width: 194px;
+}

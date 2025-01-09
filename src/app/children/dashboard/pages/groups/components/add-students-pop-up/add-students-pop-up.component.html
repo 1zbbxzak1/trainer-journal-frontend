@@ -1,1 +1,55 @@
-<p>add-students-pop-up works!</p>
+<div *ngIf="isVisible" class="modal-overlay">
+    <div class="modal-container">
+        <button (click)="closeModal()" class="tertiary-button-icon x-close">
+            <img alt="Закрыть" height="24" ngSrc="../../../../../../../assets/x-close.svg" width="24">
+        </button>
+
+        <div class="modal-header">
+            <p class="desktop-headline-5">Добавить ученика</p>
+        </div>
+
+        <div class="students">
+            <div class="dropdown-container">
+                <input
+                    (click)="toggleDropdown()"
+                    [value]="selectedStudent || ''"
+                    class="input-default address-with-group"
+                    placeholder="Выберите ученика"
+                    readonly
+                    type="text"
+                />
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button (click)="confirm()" class="desktop-primary-button-text-active primary-button confirm">
+                Добавить
+            </button>
+            <button (click)="closeModal()" class="desktop-secondary-button-text-active tertiary-button cancel">
+                Отменить
+            </button>
+        </div>
+    </div>
+
+    <!-- Выпадающее меню -->
+    <div *ngIf="isDropdownOpen"
+         class="dropdown-menu">
+        <div class="students-no-with-group">
+            <input (change)="getAllStudents()"
+                   [(ngModel)]="showStudentsWithoutGroup"
+                   class="custom-checkbox-mini"
+                   id="students-no-groups"
+                   type="checkbox"/>
+            <label class="desktop-body-2">
+                Ученики без группы
+            </label>
+        </div>
+
+        <button (click)="selectStudent(student)"
+                *ngFor="let student of students; let i = index"
+                [ngClass]="{'student': i === 0}"
+                class="desktop-body-2">
+            {{ student.fullName }}
+        </button>
+    </div>
+</div>

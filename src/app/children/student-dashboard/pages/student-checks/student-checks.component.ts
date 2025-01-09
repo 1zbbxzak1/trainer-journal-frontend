@@ -19,7 +19,10 @@ export class StudentChecksComponent implements OnInit {
     protected infoMe!: IFullInfoModel | null;
     protected balanceReport: IBalanceChangeResponseModel | null = null;
     protected checks: IPaymentReceiptResponseModel[] | null = null;
+    protected id: string = '';
+    protected amount: number = 0;
     protected isModalVisible: boolean = false;
+    protected isModalInfoVisible: boolean = false;
 
     protected modalFormGroup: FormGroup;
 
@@ -49,9 +52,20 @@ export class StudentChecksComponent implements OnInit {
         this.isModalVisible = false;
     }
 
+    protected openModalInfo(id: string, amount: number): void {
+        this.isModalInfoVisible = true;
+        this.id = id;
+        this.amount = amount;
+    }
+
+    protected closeModalInfo(): void {
+        this.isModalInfoVisible = false;
+        this.id = '';
+    }
+
     protected uploadReceipt(): void {
         if (this.modalFormGroup.valid) {
-            const formData = new FormData();
+            const formData: FormData = new FormData();
             formData.append('file', this.modalFormGroup.value.file);
             formData.append('Amount', this.modalFormGroup.value.amount);
 
@@ -61,13 +75,8 @@ export class StudentChecksComponent implements OnInit {
                 next: (): void => {
                     this.closeModal();
                     this.refreshReceipts();
-                },
-                error: (err): void => {
-                    console.error('Failed to upload receipt', err);
                 }
             });
-        } else {
-            console.error('Form is invalid');
         }
     }
 
@@ -133,7 +142,7 @@ export class StudentChecksComponent implements OnInit {
     }
 
     private getReceipts(username: string, verified: boolean | null): void {
-        this._checksManagerService.getReceipt(username, verified).pipe(
+        this._checksManagerService.getReceiptByUsername(username, verified).pipe(
             takeUntilDestroyed(this._destroyRef)
         ).subscribe({
             next: (receipts: IPaymentReceiptResponseModel[]): void => {

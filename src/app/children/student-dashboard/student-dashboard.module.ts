@@ -7,7 +7,9 @@ import {StudentProfileComponent} from './pages/student-profile/student-profile.c
 import {StudentChecksComponent} from './pages/student-checks/student-checks.component';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { SendCheckComponent } from './pages/student-checks/components/send-check/send-check.component';
+import {SendCheckComponent} from './pages/student-checks/components/send-check/send-check.component';
+import {InfoCheckComponent} from './pages/student-checks/components/info-check/info-check.component';
+import {DashboardModule} from "../dashboard/dashboard.module";
 
 
 @NgModule({
@@ -18,6 +20,7 @@ import { SendCheckComponent } from './pages/student-checks/components/send-check
         StudentProfileComponent,
         StudentChecksComponent,
         SendCheckComponent,
+        InfoCheckComponent,
     ],
     imports: [
         CommonModule,
@@ -25,7 +28,8 @@ import { SendCheckComponent } from './pages/student-checks/components/send-check
         RouterLink,
         RouterLinkActive,
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
+        DashboardModule
     ]
 })
 export class StudentDashboardModule {

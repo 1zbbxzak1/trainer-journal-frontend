@@ -1,0 +1,39 @@
+<div *ngIf="isVisible" class="modal-overlay">
+    <div (click)="$event.stopPropagation()" class="modal-container">
+        <button (click)="closeModal()" class="tertiary-button-icon x-close">
+            <img alt="Закрыть" height="24" ngSrc="../../../../../../../assets/x-close.svg" width="24">
+        </button>
+        <div class="modal-header">
+            <p class="desktop-headline-5">Проверка чека</p>
+        </div>
+        <div class="modal-content">
+            <div class="group-label">
+                <div class="img-check">
+                    <img alt="Чек" height="410" ngSrc="{{ checkInfo!.imageUrl }}" width="310">
+                </div>
+
+                <div class="check-info">
+                    <div class="info-container">
+                        <p class="desktop-body-2 info-headline">Сумма</p>
+                        <p class="desktop-body-1">{{ checkInfo!.amount }} ₽</p>
+                    </div>
+
+                    <div class="info-container">
+                        <p class="desktop-body-2 info-headline">Статус</p>
+                        <p class="desktop-body-1">{{ getTitleStatus(checkInfo!, checkInfo!.isAccepted) }}</p>
+                    </div>
+
+                    <div class="info-container">
+                        <p class="desktop-body-2 info-headline">Дата</p>
+                        <p class="desktop-body-1">{{ _formatter.formatDateFull(checkInfo!.uploadDate) }}</p>
+                    </div>
+
+                    <div *ngIf="checkInfo?.declineComment !== ''" class="info-container-comment">
+                        <p class="desktop-body-2 info-headline">Комментарий</p>
+                        <p class="desktop-body-1">{{ checkInfo!.declineComment }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

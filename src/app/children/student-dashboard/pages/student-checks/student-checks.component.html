@@ -50,7 +50,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let check of checks">
+                <tr (click)="openModalInfo(check.id, check.amount)"
+                    *ngFor="let check of checks"
+                    class="stroke-table-groups">
                     <td>
                         <img alt="Receipt Image" class="check-img" height="54" ngSrc="{{ check.imageUrl }}"
                              width="54"/>
@@ -78,3 +80,11 @@
     [isVisible]="isModalVisible"
     [title]="'Отправка чека'">
 </app-send-check>
+
+<app-info-check
+    (close)="closeModalInfo()"
+    [amount]="this.amount"
+    [id]="this.id"
+    [isVisible]="isModalInfoVisible"
+>
+</app-info-check>

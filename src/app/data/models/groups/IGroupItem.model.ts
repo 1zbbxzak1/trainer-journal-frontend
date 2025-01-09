@@ -1,3 +1,5 @@
+import {ColorKey} from '../../../children/dashboard/pages/schedule/types/types-color';
+
 export interface IGroupItemModel {
     readonly id: string,
     readonly name: string,
@@ -5,4 +7,5 @@ export interface IGroupItemModel {
     readonly hexColor: string,
     readonly studentsCount: number,
     readonly price: number,
+    readonly colorKey: ColorKey;
 }

@@ -18,9 +18,7 @@ import {
 } from '../../../../data/request-models/schedule/ICreateSinglePractice.request-model';
 import {IPracticeModel} from '../../../../data/models/schedule/IPractice.model';
 import {FormatterService} from '../../../services/formatter/formatter.service';
-
-
-// type ColorKey = 'blue' | 'purple';
+import {ColorGroup, ColorKey, ColorSchedule} from './types/types-color';
 
 @Component({
     selector: 'app-schedule',
@@ -47,7 +45,6 @@ export class ScheduleComponent implements OnInit {
     protected hallAddress = null;
     protected price = null;
     protected scheduleData: IScheduleItemModel[] = [];
-    protected selectedColorGroup: any;
     protected readonly _formatter: FormatterService = inject(FormatterService);
     private currentDate: Date = new Date();
     private readonly _destroyRef: DestroyRef = inject(DestroyRef);
@@ -55,34 +52,18 @@ export class ScheduleComponent implements OnInit {
     private readonly _groupsManagerService: GroupsManagerService = inject(GroupsManagerService);
     private readonly _scheduleManagerService: ScheduleManagerService = inject(ScheduleManagerService);
     private readonly _practicesManagerService: PracticeManagerService = inject(PracticeManagerService);
-    /**/
-    // private colorGroups: Record<ColorKey, ColorGroup> = {
-    //     blue: {
-    //         background: '#ADD8E6', // Light Blue
-    //         hoverActive: '#4682B4', // Steel Blue
-    //         sideRectangle: '#1E90FF', // Dodger Blue
-    //         time: '#0000FF', // Blue
-    //         nameTeam: '#0000CD', // Medium Blue
-    //     },
-    //     purple: {
-    //         background: '#D8BFD8', // Thistle
-    //         hoverActive: '#800080', // Purple
-    //         sideRectangle: '#8A2BE2', // Blue Violet
-    //         time: '#9932CC', // Dark Orchid
-    //         nameTeam: '#4B0082', // Indigo
-    //     },
-    // }
+    private colorSchedule = new ColorSchedule();
 
     constructor(
         private readonly practiceManagerService: PracticeManagerService,
         private readonly renderer: Renderer2
     ) {
-    }
-
-    public ngOnInit(): void {
         this.initializeTimeSlots();
         this.initializeWeekDays();
         this.updateWeekDisplay();
+    }
+
+    public ngOnInit(): void {
         this.loadSchedule();
         this.getAllGroups();
     }
@@ -137,7 +118,6 @@ export class ScheduleComponent implements OnInit {
     protected onGroupChange(event: Event): void {
         const selectElement: HTMLSelectElement = event.target as HTMLSelectElement;
         this.selectedGroup = selectElement.value;
-        console.log(`Выбрана группа с ID: ${this.selectedGroup}`);
     }
 
     protected toggleSidebar(): void {
@@ -203,32 +183,17 @@ export class ScheduleComponent implements OnInit {
 
                 const duration = this.calculateDuration(startTime, endTime);
 
-                console.log(duration);
+                const color = item.colorKey;
 
                 return {
                     ...item,
                     startTime,
                     endTime,
-                    duration
+                    duration,
+                    color
                 };
             });
     }
-
-    // protected getHexColorGroup(): ColorGroup {
-    //     // Список доступных цветовых групп
-    //     const colorKeys: ColorKey[] = Object.keys(this.colorGroups) as ColorKey[];
-    //
-    //     // Случайно выбираем цветовую группу
-    //     const randomColorKey = colorKeys[Math.floor(Math.random() * colorKeys.length)];
-    //
-    //     // Получаем выбранную группу цветов
-    //     const selectedColorGroup = this.colorGroups[randomColorKey];
-    //
-    //     // Можете сохранить выбранную группу, чтобы использовать её для различных стилей
-    //     this.selectedColorGroup = selectedColorGroup;
-    //
-    //     return selectedColorGroup;
-    // }
 
     protected calculateTop(startTime: Date): number {
         const startOfDay = new Date(startTime);
@@ -253,6 +218,36 @@ export class ScheduleComponent implements OnInit {
         return top;
     }
 
+    protected getColorForSchedule(name: string | null | undefined): ColorGroup {
+        if (!name) {
+            // Default color for invalid names
+            return this.colorSchedule.colorGroups.blue;
+        }
+
+        // Normalize and enrich the input
+        const enrichedName = name.toLowerCase().replace(/[^a-zа-яё0-9]/gi, '');
+
+        const colorKeys = Object.keys(this.colorSchedule.colorGroups) as ColorKey[];
+        const sortedKeys = [...colorKeys].sort();
+
+        // Generate a unique hash for the enriched name
+        const hash = this.generateHash(enrichedName);
+
+        // Use the hash value to determine the index
+        const index = hash % sortedKeys.length;
+
+        return this.colorSchedule.colorGroups[sortedKeys[index]];
+    }
+
+    private generateHash(input: string): number {
+        let hash = 0;
+        for (let i = 0; i < input.length; i++) {
+            hash = (hash << 5) - hash + input.charCodeAt(i) * (i + 1); // Multiply by position
+            hash |= 0; // Ensure 32-bit integer
+        }
+        return Math.abs(hash);
+    }
+
     private parseTime(slot: string, date: Date): Date {
         const [hours, minutes] = slot.split(':').map(Number);
         const result = new Date(date);
@@ -273,8 +268,10 @@ export class ScheduleComponent implements OnInit {
             return 41;
         } else if (durationInMinutes === 75) {
             return 51;
-        } else if (durationInMinutes > 60 && durationInMinutes <= 90) {
+        } else if (durationInMinutes > 60 && durationInMinutes < 90) {
             return 62;
+        } else if (durationInMinutes === 90) {
+            return 70;
         } else if (durationInMinutes > 90 && durationInMinutes < 120) {
             return 72;
         } else if (durationInMinutes == 120) {
@@ -361,13 +358,12 @@ export class ScheduleComponent implements OnInit {
             takeUntilDestroyed(this._destroyRef)
         ).subscribe({
             next: (schedule: IScheduleItemModel[]): void => {
-                this.scheduleData = schedule;
-
-                this.initializeTimeSlots();
+                this.scheduleData = schedule.map((item) => ({
+                    ...item,
+                    colorKey: this.getColorForSchedule(item.groupName), // Присваиваем цвет
+                }));
 
                 this._cdr.detectChanges();
-
-                console.log(this.scheduleData);
             },
         });
     }
@@ -391,11 +387,3 @@ export class ScheduleComponent implements OnInit {
         }
     }
 }
-
-// interface ColorGroup {
-//     background: string;
-//     hoverActive: string;
-//     sideRectangle: string;
-//     time: string;
-//     nameTeam: string;
-// }

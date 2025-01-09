@@ -90,9 +90,7 @@ th {
 
     padding: 8px;
 
-    border-left: 2px solid #26AD50;
-
-    background: #C7F9CC;
+    border-left: 2px solid;
 
     cursor: pointer;
 }
@@ -104,8 +102,6 @@ th {
     letter-spacing: var(--global-letter-spacing);
 
     font-family: var(--font-family), sans-serif;
-
-    color: #26AD50;
 }
 
 .name-team {
@@ -115,8 +111,6 @@ th {
     letter-spacing: var(--global-letter-spacing);
 
     font-family: var(--font-family), sans-serif;
-
-    color: #1C8A3F;
 }
 
 .today {

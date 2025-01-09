@@ -17,6 +17,9 @@ import {StudentScheduleComponent} from './children/student-dashboard/pages/stude
 import {StudentGroupComponent} from './children/student-dashboard/pages/student-group/student-group.component';
 import {StudentChecksComponent} from './children/student-dashboard/pages/student-checks/student-checks.component';
 import {
+    StudentProfileGroupComponent
+} from './children/dashboard/pages/groups/children/student-profile/student-profile-group.component';
+import {
     ChecksDetailsComponent
 } from './children/dashboard/pages/checks/children/checks-details/checks-details.component';
 
@@ -43,6 +46,11 @@ export const routes: Routes = [
         canActivate: [(router: ActivatedRouteSnapshot, state: RouterStateSnapshot) => inject(AuthGuard).canActivate(router, state)],
     },
     {
+        path: 'dashboard/groups/group-details/profile/:username',
+        component: StudentProfileGroupComponent,
+        canActivate: [(router: ActivatedRouteSnapshot, state: RouterStateSnapshot) => inject(AuthGuard).canActivate(router, state)],
+    },
+    {
         path: 'dashboard/journal',
         component: JournalComponent,
         canActivate: [(router: ActivatedRouteSnapshot, state: RouterStateSnapshot) => inject(AuthGuard).canActivate(router, state)],
@@ -55,6 +63,11 @@ export const routes: Routes = [
     {
         path: 'dashboard/students',
         component: StudentsComponent,
+        canActivate: [(router: ActivatedRouteSnapshot, state: RouterStateSnapshot) => inject(AuthGuard).canActivate(router, state)],
+    },
+    {
+        path: 'dashboard/students/profile/:username',
+        component: StudentProfileGroupComponent,
         canActivate: [(router: ActivatedRouteSnapshot, state: RouterStateSnapshot) => inject(AuthGuard).canActivate(router, state)],
     },
     {

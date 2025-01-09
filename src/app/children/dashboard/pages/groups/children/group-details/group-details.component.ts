@@ -62,8 +62,6 @@ export class GroupDetailsComponent extends PopUpGroupService implements OnInit {
 
             this.getAllStudentsByGroup(this.selectedGroupId);
             this.getGroupById(this.selectedGroupId);
-
-
         });
     }
 
@@ -217,5 +215,9 @@ export class GroupDetailsComponent extends PopUpGroupService implements OnInit {
                 }
             });
         }
+    }
+
+    protected navigateToStudentProfile(username: string): void {
+        this._router.navigate(['dashboard/groups/group-details/profile', username]);
     }
 }

@@ -86,7 +86,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let student of searchStudents(); let index = index"
+                    <tr (click)="navigateToStudentProfile(student.username); $event.stopPropagation()"
+                        *ngFor="let student of searchStudents(); let index = index"
                         class="stroke-table-students">
                         <td *ngIf="columnsVisibility['number']" class="table-groups-name number">
                             <p class="desktop-body-1">{{ index + 1 }}</p>
@@ -155,18 +156,18 @@
             <p class="desktop-body-1 second-text">Добавьте ученика</p>
         </div>
     </ng-template>
-
-    <app-delete-pop-up
-        (close)="toggleModal('delete', false)"
-        (confirmAction)="excludeStudentFromGroup()"
-        [isVisible]="modalStates.delete"
-        [title]="'Удалить аккаунт?'">
-    </app-delete-pop-up>
-
-    <app-create-student-pop-up
-        (close)="toggleModal('create', false); getAllStudentsByGroup(selectedGroupId)"
-        [groupsId]="groupsId"
-        [isVisible]="modalStates.create"
-    >
-    </app-create-student-pop-up>
 </div>
+
+<app-delete-pop-up
+    (close)="toggleModal('delete', false)"
+    (confirmAction)="excludeStudentFromGroup()"
+    [isVisible]="modalStates.delete"
+    [title]="'Удалить аккаунт?'">
+</app-delete-pop-up>
+
+<app-create-student-pop-up
+    (close)="toggleModal('create', false); getAllStudentsByGroup(selectedGroupId)"
+    [groupsId]="groupsId"
+    [isVisible]="modalStates.create"
+>
+</app-create-student-pop-up>

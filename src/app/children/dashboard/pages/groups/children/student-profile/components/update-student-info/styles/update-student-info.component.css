@@ -1,0 +1,162 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+.modal-overlay::-webkit-scrollbar {
+    display: none;
+}
+
+.modal-container {
+    position: relative;
+    height: 95vh;
+    box-sizing: border-box;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    background: var(--bg-white);
+    border-radius: 16px;
+    padding: 60px 40px;
+    width: 890px;
+    box-shadow: 0 8px 16px 0 rgba(35, 35, 35, 0.12);
+
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-container::-webkit-scrollbar {
+    display: none;
+}
+
+.x-close {
+    width: 48px;
+    height: 48px;
+
+    padding: 12px;
+
+    position: absolute;
+    top: 16px;
+    right: 16px;
+}
+
+.modal-header {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+
+    width: 764px;
+}
+
+.desc {
+    margin-top: 4px;
+    margin-bottom: 24px;
+    color: var(--text-secondary-grey);
+}
+
+.modal-content {
+    width: 764px;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.contacts {
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 24px;
+}
+
+.container-label {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    column-gap: 30px;
+    margin-top: 24px;
+}
+
+select {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.input-default {
+    width: 740px;
+
+    margin-top: 4px;
+}
+
+.gender-drop,
+.birthDate,
+.school,
+.phone,
+.role {
+    width: 335px;
+}
+
+.address {
+    margin-top: 24px;
+}
+
+.contacts-details {
+    margin-top: 8px;
+    width: 780px;
+}
+
+.contact-group-margin {
+    margin-top: 24px;
+}
+
+.secondary-1-button {
+    width: 32px;
+    height: 32px;
+    padding: 8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contacts-button {
+    margin-top: 12px;
+}
+
+.modal-footer {
+    width: 740px;
+    margin-top: 48px;
+    display: flex;
+    gap: 12px;
+}
+
+.confirm {
+    width: 244px;
+}
+
+.cancel {
+    width: 158px;
+}
+
+.confirm,
+.cancel {
+    padding: 12px 32px;
+}
+
+.dropdown-container {
+    position: relative;
+}

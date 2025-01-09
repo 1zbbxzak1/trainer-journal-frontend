@@ -21,10 +21,14 @@ import {JournalDetailsComponent} from './pages/journal/children/journal-details/
 import {
     CreateStudentPopUpComponent
 } from './pages/groups/components/create-student-pop-up/create-student-pop-up.component';
+import {StudentProfileGroupComponent} from './pages/groups/children/student-profile/student-profile-group.component';
 import {ChecksDetailsComponent} from './pages/checks/children/checks-details/checks-details.component';
 import {EditAmountComponent} from './pages/checks/components/edit-amount/edit-amount.component';
 import {DeclineCommentComponent} from './pages/checks/components/decline-comment/decline-comment.component';
 import {CheckInfoComponent} from './pages/checks/components/check-info/check-info.component';
+import {
+    UpdateStudentInfoComponent
+} from './pages/groups/children/student-profile/components/update-student-info/update-student-info.component';
 
 
 @NgModule({
@@ -56,7 +60,10 @@ import {CheckInfoComponent} from './pages/checks/components/check-info/check-inf
         AddStudentPopUpComponent,
         LoginDetailsPopUpComponent,
         AddStudentsPopUpComponent,
+        StudentProfileGroupComponent,
+        UpdateStudentInfoComponent,
     ],
+    exports: [],
     imports: [
         CommonModule,
         RouterLink,

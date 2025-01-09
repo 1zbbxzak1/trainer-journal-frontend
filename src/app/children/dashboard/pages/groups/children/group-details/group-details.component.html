@@ -96,7 +96,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let student of searchStudents(); let index = index"
+                    <tr (click)="navigateToStudentProfile(student.username); $event.stopPropagation()"
+                        *ngFor="let student of searchStudents(); let index = index"
                         class="stroke-table-students">
                         <td *ngIf="columnsVisibility['number']" class="table-groups-name number">
                             <p class="desktop-body-1">{{ index + 1 }}</p>
@@ -185,7 +186,6 @@
         [groupsId]="groupsId"
         [isVisible]="modalStates.create"
     >
-
     </app-create-student-pop-up>
 
     <app-add-students-pop-up

@@ -220,9 +220,11 @@ export class StudentsComponent extends PopUpGroupService implements OnInit {
                 }
 
                 this._cdr.detectChanges();
-
-                console.log(this.allStudents);
             }
         })
+    }
+
+    protected navigateToStudentProfile(username: string): void {
+        this._router.navigate(['dashboard/students/profile', username]);
     }
 }

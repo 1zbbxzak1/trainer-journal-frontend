@@ -29,6 +29,7 @@ import {CheckInfoComponent} from './pages/checks/components/check-info/check-inf
 import {
     UpdateStudentInfoComponent
 } from './pages/groups/children/student-profile/components/update-student-info/update-student-info.component';
+import {PracticeInfoComponent} from './pages/schedule/components/practice-info/practice-info.component';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import {
         StudentsComponent,
 
         ScheduleComponent,
+        PracticeInfoComponent,
 
         ChecksComponent,
         ChecksDetailsComponent,

@@ -40,6 +40,8 @@ export class ScheduleComponent implements OnInit {
     protected sessionEndTime = '';
     protected isAddingSession = false;
 
+    protected practiceId: string = '';
+    protected startDate: Date = new Date();
     protected isSidebarOpen = false;
     protected isSidebarInfoOpen = false;
     protected hallAddress = null;
@@ -126,10 +128,12 @@ export class ScheduleComponent implements OnInit {
     }
 
     protected toggleSidebarInfo(id: string, practiceDate: Date): void {
-        this.isSidebarInfoOpen = !this.isSidebarInfoOpen;
         this.updateScroll();
+        this.isSidebarInfoOpen = true;
 
         this.getInfoPractice(id, practiceDate);
+        this.practiceId = id;
+        this.startDate = practiceDate;
     }
 
     protected closeSidebarInfo(): void {

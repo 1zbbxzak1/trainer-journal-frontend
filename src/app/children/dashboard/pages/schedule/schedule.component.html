@@ -139,38 +139,12 @@
     </div>
 
     <div *ngIf="isSidebarInfoOpen" class="sidebar">
-        <div class="sidebar-header">
-            <p class="desktop-headline-6">Описание занятия</p>
-            <button (click)="closeSidebarInfo()" class="tertiary-button close-sidebar">
-                <img alt="Закрыть" height="24" ngSrc="assets/x-close.svg" width="24">
-            </button>
-        </div>
+        <app-practice-info
+            (attendance)="toggleSidebarAttendance(practiceId, startDate)"
+            (close)="closeSidebarInfo()"
+            [practice]="practice">
+        </app-practice-info>
+    </div>
 
-        <div class="sidebar-container">
-            <div class="sidebar-item">
-                <p class="desktop-body-2 sidebar-title">Группа</p>
-                <p class="desktop-body-1">{{ practice!.group.name }}</p>
-            </div>
-
-            <div class="sidebar-item">
-                <p class="desktop-body-2 sidebar-title">Цена</p>
-                <p class="desktop-body-1">{{ practice!.price }} ₽</p>
-            </div>
-
-            <div class="sidebar-item">
-                <p class="desktop-body-2 sidebar-title">Начало</p>
-                <p class="desktop-body-1">{{ _formatter.formatTime(practice!.start) }}</p>
-            </div>
-
-            <div class="sidebar-item">
-                <p class="desktop-body-2 sidebar-title">Конец</p>
-                <p class="desktop-body-1">{{ _formatter.formatTime(practice!.end) }}</p>
-            </div>
-
-            <div class="sidebar-item">
-                <p class="desktop-body-2 sidebar-title">Адрес</p>
-                <p class="desktop-body-1">{{ practice!.hallAddress }}</p>
-            </div>
-        </div>
     </div>
 </div>

@@ -137,7 +137,22 @@ th {
 .sidebar {
     max-width: 420px;
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
+    box-shadow: 0 8px 16px 0 rgba(35, 35, 35, 0.12);
+    background: var(--bg-white);
+    border-left: 2px solid var(--border-default);
+
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    z-index: 100;
+}
+
+.sidebar-attendance {
+    max-width: 380px;
+    width: 100%;
+    height: 100vh;
     box-shadow: 0 8px 16px 0 rgba(35, 35, 35, 0.12);
     background: var(--bg-white);
     border-left: 2px solid var(--border-default);
@@ -199,8 +214,13 @@ th {
 }
 
 .sidebar-container {
+    display: flex;
+    flex-direction: column;
+
     margin-top: 100px;
     padding-left: 24px;
+
+    height: 75%;
 
     z-index: 10;
 }
@@ -211,7 +231,7 @@ th {
     align-items: center;
 
     column-gap: 16px;
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .sidebar-title {
@@ -220,7 +240,14 @@ th {
     width: 60px;
 }
 
-.no-scroll {
-    overflow: hidden;
-    height: 100%;
+.footer-info {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+    row-gap: 12px;
+}
+
+.primary,
+.disabled {
+    width: 380px;
 }

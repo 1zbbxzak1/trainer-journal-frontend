@@ -126,21 +126,27 @@ export class ScheduleComponent implements OnInit {
 
     protected toggleSidebar(): void {
         this.isSidebarOpen = !this.isSidebarOpen;
-        this.updateScroll();
+        if (this.isSidebarOpen) {
+            this.disableBodyScroll(); // Отключаем прокрутку при открытии модалки
+        } else {
+            this.enableBodyScroll(); // Включаем прокрутку при закрытии модалки
+        }
     }
 
     protected toggleSidebarInfo(id: string, practiceDate: Date): void {
-        this.updateScroll();
         this.isSidebarInfoOpen = true;
 
         this.getInfoPractice(id, practiceDate);
         this.practiceId = id;
         this.startDate = practiceDate;
+
+        this.disableBodyScroll();
     }
 
     protected closeSidebarInfo(): void {
         this.isSidebarInfoOpen = !this.isSidebarInfoOpen;
-        this.updateScroll();
+
+        this.enableBodyScroll();
     }
 
     protected toggleSidebarAttendance(id: string, practiceDate: Date): void {
@@ -157,6 +163,7 @@ export class ScheduleComponent implements OnInit {
     protected closeSidebarAttendance(): void {
         this.isSidebarAttendanceOpen = !this.isSidebarAttendanceOpen;
 
+        this.enableBodyScroll();
     }
 
     protected getInfoPractice(id: string, practiceDate: Date): void {
@@ -395,17 +402,13 @@ export class ScheduleComponent implements OnInit {
         return date.toDateString() === today.toDateString();
     }
 
-    private updateScroll(): void {
-        const container = document.querySelector('.global-container');
-        if (!container) {
-            console.warn('global-container не найден');
-            return;
-        }
+    private disableBodyScroll(): void {
+        const body = document.querySelector('.global-container');
+        this.renderer.addClass(body, 'no-scroll'); // Добавляем класс для блокировки прокрутки
+    }
 
-        if (this.isSidebarOpen || this.isSidebarInfoOpen) {
-            container.setAttribute('style', 'overflow: hidden;');
-        } else {
-            container.removeAttribute('style');
-        }
+    private enableBodyScroll(): void {
+        const body = document.querySelector('.global-container');
+        this.renderer.removeClass(body, 'no-scroll'); // Убираем класс, восстанавливаем прокрутку
     }
 }

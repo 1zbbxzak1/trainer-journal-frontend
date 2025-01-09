@@ -68,7 +68,7 @@ export class GroupsManagerService {
         );
     }
 
-    public AddStudentToGroup(id: string, student: IAddStudentRequestModel): Observable<void> {
+    public addStudentToGroup(id: string, student: IAddStudentRequestModel): Observable<void> {
         return this._groupService.addStudentToGroup(id, student).pipe(
             catchError(err => {
                 this._errorHandler.handleError(err);

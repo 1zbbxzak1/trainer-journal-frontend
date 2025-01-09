@@ -23,6 +23,11 @@
     margin-bottom: 24px;
 }
 
+.headline-2 {
+    margin-top: 60px;
+    margin-bottom: 24px;
+}
+
 .info-container {
     display: flex;
     flex-direction: row;

@@ -8,7 +8,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 10;
+    z-index: 1000;
 
     overflow-y: scroll;
     scrollbar-width: none;
@@ -122,6 +122,10 @@ select {
 .contacts-details {
     margin-top: 8px;
     width: 780px;
+}
+
+.contact-group-margin {
+    margin-top: 24px;
 }
 
 .secondary-1-button {

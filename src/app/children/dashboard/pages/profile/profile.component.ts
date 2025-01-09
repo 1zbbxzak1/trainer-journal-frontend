@@ -1,8 +1,9 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, inject, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
 import {ProfileManagerService} from '../../../../data/services/profile/profile.manager.service';
 import {IFullInfoModel} from '../../../../data/models/profile/IFullInfo.model';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {AuthManagerService} from '../../../../data/services/auth/auth.manager.service';
+import {FormatterService} from '../../../services/formatter/formatter.service';
 
 @Component({
     selector: 'app-profile',
@@ -14,20 +15,18 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 export class ProfileComponent implements OnInit {
     protected infoMe!: IFullInfoModel | null;
     protected readonly _destroyRef: DestroyRef = inject(DestroyRef);
-    private readonly _router: Router = inject(Router);
+    protected readonly _formatter: FormatterService = inject(FormatterService);
     private readonly _cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
     private readonly _profileManagerService: ProfileManagerService = inject(ProfileManagerService);
+    private readonly _authManagerService: AuthManagerService = inject(AuthManagerService);
 
     public ngOnInit(): void {
         this.getInfoMe();
     }
 
-    protected removeCookies(): void {
-        this.deleteCookie('accessToken');
-        this.deleteCookie('loginTimestamp');
-        this._router.navigate(['/']).then((): void => {
-            this._cdr.detectChanges();
-        });
+    protected deleteCookie(): void {
+        this._authManagerService.logout();
+        this._cdr.detectChanges();
     }
 
     private getInfoMe(): void {
@@ -40,9 +39,5 @@ export class ProfileComponent implements OnInit {
                 this._cdr.detectChanges();
             }
         })
-    }
-
-    private deleteCookie(cookieName: string): void {
-        document.cookie = `${cookieName}=;`;
     }
 }

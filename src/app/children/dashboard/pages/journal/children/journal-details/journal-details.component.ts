@@ -50,8 +50,6 @@ export class JournalDetailsComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        this.loadSessions();
-
         this._activatedRoute.params.subscribe((params: Params): void => {
             this.groupId = params['id'];
 
@@ -113,8 +111,7 @@ export class JournalDetailsComponent implements OnInit {
                     this.loadGroupAttendance();
                     this._cdr.markForCheck();
                 },
-                error: (err): void => {
-                    console.error('Failed to mark attendance:', err);
+                error: (): void => {
                     this.attendance[monthKey][day] = false;
                     this._cdr.markForCheck();
                 },
@@ -127,8 +124,7 @@ export class JournalDetailsComponent implements OnInit {
                     this.loadGroupAttendance();
                     this._cdr.markForCheck();
                 },
-                error: (err): void => {
-                    console.error('Failed to unmark attendance:', err);
+                error: (): void => {
                     this.attendance[monthKey][day] = true;
                     this._cdr.markForCheck();
                 },
@@ -150,8 +146,10 @@ export class JournalDetailsComponent implements OnInit {
     }
 
     private loadSessions(): void {
-        const daysInMonth: number = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, 0).getDate();
-        this.sessions = Array.from({length: daysInMonth}, (_, i) => i + 1);
+        this.sessions = this.scheduleItems.map((item: IScheduleItemModel) => {
+            const scheduleDate: Date = new Date(item.start);
+            return scheduleDate.getDate();
+        });
     }
 
     private getGroupById(id: string | null): void {
@@ -205,6 +203,7 @@ export class JournalDetailsComponent implements OnInit {
                     this.scheduleItems = schedule;
 
                     this.updateDayBlockStatus();
+                    this.loadSessions();
 
                     this._cdr.markForCheck();
                 },

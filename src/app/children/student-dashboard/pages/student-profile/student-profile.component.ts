@@ -1,9 +1,9 @@
 import {ChangeDetectorRef, Component, DestroyRef, inject, OnInit} from '@angular/core';
 import {IFullInfoModel} from '../../../../data/models/profile/IFullInfo.model';
-import {Router} from '@angular/router';
 import {ProfileManagerService} from '../../../../data/services/profile/profile.manager.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormatterService} from '../../../services/formatter/formatter.service';
+import {AuthManagerService} from '../../../../data/services/auth/auth.manager.service';
 
 @Component({
     selector: 'app-student-profile',
@@ -14,20 +14,12 @@ export class StudentProfileComponent implements OnInit {
     protected infoMe!: IFullInfoModel | null;
     protected readonly _destroyRef: DestroyRef = inject(DestroyRef);
     protected readonly _formatter: FormatterService = inject(FormatterService);
-    private readonly _router: Router = inject(Router);
     private readonly _cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
     private readonly _profileManagerService: ProfileManagerService = inject(ProfileManagerService);
+    private readonly _authManagerService: AuthManagerService = inject(AuthManagerService);
 
     public ngOnInit(): void {
         this.getInfoMe();
-    }
-
-    protected removeCookies(): void {
-        this.deleteCookie('accessToken');
-        this.deleteCookie('loginTimestamp');
-        this._router.navigate(['/']).then((): void => {
-            this._cdr.detectChanges();
-        });
     }
 
     protected getColorForBalance(balance: number): string {
@@ -46,6 +38,11 @@ export class StudentProfileComponent implements OnInit {
         }
     }
 
+    protected deleteCookie(): void {
+        this._authManagerService.logout();
+        this._cdr.detectChanges();
+    }
+
     private getInfoMe(): void {
         this._profileManagerService.getInfoMe().pipe(
             takeUntilDestroyed(this._destroyRef)
@@ -56,9 +53,5 @@ export class StudentProfileComponent implements OnInit {
                 this._cdr.detectChanges();
             }
         })
-    }
-
-    private deleteCookie(cookieName: string): void {
-        document.cookie = `${cookieName}=;`;
     }
 }

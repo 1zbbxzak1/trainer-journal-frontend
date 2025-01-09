@@ -55,7 +55,6 @@ export class CreateStudentPopUpComponent implements OnInit {
         this.addContact();
 
         this._activatedRoute.url.subscribe(url => {
-            // Пример: проверка текущего пути (замените на свой путь)
             if (url.join('/').includes('students')) {
                 this.showGroupSelector = true; // Показываем поле для группы
             } else {
@@ -102,6 +101,7 @@ export class CreateStudentPopUpComponent implements OnInit {
 
     protected confirm(): void {
         this.createStudent();
+        this.loadGroups();
         this.confirmAction.emit();
     }
 
@@ -143,10 +143,8 @@ export class CreateStudentPopUpComponent implements OnInit {
     }
 
     private convertDateFormat(dateString: string): string {
-        // Разделение строки на компоненты: день, месяц, год
         const [day, month, year] = dateString.split('.').map(Number);
 
-        // Создание объекта Date, учтите, что месяц в JavaScript начинается с 0
         const date: Date = new Date(year, month - 1, day);
 
         // Возвращаем строку в формате ISO
@@ -159,11 +157,7 @@ export class CreateStudentPopUpComponent implements OnInit {
                 if (response && response.groups) {
                     this.groups = response.groups;
                 }
-            },
-            error: () => {
-                // Здесь можно добавить обработку ошибок
-                console.error('Не удалось загрузить группы');
-            },
+            }
         });
     }
 }

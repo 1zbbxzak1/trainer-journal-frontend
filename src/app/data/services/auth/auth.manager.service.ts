@@ -17,6 +17,9 @@ export class AuthManagerService {
     private readonly _cookieService: CookieService = inject(CookieService);
 
     public loginUser(user: IAuthRequestModel): Observable<boolean> {
+        this.removeAccessToken();
+        this.removeLoginTimestamp();
+        
         return this._authService.loginUser(user).pipe(
             map((response: IAuthResponseModel): boolean => {
                 this.setAccessToken(response.token); // Сохраняем токен в куки
@@ -95,11 +98,11 @@ export class AuthManagerService {
 
     // Методы для работы с куками
     private setAccessToken(token: string): void {
-        this._cookieService.set(environment.TOKEN_NAME, token, {expires: 1}); // Токен будет храниться 1 день
+        this._cookieService.set(environment.TOKEN_NAME, token, {expires: 1, path: '/'});
     }
 
     private removeAccessToken(): void {
-        this._cookieService.delete(environment.TOKEN_NAME);
+        this._cookieService.delete(environment.TOKEN_NAME, '/', window.location.hostname);
     }
 
     private getLoginTimestamp(): number | null {
@@ -108,10 +111,10 @@ export class AuthManagerService {
     }
 
     private setLoginTimestamp(timestamp: number): void {
-        this._cookieService.set(environment.LOGIN_TIMESTAMP_NAME, timestamp.toString(), {expires: 1}); // Время логина будет храниться 1 день
+        this._cookieService.set(environment.LOGIN_TIMESTAMP_NAME, timestamp.toString(), {expires: 1, path: '/'});
     }
 
     private removeLoginTimestamp(): void {
-        this._cookieService.delete(environment.LOGIN_TIMESTAMP_NAME);
+        this._cookieService.delete(environment.LOGIN_TIMESTAMP_NAME, '/', window.location.hostname);
     }
 }

@@ -7,7 +7,7 @@
                 <p class="desktop-headline-4">Профиль</p>
             </div>
 
-            <button (click)="removeCookies()"
+            <button (click)="deleteCookie()"
                     class="secondary-2-button desktop-secondary-button-text-active">
                 <p>Выйти из аккаунта</p>
             </button>
@@ -19,23 +19,22 @@
             <div class="desktop-headline-6 headline">Личные данные</div>
 
             <div class="info-container">
-                <p class="desktop-body-2 info-headline">Пол</p>
-                <p class="desktop-body-1">{{ infoMe?.userInfo?.gender }}</p>
-            </div>
-
-            <div class="info-container">
-                <p class="desktop-body-2 info-headline">Email</p>
-                <p class="desktop-body-1">{{ infoMe?.trainerInfo?.email || 'Отсутствует' }}</p>
-            </div>
-
-            <div class="info-container">
-                <p class="desktop-body-2 info-headline">Telegram</p>
-                <p class="desktop-body-1">{{ infoMe?.userInfo?.telegramUsername || 'Отсутствует' }}</p>
-            </div>
-
-            <div class="info-container">
                 <p class="desktop-body-2 info-headline">Телефон</p>
-                <p class="desktop-body-1">{{ infoMe?.trainerInfo?.phone || 'Отсутствует' }}</p>
+                <p class="desktop-body-1">{{ _formatter.formatPhoneNumber(infoMe!.trainerInfo!.phone!) || 'Отсутствует' }}</p>
+            </div>
+
+            <div>
+                <div class="desktop-headline-6 headline-2">Данные для входа</div>
+
+                <div class="info-container">
+                    <p class="desktop-body-2 info-headline">Логин</p>
+                    <p class="desktop-body-1">{{ infoMe?.credentials?.login }}</p>
+                </div>
+
+                <div class="info-container">
+                    <p class="desktop-body-2 info-headline">Пароль</p>
+                    <p class="desktop-body-1">{{ infoMe?.credentials?.password }}</p>
+                </div>
             </div>
         </div>
     </div>

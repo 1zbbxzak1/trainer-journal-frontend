@@ -111,7 +111,9 @@
             <div class="group-label contacts">
                 <p class="desktop-body-2">Контакты*</p>
                 <div formArrayName="contacts">
-                    <div *ngFor="let contact of contacts.controls; let i = index" [formGroupName]="i"
+                    <div *ngFor="let contact of contacts.controls; let i = index"
+                         [formGroupName]="i"
+                         [ngClass]="{'contact-group-margin': i === 1}"
                          class="contact-group">
                         <!-- ФИО -->
                         <input [ngClass]="{'input-error': isControlError('name')}"

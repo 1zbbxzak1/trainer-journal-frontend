@@ -22,6 +22,7 @@ export class PopUpGroupService {
         groupEdit: false,
         delete: false,
         add: false,
+        addStudent: false,
         create: false,
         loginDetails: false
     };

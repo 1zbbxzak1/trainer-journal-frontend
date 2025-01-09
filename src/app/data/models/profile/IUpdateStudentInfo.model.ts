@@ -5,5 +5,5 @@ export interface IUpdateStudentInfoModel {
     readonly address?: string | null,
     readonly kyu?: number | null,
     readonly birthDate?: string | null,
-    readonly contacts?: IContactsModel[],
+    readonly contacts?: IContactsModel[] | null,
 }

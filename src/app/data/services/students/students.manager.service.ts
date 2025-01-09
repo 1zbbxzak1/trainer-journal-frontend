@@ -13,7 +13,7 @@ export class StudentsManagerService {
     private readonly _studentsService: StudentsService = inject(StudentsService);
     private readonly _errorHandler: ErrorHandler = inject(ErrorHandler);
 
-    public getStudents(withGroup: boolean | null = null): Observable<IStudentItemResponseModel[]> {
+    public getStudents(withGroup: boolean): Observable<IStudentItemResponseModel[]> {
         return this._studentsService.getStudents(withGroup).pipe(
             catchError(err => {
                 this._errorHandler.handleError(err);

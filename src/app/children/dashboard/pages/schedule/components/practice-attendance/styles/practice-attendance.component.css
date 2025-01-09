@@ -1,0 +1,96 @@
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--border-default);
+    padding: 24px;
+}
+
+.close-sidebar {
+    padding: 6px;
+    width: 30px;
+    height: 30px;
+
+    border: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-container {
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 25px;
+
+    height: 78%;
+
+    z-index: 10;
+    overflow-y: auto;
+}
+
+.sidebar-item-group {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
+    column-gap: 16px;
+    padding-top: 20px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+
+    border-bottom: 2px dashed var(--border-default);
+
+    position: sticky; /* Закрепляем этот блок */
+    top: 0; /* Чтобы блок оставался на верху */
+    background-color: white; /* Добавим фон, чтобы блок не терял видимость при прокрутке */
+    z-index: 1;
+}
+
+.sidebar-title-group {
+    color: var(--text-secondary-grey);
+    align-items: center;
+
+    padding-left: 24px;
+    padding-right: 18px;
+
+    width: 280px;
+}
+
+.sidebar-title {
+    color: var(--text-secondary-grey);
+
+    width: 60px;
+}
+
+.student-attendance {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding-left: 24px;
+    padding-right: 24px;
+
+    margin-bottom: 20px;
+}
+
+.checkbox-attendance {
+    top: 0;
+    margin-right: 0;
+    border: 1px solid var(--border-hover);
+}
+
+.footer-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: auto;
+    column-gap: 12px;
+}
+
+.primary,
+.disabled {
+    width: 160px;
+}

@@ -1,0 +1,31 @@
+<div class="sidebar-header">
+    <p class="desktop-headline-6">Отметка посещаемости</p>
+    <button (click)="closeModal()" class="tertiary-button close-sidebar">
+        <img alt="Закрыть" height="24" ngSrc="assets/x-close.svg" width="24">
+    </button>
+</div>
+
+<div class="sidebar-container">
+    <div class="sidebar-item-group">
+        <p class="desktop-body-2 sidebar-title-group">{{ practice!.group.name }}</p>
+        <img alt="иконка" height="24" ngSrc="assets/book-open.svg" width="24">
+    </div>
+    
+    <div *ngFor="let student of students; let i = index" class="student-attendance">
+        <p class="desktop-body-1">{{ _formatter.formatFullName(student.fullName) }}</p>
+        <input (change)="toggleAttendance(i, $event)"
+               [checked]="attendance[student.username] || false"
+               class="custom-checkbox-mini checkbox-attendance"
+               type="checkbox"/>
+    </div>
+</div>
+
+<div class="footer-info">
+    <button (click)="saveAttendance()" class="primary-button desktop-primary-button-text-active primary">
+        <img alt="сохранить" height="14" ngSrc="assets/accept-icon.svg" width="14">
+    </button>
+
+    <button (click)="cancelAttendance()" class="secondary-1-button desktop-secondary-button-text-active disabled">
+        <img alt="отмена" height="14" ngSrc="assets/x-cancel.svg" width="14">
+    </button>
+</div>

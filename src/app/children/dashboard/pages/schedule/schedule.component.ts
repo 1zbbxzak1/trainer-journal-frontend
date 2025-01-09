@@ -44,6 +44,8 @@ export class ScheduleComponent implements OnInit {
     protected startDate: Date = new Date();
     protected isSidebarOpen = false;
     protected isSidebarInfoOpen = false;
+    protected isSidebarAttendanceOpen = false;
+
     protected hallAddress = null;
     protected price = null;
     protected scheduleData: IScheduleItemModel[] = [];
@@ -139,6 +141,22 @@ export class ScheduleComponent implements OnInit {
     protected closeSidebarInfo(): void {
         this.isSidebarInfoOpen = !this.isSidebarInfoOpen;
         this.updateScroll();
+    }
+
+    protected toggleSidebarAttendance(id: string, practiceDate: Date): void {
+        this.isSidebarInfoOpen = false;
+        this.isSidebarAttendanceOpen = true;
+
+        this.getInfoPractice(id, practiceDate);
+        this.practiceId = id;
+        this.startDate = practiceDate;
+
+        this.disableBodyScroll();
+    }
+
+    protected closeSidebarAttendance(): void {
+        this.isSidebarAttendanceOpen = !this.isSidebarAttendanceOpen;
+
     }
 
     protected getInfoPractice(id: string, practiceDate: Date): void {

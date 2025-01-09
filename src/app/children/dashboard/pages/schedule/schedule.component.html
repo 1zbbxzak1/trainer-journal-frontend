@@ -146,5 +146,12 @@
         </app-practice-info>
     </div>
 
+    <div *ngIf="isSidebarAttendanceOpen" class="sidebar-attendance">
+        <app-practice-attendance
+            (close)="closeSidebarAttendance()"
+            [practiceId]="practiceId"
+            [practice]="practice"
+            [startDate]="startDate">
+        </app-practice-attendance>
     </div>
 </div>

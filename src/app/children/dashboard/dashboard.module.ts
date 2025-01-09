@@ -30,6 +30,9 @@ import {
     UpdateStudentInfoComponent
 } from './pages/groups/children/student-profile/components/update-student-info/update-student-info.component';
 import {PracticeInfoComponent} from './pages/schedule/components/practice-info/practice-info.component';
+import {
+    PracticeAttendanceComponent
+} from './pages/schedule/components/practice-attendance/practice-attendance.component';
 
 
 @NgModule({
@@ -46,6 +49,7 @@ import {PracticeInfoComponent} from './pages/schedule/components/practice-info/p
 
         ScheduleComponent,
         PracticeInfoComponent,
+        PracticeAttendanceComponent,
 
         ChecksComponent,
         ChecksDetailsComponent,

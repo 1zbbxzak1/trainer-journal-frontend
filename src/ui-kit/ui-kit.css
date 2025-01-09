@@ -421,8 +421,13 @@ body::-webkit-scrollbar-button {
 
 .tertiary-button-disabled {
     color: var(--text-disable-light-grey);
+    cursor: default;
+
+    border: 1px solid var(--border-default);
     border-radius: 10px;
-    cursor: pointer;
+    padding: 12px 32px;
+
+    background: none;
 }
 
 .primary-button,

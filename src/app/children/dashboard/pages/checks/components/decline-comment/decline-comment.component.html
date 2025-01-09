@@ -1,0 +1,29 @@
+<div *ngIf="isVisible" class="modal-overlay">
+    <div (click)="$event.stopPropagation()" class="modal-container">
+        <button (click)="closeModal()" class="tertiary-button-icon x-close">
+            <img alt="Закрыть" height="24" ngSrc="../../../../../../../assets/x-close.svg" width="24">
+        </button>
+        <div class="modal-header">
+            <p class="desktop-headline-5">Причина отказа</p>
+        </div>
+        <form [formGroup]="formGroupReceipt" class="modal-content">
+            <div class="group-label price">
+                <p class="desktop-body-2">Комментарий</p>
+                <textarea
+                    [ngClass]="{'input-error': isControlError('comment')}"
+                    class="input-default"
+                    formControlName="comment"
+                    placeholder="Введите">
+                </textarea>
+            </div>
+        </form>
+        <div class="modal-footer">
+            <button (click)="confirm()" class="desktop-primary-button-text-active primary-button confirm">
+                Отклонить
+            </button>
+            <button (click)="closeModal()" class="desktop-secondary-button-text-active tertiary-button cancel">
+                Отменить
+            </button>
+        </div>
+    </div>
+</div>

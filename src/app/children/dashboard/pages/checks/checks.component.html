@@ -1,1 +1,36 @@
-<app-sidebar/>
+<div class="global-container">
+    <app-sidebar/>
+
+    <div class="second-container">
+        <div class="header">
+            <p class="desktop-headline-4">Чеки</p>
+        </div>
+
+        <div *ngIf="groups && groups.groups && groups.groups.length > 0; else noGroups">
+            <table class="table-groups">
+                <thead>
+                <tr>
+                    <th class="desktop-headline-6 name">Название</th>
+                    <th class="desktop-headline-6">Количество учеников</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr (click)="navigateToChecksDetails(group.id)" *ngFor="let group of groups?.groups"
+                    class="stroke-table-groups">
+                    <td class="table-groups-name">
+                        <div [style.background-color]="group.hexColor" class="ellipse"></div>
+                        <p class="desktop-body-1">{{ group.name }}</p>
+                    </td>
+                    <td class="desktop-body-1">{{ group.studentsCount }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <ng-template #noGroups>
+            <div class="no-groups">
+                <p class="desktop-body-1 second-text">Создайте группу для начала работы</p>
+            </div>
+        </ng-template>
+    </div>
+</div>

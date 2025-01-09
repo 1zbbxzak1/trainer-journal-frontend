@@ -1,0 +1,140 @@
+.second-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+
+    gap: 16px;
+}
+
+.ellipse {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 100%;
+
+    margin-right: 16px;
+}
+
+.input-container {
+    position: relative;
+}
+
+.input-default.search {
+    max-width: 340px;
+    width: 100%;
+    padding: 16px 20px;
+}
+
+.search {
+    margin-top: 48px;
+    margin-bottom: 20px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 20px;
+    top: 52%;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.input-default:focus + .search-icon,
+.input-default:not(:placeholder-shown) + .search-icon {
+    opacity: 0;
+}
+
+.table-container-checks {
+    display: flex;
+    column-gap: 28px;
+
+    height: 100%;
+    width: 100%;
+}
+
+.table-container-checks table {
+    border-spacing: 0 12px;
+    border-collapse: separate;
+}
+
+.table-container-checks th {
+    text-align: left;
+
+    padding-top: 14px;
+    padding-bottom: 14px;
+
+    border-bottom: 2px solid var(--border-default);
+}
+
+.table-container-checks td {
+    text-align: left;
+
+    padding-top: 14px;
+    padding-bottom: 14px;
+
+    height: 36px;
+}
+
+.table-container-checks table .sort {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 6px 16px;
+}
+
+.table-container-checks table .sort:hover {
+    background: var(--bg-grey);
+    border-radius: 8px;
+}
+
+.table-container-checks th:nth-child(4),
+.table-container-checks td:nth-child(4),
+.table-container-checks th:nth-child(5),
+.table-container-checks td:nth-child(5) {
+    text-align: right;
+}
+
+.table-container-checks th:nth-child(1),
+.table-container-checks td:nth-child(1) {
+    width: 490px;
+    padding-left: 12px;
+}
+
+.table-container-checks th:nth-child(2),
+.table-container-checks td:nth-child(2) {
+    width: 179px;
+    text-align: center;
+}
+
+.table-container-checks td:nth-child(3) {
+    width: 330px;
+}
+
+.table-container-checks th:nth-child(4),
+.table-container-checks td:nth-child(4) {
+    width: 270px;
+}
+
+.table-container-checks th:nth-child(5),
+.table-container-checks td:nth-child(5) {
+    width: 301px;
+    padding-right: 12px;
+}
+
+.table-container-checks td:nth-child(5) {
+    border-radius: 10px;
+}
+
+.check-img {
+    border-radius: 57px;
+}
+
+.status {
+    border-radius: 36px;
+    padding: 2px 16px;
+    width: 75px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

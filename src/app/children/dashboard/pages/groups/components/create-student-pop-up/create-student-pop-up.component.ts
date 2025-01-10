@@ -89,9 +89,9 @@ export class CreateStudentPopUpComponent implements OnInit {
         this.isDropdownOpen = !this.isDropdownOpen;
     }
 
-    protected selectGroup(group: IGroupItemModel): void {
+    protected selectGroup(group: IGroupItemModel | null): void {
         this.selectedGroup = group;
-        this.groupsId = [group.id];
+        this.groupsId = [group?.id];
         this.isDropdownOpen = false;
     }
 

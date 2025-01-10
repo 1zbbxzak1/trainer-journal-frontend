@@ -5,6 +5,12 @@ import {FormatterService} from '../../../services/formatter/formatter.service';
 import {ScheduleManagerService} from '../../../../data/services/schedule/schedule.manager.service';
 import {PracticeManagerService} from '../../../../data/services/schedule/practice.manager.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {ColorGroup, ColorKey, ColorSchedule} from '../../../dashboard/pages/schedule/types/types-color';
+import {ProfileManagerService} from '../../../../data/services/profile/profile.manager.service';
+import {IFullInfoModel} from '../../../../data/models/profile/IFullInfo.model';
+import {StudentsManagerService} from '../../../../data/services/students/students.manager.service';
+import {IGroupResponseModel} from '../../../../data/response-models/groups/IGroup.response-model';
+import {forkJoin} from 'rxjs';
 
 @Component({
     selector: 'app-student-schedule',
@@ -15,32 +21,33 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StudentScheduleComponent implements OnInit {
-    protected username = '';
-    protected groupId = '';
+    protected groupsId: string[] = [];
     protected practice: IPracticeModel | null = null;
     protected currentWeek = '';
     protected weekDays: { date: Date, day: string, weekDay: string, isToday: boolean }[] = [];
     protected timeSlots: string[] = [];
-
     protected isSidebarInfoOpen = false;
     protected hallAddress = null;
     protected price = null;
     protected scheduleData: IScheduleItemModel[] = [];
     protected readonly _formatter: FormatterService = inject(FormatterService);
+    private colorSchedule = new ColorSchedule();
     private currentDate: Date = new Date();
     private readonly _destroyRef: DestroyRef = inject(DestroyRef);
     private readonly _cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
+    private readonly _profileManagerService: ProfileManagerService = inject(ProfileManagerService);
+    private readonly _studentManagerService: StudentsManagerService = inject(StudentsManagerService);
     private readonly _scheduleManagerService: ScheduleManagerService = inject(ScheduleManagerService);
     private readonly _practicesManagerService: PracticeManagerService = inject(PracticeManagerService);
 
     constructor() {
+        this.getInfoStudent();
     }
 
     public ngOnInit(): void {
         this.initializeTimeSlots();
         this.initializeWeekDays();
         this.updateWeekDisplay();
-        this.loadSchedule();
     }
 
     protected toggleSidebarInfo(id: string, practiceDate: Date): void {
@@ -99,15 +106,37 @@ export class StudentScheduleComponent implements OnInit {
 
                 const duration = this.calculateDuration(startTime, endTime);
 
-                console.log(duration);
+                const color = item.colorKey;
 
                 return {
                     ...item,
                     startTime,
                     endTime,
-                    duration
+                    duration,
+                    color
                 };
             });
+    }
+
+    protected getColorForSchedule(name: string | null | undefined): ColorGroup {
+        if (!name) {
+            // Default color for invalid names
+            return this.colorSchedule.colorGroups.blue;
+        }
+
+        // Normalize and enrich the input
+        const enrichedName = name.toLowerCase().replace(/[^a-zа-яё0-9]/gi, '');
+
+        const colorKeys = Object.keys(this.colorSchedule.colorGroups) as ColorKey[];
+        const sortedKeys = [...colorKeys].sort();
+
+        // Generate a unique hash for the enriched name
+        const hash = this.generateHash(enrichedName);
+
+        // Use the hash value to determine the index
+        const index = hash % sortedKeys.length;
+
+        return this.colorSchedule.colorGroups[sortedKeys[index]];
     }
 
     protected calculateTop(startTime: Date): number {
@@ -133,6 +162,15 @@ export class StudentScheduleComponent implements OnInit {
         return top;
     }
 
+    private generateHash(input: string): number {
+        let hash = 0;
+        for (let i = 0; i < input.length; i++) {
+            hash = (hash << 5) - hash + input.charCodeAt(i) * (i + 1); // Multiply by position
+            hash |= 0; // Ensure 32-bit integer
+        }
+        return Math.abs(hash);
+    }
+
     private parseTime(slot: string, date: Date): Date {
         const [hours, minutes] = slot.split(':').map(Number);
         const result = new Date(date);
@@ -153,8 +191,10 @@ export class StudentScheduleComponent implements OnInit {
             return 41;
         } else if (durationInMinutes === 75) {
             return 51;
-        } else if (durationInMinutes > 60 && durationInMinutes <= 90) {
+        } else if (durationInMinutes > 60 && durationInMinutes < 90) {
             return 62;
+        } else if (durationInMinutes === 90) {
+            return 70;
         } else if (durationInMinutes > 90 && durationInMinutes < 120) {
             return 72;
         } else if (durationInMinutes == 120) {
@@ -220,18 +260,58 @@ export class StudentScheduleComponent implements OnInit {
     private loadSchedule(): void {
         const startOfWeek: Date = this.getStartOfWeek(this.currentDate);
 
-        this._scheduleManagerService.getSchedule(startOfWeek, 1).pipe(
+        // Создаём массив Observable для каждого groupId
+        const scheduleObservables = this.groupsId.map(groupId =>
+            this._scheduleManagerService.getGroupSchedule(groupId, startOfWeek, 1)
+        );
+
+        // Используем forkJoin для объединения результатов
+        forkJoin(scheduleObservables).pipe(
             takeUntilDestroyed(this._destroyRef)
         ).subscribe({
-            next: (schedule: IScheduleItemModel[]): void => {
-                this.scheduleData = schedule;
+            next: (schedules: IScheduleItemModel[][]): void => {
+                // Объединяем все полученные расписания в один массив
+                this.scheduleData = schedules.flat().map((item) => ({
+                    ...item,
+                    colorKey: this.getColorForSchedule(item.groupName), // Присваиваем цвет
+                }));
 
                 this.initializeTimeSlots();
 
                 this._cdr.detectChanges();
-
-                console.log(this.scheduleData);
             },
+            error: (err) => {
+                console.error('Failed to load schedules', err);
+            }
+        });
+    }
+
+    private getInfoStudent(): void {
+        this._profileManagerService.getInfoMe().pipe(
+            takeUntilDestroyed(this._destroyRef)
+        ).subscribe({
+            next: (student: IFullInfoModel): void => {
+
+                this.getGroups(student.username);
+
+                this._cdr.detectChanges();
+            }
+        });
+    }
+
+    private getGroups(username: string): void {
+        this._studentManagerService.getStudentGroups(username).pipe(
+            takeUntilDestroyed(this._destroyRef)
+        ).subscribe({
+            next: (groups: IGroupResponseModel[]): void => {
+                for (const group of groups) {
+                    this.groupsId.push(group.id);
+                }
+
+                this.loadSchedule();
+
+                this._cdr.detectChanges();
+            }
         });
     }
 

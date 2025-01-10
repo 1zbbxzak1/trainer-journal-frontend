@@ -58,6 +58,7 @@
 <app-check-info
     #checkInfoComponent
     (close)="closeModalInfo()"
+    (confirmAction)="getReceipts(this.groupId)"
     (visibleDecline)="openModalComment()"
     (visibleEdit)="openModalEdit()"
     [amount]="this.amount"

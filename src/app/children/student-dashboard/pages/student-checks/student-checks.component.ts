@@ -81,29 +81,39 @@ export class StudentChecksComponent implements OnInit {
     }
 
 
-    protected getBackgroundStatus(status: boolean): string {
-        if (!status) {
-            return "#FFEEC2";
-        } else if (status) {
-            return "#C7F9CC";
-        } else {
+    protected getBackgroundStatus(check: IPaymentReceiptResponseModel, status: boolean): string {
+        if (check.isVerified && !status) {
             return "#FFEBEB";
+        } else if (check.isVerified && status) {
+            return "#C7F9CC";
+        } else if (!check.isVerified && !status) {
+            return "#FFEEC2";
+        } else {
+            return '';
         }
     }
 
-    protected getTitleStatus(status: boolean): string {
-        if (!status) {
+    protected getTitleStatus(check: IPaymentReceiptResponseModel, status: boolean): string {
+        if (check.isVerified && !status) {
+            return "Отклонен";
+        } else if (check.isVerified && status) {
+            return "Принят";
+        } else if (!check.isVerified && !status) {
             return "На проверке";
         } else {
-            return "Проверено";
+            return '';
         }
     }
 
-    protected getTitleStatusStyle(status: boolean): string {
-        if (!status) {
+    protected getTitleStatusStyle(check: IPaymentReceiptResponseModel, status: boolean): string {
+        if (check.isVerified && !status) {
+            return "#f93232";
+        } else if (check.isVerified && status) {
+            return "#439f6e";
+        } else if (!check.isVerified && !status) {
             return "#fcb73e";
         } else {
-            return "#439f6e";
+            return '';
         }
     }
 

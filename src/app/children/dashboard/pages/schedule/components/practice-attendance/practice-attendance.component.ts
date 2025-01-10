@@ -69,14 +69,12 @@ export class PracticeAttendanceComponent implements OnChanges {
 
         this._journalManagerService.markPracticeAttendance(this.practiceId, attendanceRequest).subscribe({
             next: (): void => {
-                console.log('Attendance updated successfully');
                 // Обновление оригинального состояния после успешного сохранения
                 this.originalAttendance = {...this.attendance};
                 this._cdr.markForCheck();
-            },
-            error: (): void => {
-                console.log('Error updating attendance');
-            },
+
+                this.closeModal();
+            }
         });
     }
 

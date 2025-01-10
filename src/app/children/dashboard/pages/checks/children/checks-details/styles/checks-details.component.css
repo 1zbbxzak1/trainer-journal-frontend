@@ -121,10 +121,6 @@
     padding-right: 12px;
 }
 
-.table-container-checks td:nth-child(5) {
-    border-radius: 10px;
-}
-
 .check-img {
     border-radius: 57px;
 }

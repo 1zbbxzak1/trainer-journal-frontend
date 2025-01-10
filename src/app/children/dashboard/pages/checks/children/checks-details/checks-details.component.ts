@@ -229,11 +229,7 @@ export class ChecksDetailsComponent {
 
         this._checksManagerService.verifyReceipt(id, data).pipe(
             takeUntilDestroyed(this._destroyRef),
-        ).subscribe({
-            next: (): void => {
-                console.log('yes');
-            }
-        });
+        ).subscribe();
     }
 
     protected refreshReceipts(id: string): void {
@@ -246,8 +242,6 @@ export class ChecksDetailsComponent {
         ).subscribe({
             next: (receipts: IPaymentReceiptResponseModel[]): void => {
                 this.checks = receipts;
-
-                console.log(this.checks);
 
                 this._cdr.detectChanges();
             }

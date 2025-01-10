@@ -38,9 +38,17 @@
                         <div (click)="toggleSidebarInfo(item.id, item.startTime)"
                              *ngFor="let item of getScheduleForSlot(day.date, slot)"
                              [ngStyle]="{'top': calculateTop(item.startTime) + 'px', 'height': item.duration + 'px'}"
+                             [style.background]="item.colorKey.background"
+                             [style.border-left-color]="item.colorKey.sideRectangle"
                              class="schedule-item">
-                            <p class="time">{{ _formatter.formatTime(item.startTime) + " - " + _formatter.formatTime(item.endTime) }}</p>
-                            <p class="name-team">{{ item.groupName }}</p>
+                            <p [style.color]="item.colorKey.time"
+                               class="time">
+                                {{ _formatter.formatTime(item.startTime) + " - " + _formatter.formatTime(item.endTime) }}
+                            </p>
+                            <p [style.color]="item.colorKey.nameTeam"
+                               class="name-team">
+                                {{ item.groupName }}
+                            </p>
                         </div>
                     </td>
                 </tr>

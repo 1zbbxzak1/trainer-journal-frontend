@@ -58,9 +58,9 @@
                              width="54"/>
                     </td>
                     <td class="desktop-description">
-                        <div [style.background-color]="getBackgroundStatus(check.isAccepted)"
-                             [style.color]="getTitleStatusStyle(check.isAccepted)" class="status">
-                            {{ getTitleStatus(check.isAccepted) }}
+                        <div [style.background-color]="getBackgroundStatus(check, check.isAccepted)"
+                             [style.color]="getTitleStatusStyle(check, check.isAccepted)" class="status">
+                            {{ getTitleStatus(check, check.isAccepted) }}
                         </div>
                     </td>
                     <td class="desktop-body-1">{{ check.amount }}</td>

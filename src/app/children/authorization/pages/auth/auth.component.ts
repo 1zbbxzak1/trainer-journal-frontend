@@ -80,18 +80,6 @@ export class AuthComponent implements OnInit {
         return this._controlValidator.isControlError(controlName);
     }
 
-    protected isControlRequired(controlName: string): boolean {
-        return this._controlValidator.isControlRequired(controlName);
-    }
-
-    protected isCorrectUserName(controlName: string): boolean {
-        return this._controlValidator.isCorrectUserName(controlName);
-    }
-
-    protected isPasswordInvalid(controlName: string): boolean {
-        return this._controlValidator.isPasswordInvalid(controlName);
-    }
-
     protected togglePasswordVisibility(): void {
         this.passwordVisible = !this.passwordVisible;
     }

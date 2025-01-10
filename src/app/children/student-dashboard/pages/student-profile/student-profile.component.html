@@ -59,7 +59,7 @@
                     </div>
                 </div>
 
-                <div class="info-container contacts">
+                <div *ngIf="infoMe!.studentInfo!.contacts[1]" class="info-container contacts">
                     <p class="desktop-body-2 info-headline">Контакт 2</p>
                     <div class="desktop-body-1">
                         <p>{{ _formatter.formatPhoneNumber(infoMe!.studentInfo!.contacts[1]!.phone) || '-' }}</p>

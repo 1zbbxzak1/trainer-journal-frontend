@@ -16,7 +16,6 @@ _Developed for the UrFU Project Practice 2024 (5th semester)_
 - CSS
 - TypeScript
 - Angular
-- Bryntum
 
 **Deployments:** Docker
 

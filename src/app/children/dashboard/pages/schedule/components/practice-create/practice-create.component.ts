@@ -6,7 +6,6 @@ import {PracticeManagerService} from '../../../../../../data/services/schedule/p
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {IGetGroupResponseModel} from '../../../../../../data/response-models/groups/IGetGroup.response-model';
 import {GroupsManagerService} from '../../../../../../data/services/groups/groups.manager.service';
-import {FormatterService} from '../../../../../services/formatter/formatter.service';
 import {group} from '@angular/animations';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 
@@ -46,7 +45,6 @@ export class PracticeCreateComponent {
     constructor(
         private readonly _cdr: ChangeDetectorRef,
         private readonly _destroyRef: DestroyRef,
-        private readonly _formatter: FormatterService,
         private readonly _groupsManagerService: GroupsManagerService,
         private readonly practiceManagerService: PracticeManagerService,
     ) {

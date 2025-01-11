@@ -24,71 +24,171 @@
                 <p [style.color]="getColorForBalance(infoUser!.studentInfo!.balance)">{{ infoUser?.studentInfo?.balance + " ₽" }}</p>
             </div>
 
-            <div class="grid-info">
-                <div class="info">
-                    <div class="desktop-headline-6 headline">Личные данные</div>
+            <div class="profile">
+                <div class="grid-info">
+                    <div class="info">
+                        <div class="desktop-headline-6 headline">Личные данные</div>
 
-                    <div class="info-container">
-                        <p class="desktop-body-2 info-headline">Пол</p>
-                        <p class="desktop-body-1">{{ getGender(infoUser!.userInfo!.gender) }}</p>
-                    </div>
+                        <div class="info-container">
+                            <p class="desktop-body-2 info-headline">Пол</p>
+                            <p class="desktop-body-1">{{ getGender(infoUser!.userInfo!.gender) }}</p>
+                        </div>
 
-                    <div class="info-container">
-                        <p class="desktop-body-2 info-headline">Дата рождения</p>
-                        <p class="desktop-body-1">{{ _formatter.formatBirthDate(infoUser!.studentInfo!.birthDate) }}</p>
-                    </div>
+                        <div class="info-container">
+                            <p class="desktop-body-2 info-headline">Дата рождения</p>
+                            <p class="desktop-body-1">{{ _formatter.formatBirthDate(infoUser!.studentInfo!.birthDate) }}</p>
+                        </div>
 
-                    <div class="info-container">
-                        <p class="desktop-body-2 info-headline">Возраст</p>
-                        <p class="desktop-body-1">{{ infoUser?.studentInfo?.age }}</p>
-                    </div>
+                        <div class="info-container">
+                            <p class="desktop-body-2 info-headline">Возраст</p>
+                            <p class="desktop-body-1">{{ infoUser?.studentInfo?.age }}</p>
+                        </div>
 
-                    <div class="info-container">
-                        <p class="desktop-body-2 info-headline">Класс</p>
-                        <p class="desktop-body-1">{{ infoUser?.studentInfo?.schoolGrade }}</p>
-                    </div>
+                        <div class="info-container">
+                            <p class="desktop-body-2 info-headline">Класс</p>
+                            <p class="desktop-body-1">{{ infoUser?.studentInfo?.schoolGrade }}</p>
+                        </div>
 
-                    <div class="info-container">
-                        <p class="desktop-body-2 info-headline">Адрес</p>
-                        <p class="desktop-body-1">{{ infoUser?.studentInfo?.address }}</p>
-                    </div>
+                        <div class="info-container">
+                            <p class="desktop-body-2 info-headline">Адрес</p>
+                            <p class="desktop-body-1">{{ infoUser?.studentInfo?.address }}</p>
+                        </div>
 
-                    <div class="info-container contacts">
-                        <p class="desktop-body-2 info-headline">Контакт 1</p>
-                        <div class="desktop-body-1">
-                            <p>{{ _formatter.formatPhoneNumber(infoUser!.studentInfo!.contacts[0]!.phone) }}</p>
-                            <p class="desktop-body-2">{{ infoUser!.studentInfo!.contacts[0]!.relation }}
-                                · {{ infoUser!.studentInfo!.contacts[0]!.name }}</p>
+                        <div class="info-container contacts">
+                            <p class="desktop-body-2 info-headline">Контакт 1</p>
+                            <div class="desktop-body-1">
+                                <p>{{ _formatter.formatPhoneNumber(infoUser!.studentInfo!.contacts[0]!.phone) }}</p>
+                                <p class="desktop-body-2">{{ infoUser!.studentInfo!.contacts[0]!.relation }}
+                                    · {{ infoUser!.studentInfo!.contacts[0]!.name }}</p>
+                            </div>
+                        </div>
+
+                        <div *ngIf="infoUser!.studentInfo!.contacts[1]" class="info-container contacts">
+                            <p class="desktop-body-2 info-headline">Контакт 2</p>
+                            <div class="desktop-body-1">
+                                <p>{{ _formatter.formatPhoneNumber(infoUser!.studentInfo!.contacts[1]!.phone) || '-' }}</p>
+                                <p class="desktop-body-2">{{ infoUser!.studentInfo!.contacts[1]!.relation || '-' }}
+                                    · {{ infoUser!.studentInfo!.contacts[1]!.name || '-' }}</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div *ngIf="infoUser!.studentInfo!.contacts[1]" class="info-container contacts">
-                        <p class="desktop-body-2 info-headline">Контакт 2</p>
-                        <div class="desktop-body-1">
-                            <p>{{ _formatter.formatPhoneNumber(infoUser!.studentInfo!.contacts[1]!.phone) || '-' }}</p>
-                            <p class="desktop-body-2">{{ infoUser!.studentInfo!.contacts[1]!.relation || '-' }}
-                                · {{ infoUser!.studentInfo!.contacts[1]!.name || '-' }}</p>
+                    <div class="info">
+                        <div class="desktop-headline-6 headline">Данные для входа</div>
+
+                        <div class="info-container">
+                            <p class="desktop-body-2 info-headline">Логин</p>
+                            <p class="desktop-body-1">{{ infoUser?.credentials?.login }}</p>
+                        </div>
+
+                        <div class="info-container">
+                            <p class="desktop-body-2 info-headline">Пароль</p>
+                            <p class="desktop-body-1">{{ infoUser?.credentials?.password }}</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="info">
-                    <div class="desktop-headline-6 headline">Данные для входа</div>
+                <div>
+                    <div class="info">
+                        <div class="desktop-headline-6 headline">История посещений</div>
 
-                    <div class="info-container">
-                        <p class="desktop-body-2 info-headline">Логин</p>
-                        <p class="desktop-body-1">{{ infoUser?.credentials?.login }}</p>
+                        <div class="button-week">
+                            <button (click)="prevMonth()" class="secondary-2-button left">
+                                <img alt="назад" height="24" ngSrc="assets/chevron-left.svg" width="24">
+                            </button>
+
+                            <button (click)="nextMonth()" class="secondary-2-button right">
+                                <img alt="вперед" height="24" ngSrc="assets/chevron-right.svg" width="24">
+                            </button>
+
+                            <p class="desktop-body-1">{{ currentMonth }}</p>
+
+                            <div class="count-practice">
+                                <p class="desktop-body-2">Кол-во занятий за месяц:</p>
+                                <p class="desktop-headline-6">{{ countPractice }}</p>
+                            </div>
+                        </div>
+
+                        <div class="table-container-first">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th class="mobile-headline-5 desc">Пн</th>
+                                    <th class="mobile-headline-5 desc">Вт</th>
+                                    <th class="mobile-headline-5 desc">Ср</th>
+                                    <th class="mobile-headline-5 desc">Чт</th>
+                                    <th class="mobile-headline-5 desc">Пт</th>
+                                    <th class="mobile-headline-5 desc">Сб</th>
+                                    <th class="mobile-headline-5 desc">Вс</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td *ngFor="let day of ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']"
+                                        class="desktop-body-1 tr-table">
+                                        <div *ngIf="sessions[day]" class="days">
+                                            <p *ngFor="let date of sessions[day]"
+                                               [style.background]="getDayBackground(day, date)"
+                                               [style.color]="getDayTitleStyle(day, date)"
+                                               class="desc-day"
+                                            >
+                                                {{ date }}
+                                            </p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="desc-days">
+                            <div class="desc-days-item">
+                                <p class="title-item-1">Число</p>
+                                <p class="desc-item">Посетил</p>
+                            </div>
+
+                            <div class="desc-days-item">
+                                <p class="title-item-2">Число</p>
+                                <p class="desc-item">Пропустил</p>
+                            </div>
+
+                            <div class="desc-days-item">
+                                <p class="title-item-3">Число</p>
+                                <p class="desc-item">Не прошло</p>
+                            </div>
+                        </div>
+
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th class="mobile-headline-5 desc">Баланс на<br/>начало месяца</th>
+                                    <th class="mobile-headline-5 desc">
+                                        <p>Списано</p>
+                                        <p class="desktop-description desc">Посещено</p>
+                                    </th>
+                                    <th class="mobile-headline-5 desc">К оплате</th>
+                                    <th class="mobile-headline-5 desc">Зачислено</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="desktop-body-1">{{ balanceReport?.startBalance }}</td>
+                                    <td class="desktop-body-1">{{ balanceReport?.expenses }}</td>
+                                    <td class="desktop-body-1">{{ infoUser?.studentInfo?.balance }}</td>
+                                    <td class="desktop-body-1">{{ balanceReport?.payments }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
-                    <div class="info-container">
-                        <p class="desktop-body-2 info-headline">Пароль</p>
-                        <p class="desktop-body-1">{{ infoUser?.credentials?.password }}</p>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <app-update-student-info
     (close)="closeModal()"

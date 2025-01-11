@@ -44,8 +44,7 @@
 .table-container th {
     text-align: right;
 
-    padding-top: 14px;
-    padding-bottom: 14px;
+    padding: 14px 20px;
 
     border-bottom: 2px solid var(--border-default);
 }

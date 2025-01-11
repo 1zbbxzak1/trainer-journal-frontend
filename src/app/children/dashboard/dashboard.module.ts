@@ -34,6 +34,7 @@ import {
     PracticeAttendanceComponent
 } from './pages/schedule/components/practice-attendance/practice-attendance.component';
 import {LoadingComponent} from './components/loading/loading.component';
+import {PracticeCreateComponent} from './pages/schedule/components/practice-create/practice-create.component';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import {LoadingComponent} from './components/loading/loading.component';
         StudentsComponent,
 
         ScheduleComponent,
+        PracticeCreateComponent,
         PracticeInfoComponent,
         PracticeAttendanceComponent,
 

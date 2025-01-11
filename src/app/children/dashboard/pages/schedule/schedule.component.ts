@@ -8,14 +8,9 @@ import {
     Renderer2
 } from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {IGetGroupResponseModel} from '../../../../data/response-models/groups/IGetGroup.response-model';
-import {GroupsManagerService} from '../../../../data/services/groups/groups.manager.service';
 import {ScheduleManagerService} from '../../../../data/services/schedule/schedule.manager.service';
 import {IScheduleItemModel} from '../../../../data/models/schedule/IScheduleItem.model';
 import {PracticeManagerService} from '../../../../data/services/schedule/practice.manager.service';
-import {
-    ICreateSinglePracticeRequestModel
-} from '../../../../data/request-models/schedule/ICreateSinglePractice.request-model';
 import {IPracticeModel} from '../../../../data/models/schedule/IPractice.model';
 import {FormatterService} from '../../../services/formatter/formatter.service';
 import {ColorGroup, ColorKey, ColorSchedule} from './types/types-color';
@@ -30,37 +25,26 @@ import {ColorGroup, ColorKey, ColorSchedule} from './types/types-color';
 })
 export class ScheduleComponent implements OnInit {
     protected isLoading: boolean = true;
-    protected groups: IGetGroupResponseModel | null = null;
     protected practice: IPracticeModel | null = null;
-    protected selectedGroup: string | null = null;
-    protected currentWeek = '';
+    protected currentWeek: string = '';
     protected weekDays: { date: Date, day: string, weekDay: string, isToday: boolean }[] = [];
-    protected selectedDay: { date: Date, day: string, weekDay: string, isToday: boolean } | null = null;
     protected timeSlots: string[] = [];
-    protected sessionStartTime = '';
-    protected sessionEndTime = '';
-    protected isAddingSession = false;
-
     protected practiceId: string = '';
     protected startDate: Date = new Date();
-    protected isSidebarOpen = false;
-    protected isSidebarInfoOpen = false;
-    protected isSidebarAttendanceOpen = false;
+    protected isSidebarOpen: boolean = false;
+    protected isSidebarInfoOpen: boolean = false;
+    protected isSidebarAttendanceOpen: boolean = false;
 
-    protected hallAddress = null;
-    protected price = null;
     protected scheduleData: IScheduleItemModel[] = [];
     protected readonly _formatter: FormatterService = inject(FormatterService);
     private currentDate: Date = new Date();
     private readonly _destroyRef: DestroyRef = inject(DestroyRef);
     private readonly _cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
-    private readonly _groupsManagerService: GroupsManagerService = inject(GroupsManagerService);
     private readonly _scheduleManagerService: ScheduleManagerService = inject(ScheduleManagerService);
     private readonly _practicesManagerService: PracticeManagerService = inject(PracticeManagerService);
     private colorSchedule: ColorSchedule = new ColorSchedule();
 
     constructor(
-        private readonly practiceManagerService: PracticeManagerService,
         private readonly renderer: Renderer2
     ) {
         this.initializeTimeSlots();
@@ -70,67 +54,14 @@ export class ScheduleComponent implements OnInit {
 
     public ngOnInit(): void {
         this.loadSchedule();
-        this.getAllGroups();
-    }
-
-    // Начать добавление занятия
-    protected startAddingSession(): void {
-        this.isAddingSession = true;
-        this.selectedDay = null;
-        this.sessionStartTime = '';
-        this.sessionEndTime = '';
-    }
-
-    // Сохранить занятие
-    protected saveSession(): void {
-        if (!this.selectedGroup || !this.selectedDay || !this.sessionStartTime || !this.sessionEndTime) {
-            alert('Заполните все поля!');
-            return;
-        }
-
-        const startDateTime: Date = new Date(this.selectedDay.date);
-        startDateTime.setHours(+this.sessionStartTime.split(':')[0], +this.sessionStartTime.split(':')[1]);
-
-        const endDateTime: Date = new Date(this.selectedDay.date);
-        endDateTime.setHours(+this.sessionEndTime.split(':')[0], +this.sessionEndTime.split(':')[1]);
-
-        const request: ICreateSinglePracticeRequestModel = {
-            groupId: this.selectedGroup,
-            start: startDateTime.toISOString(),
-            end: endDateTime.toISOString(),
-            practiceType: 'тренировка',
-            hallAddress: null,
-            price: null
-        };
-
-        this.practiceManagerService.createSinglePractice(request).subscribe({
-            next: (): void => {
-                alert('Занятие успешно создано!');
-                this.isAddingSession = false;
-
-                this._cdr.detectChanges();
-            },
-            error: (): void => {
-                alert('Произошла ошибка при создании занятия.');
-            }
-        });
-    }
-
-    protected selectDay(day: { date: Date, day: string, weekDay: string, isToday: boolean }): void {
-        this.selectedDay = day;
-    }
-
-    protected onGroupChange(event: Event): void {
-        const selectElement: HTMLSelectElement = event.target as HTMLSelectElement;
-        this.selectedGroup = selectElement.value;
     }
 
     protected toggleSidebar(): void {
         this.isSidebarOpen = !this.isSidebarOpen;
         if (this.isSidebarOpen) {
-            this.disableBodyScroll(); // Отключаем прокрутку при открытии модалки
+            this.disableBodyScroll();
         } else {
-            this.enableBodyScroll(); // Включаем прокрутку при закрытии модалки
+            this.enableBodyScroll();
         }
     }
 
@@ -269,6 +200,26 @@ export class ScheduleComponent implements OnInit {
         return this.colorSchedule.colorGroups[sortedKeys[index]];
     }
 
+    protected loadSchedule(): void {
+        const startOfWeek: Date = this.getStartOfWeek(this.currentDate);
+
+        this._scheduleManagerService.getSchedule(startOfWeek, 1).pipe(
+            takeUntilDestroyed(this._destroyRef)
+        ).subscribe({
+            next: (schedule: IScheduleItemModel[]): void => {
+                this.scheduleData = schedule.map((item) => ({
+                    ...item,
+                    colorKey: this.getColorForSchedule(item.groupName), // Присваиваем цвет
+                }));
+
+                this.timeout(1500);
+            },
+            error: (): void => {
+                this.timeout(1500);
+            }
+        });
+    }
+
     private generateHash(input: string): number {
         let hash = 0;
         for (let i = 0; i < input.length; i++) {
@@ -305,33 +256,13 @@ export class ScheduleComponent implements OnInit {
         } else if (durationInMinutes > 90 && durationInMinutes < 120) {
             return 72;
         } else if (durationInMinutes == 120) {
-            return 93;
+            return 97;
         } else if (durationInMinutes < 60) {
             return 30;
         }
 
         // Рассчитываем количество слотов
         return durationInMinutes / minutesPerSlot + 36;
-    }
-
-    private getAllGroups(): void {
-        this._groupsManagerService.getAllGroups().pipe(
-            takeUntilDestroyed(this._destroyRef)
-        ).subscribe({
-            next: (groups: IGetGroupResponseModel | null): void => {
-                this.groups = groups;
-
-                this.timeout(1500);
-            },
-            error: (): void => {
-                this.timeout(1500);
-            }
-        });
-    }
-
-    private formatTime(date: Date): string {
-        const options: Intl.DateTimeFormatOptions = {hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Moscow'};
-        return date.toLocaleTimeString('ru-RU', options);
     }
 
     private initializeTimeSlots(): void {
@@ -382,26 +313,6 @@ export class ScheduleComponent implements OnInit {
         };
 
         this.currentWeek = `${startOfWeek.toLocaleDateString('ru-RU', options)} - ${endOfWeek.toLocaleDateString('ru-RU', options)}`;
-    }
-
-    private loadSchedule(): void {
-        const startOfWeek: Date = this.getStartOfWeek(this.currentDate);
-
-        this._scheduleManagerService.getSchedule(startOfWeek, 1).pipe(
-            takeUntilDestroyed(this._destroyRef)
-        ).subscribe({
-            next: (schedule: IScheduleItemModel[]): void => {
-                this.scheduleData = schedule.map((item) => ({
-                    ...item,
-                    colorKey: this.getColorForSchedule(item.groupName), // Присваиваем цвет
-                }));
-
-                this.timeout(1500);
-            },
-            error: (): void => {
-                this.timeout(1500);
-            }
-        });
     }
 
     private isToday(date: Date): boolean {

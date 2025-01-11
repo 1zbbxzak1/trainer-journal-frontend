@@ -1,0 +1,171 @@
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--border-default);
+    padding: 24px;
+}
+
+.close-sidebar {
+    padding: 6px;
+    width: 30px;
+    height: 30px;
+
+    border: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-content {
+    margin: 24px;
+    height: 85%;
+}
+
+.sidebar-container {
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 100px;
+    padding-left: 24px;
+
+    height: 75%;
+
+    z-index: 10;
+}
+
+.sidebar-title {
+    color: var(--text-secondary-grey);
+
+    width: 60px;
+}
+
+.add-session-form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.footer-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: auto;
+    row-gap: 12px;
+}
+
+.primary,
+.back {
+    width: 320px;
+}
+
+.back {
+    padding: 12px 32px;
+}
+
+.groups {
+    margin-bottom: 40px;
+}
+
+.dropdown-menu {
+    display: flex;
+    flex-direction: column;
+
+    width: 333px;
+    overflow-y: auto;
+    left: auto;
+    right: auto;
+
+    margin-top: 4px;
+
+    padding-top: 0;
+}
+
+.dropdown-item {
+    display: block;
+    width: 317px;
+    margin: 8px;
+}
+
+.dropdown-container {
+    position: relative;
+}
+
+.input-default {
+    cursor: pointer;
+    width: 280px;
+}
+
+.no-group-select-container {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.no-group-select {
+    color: var(--text-secondary-grey);
+    text-align: center;
+}
+
+.button-week {
+    display: flex;
+    gap: 12px;
+
+    align-items: center;
+
+    margin-top: 16px;
+}
+
+.left,
+.right {
+    padding: 6px;
+
+    width: 36px;
+    height: 36px;
+}
+
+.sidebar-buttons {
+    margin-top: 40px;
+}
+
+.add-session {
+    margin-top: 8px;
+    width: 48px;
+    height: 48px;
+    padding: 12px;
+}
+
+.group-name {
+    color: var(--text-secondary-grey);
+    margin-bottom: 24px;
+}
+
+.days-select-container {
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+
+    margin-bottom: 24px;
+}
+
+.days-select {
+    margin-bottom: 8px;
+}
+
+.day-button {
+    padding: 9px 11px;
+}
+
+.day-button.selected {
+    background: var(--text-black);
+    color: var(--text-white);
+    border: none;
+}
+
+.time-input-start {
+    margin-bottom: 24px;
+}
+
+.title {
+    margin-bottom: 4px;
+}

@@ -199,7 +199,7 @@ export class StudentScheduleComponent implements OnInit {
         } else if (durationInMinutes > 90 && durationInMinutes < 120) {
             return 72;
         } else if (durationInMinutes == 120) {
-            return 93;
+            return 97;
         } else if (durationInMinutes < 60) {
             return 30;
         }

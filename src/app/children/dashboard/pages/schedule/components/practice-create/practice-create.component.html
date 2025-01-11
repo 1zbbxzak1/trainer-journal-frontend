@@ -1,0 +1,123 @@
+<div class="sidebar-header">
+    <p class="desktop-headline-6">Редактирование расписания</p>
+    <button (click)="toggleSidebar()" class="tertiary-button close-sidebar">
+        <img alt="Закрыть" height="24" ngSrc="assets/x-close.svg" width="24">
+    </button>
+</div>
+<div class="sidebar-content">
+    <!-- Dropdown для выбора группы -->
+    <div *ngIf="!isAddingSessionHide" class="groups">
+        <div class="dropdown-container">
+            <input
+                (click)="toggleDropdown()"
+                [value]="getGroupNameById(selectedGroup) || ''"
+                class="input-default"
+                placeholder="Выберите группу"
+                readonly
+                type="text"
+            />
+        </div>
+
+        <div *ngIf="isDropdownOpen" class="dropdown-menu">
+            <div *ngIf="groups?.groups?.length; else noGroups">
+                <button
+                    (click)="selectGroup(group.id)"
+                    *ngFor="let group of groups!.groups"
+                    [class.selected]="group.id === selectedGroup"
+                    class="dropdown-item desktop-body-2"
+                >
+                    {{ group.name }}
+                </button>
+            </div>
+
+            <ng-template #noGroups>
+                <p class="desktop-body-2">Нет доступных групп</p>
+            </ng-template>
+        </div>
+    </div>
+
+    <div *ngIf="getGroupNameById(selectedGroup) === null" class="no-group-select-container">
+        <p class="desktop-body-1 no-group-select">Для редактирования расписания необходимо выбрать группу</p>
+    </div>
+
+    <!-- Выбор недели и кнопки добавления/удаления -->
+    <div *ngIf="getGroupNameById(selectedGroup) && !isAddingSession">
+        <p class="desktop-body-2">Применить изменения с недели:</p>
+
+        <div class="button-week">
+            <button (click)="changeWeek(-1)" class="secondary-2-button left">
+                <img alt="назад" height="24" ngSrc="assets/chevron-left.svg" width="24">
+            </button>
+
+            <button (click)="changeWeek(1)" class="secondary-2-button right">
+                <img alt="вперед" height="24" ngSrc="assets/chevron-right.svg" width="24">
+            </button>
+
+            <p class="desktop-body-1">{{ currentWeek }}</p>
+        </div>
+
+        <div class="sidebar-buttons">
+            <p class="desktop-body-2">Добавить занятие</p>
+
+            <button (click)="startAddingSession()" class="primary-button add-session">
+                <img alt="Добавить занятие" height="24" ngSrc="assets/add-practice.svg" width="24">
+            </button>
+            <button class="delete-schedule">
+                <!--                        <img alt="Очистить расписание" height="24" ngSrc="assets/.svg" width="24">-->
+            </button>
+        </div>
+    </div>
+
+    <!-- Выбор дня и временных интервалов -->
+    <div *ngIf="isAddingSession" class="add-session-form">
+        <p *ngIf="isAddingSessionHide" class="desktop-headline-6 group-name">
+            {{ getGroupNameById(selectedGroup) }}
+        </p>
+
+        <div class="days-buttons">
+            <p class="desktop-body-2 days-select">
+                Выбор дня
+            </p>
+
+            <div class="days-select-container">
+                <div *ngFor="let day of weekDays">
+                    <button (click)="selectDay(day)"
+                            [class.selected]="day === selectedDay"
+                            class="secondary-1-button mobile-body-2 day-button">
+                        {{ day.weekDay }}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div [formGroup]="formGroup">
+            <div class="time-input-start">
+                <p class="desktop-body-2 title">Начало</p>
+                <input
+                    class="input-default"
+                    formControlName="sessionStartTime"
+                    placeholder="Введите начало занятия"
+                    type="text"/>
+            </div>
+
+            <div class="time-input-end">
+                <p class="desktop-body-2 title">Конец</p>
+                <input
+                    class="input-default"
+                    formControlName="sessionEndTime"
+                    placeholder="Введите конец занятия"
+                    type="text"/>
+            </div>
+        </div>
+
+        <div class="footer-info">
+            <button (click)="saveSession()" class="primary-button desktop-primary-button-text-active primary">
+                Добавить
+            </button>
+
+            <button (click)="backButton()" class="tertiary-button desktop-secondary-button-text-active back">
+                Назад
+            </button>
+        </div>
+    </div>
+</div>

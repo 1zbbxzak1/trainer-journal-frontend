@@ -33,11 +33,13 @@ import {PracticeInfoComponent} from './pages/schedule/components/practice-info/p
 import {
     PracticeAttendanceComponent
 } from './pages/schedule/components/practice-attendance/practice-attendance.component';
+import {LoadingComponent} from './components/loading/loading.component';
 
 
 @NgModule({
     declarations: [
         SidebarComponent,
+        LoadingComponent,
 
         GroupsComponent,
         GroupDetailsComponent,

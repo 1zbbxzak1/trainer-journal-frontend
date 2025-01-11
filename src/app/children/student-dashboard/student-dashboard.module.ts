@@ -10,17 +10,24 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SendCheckComponent} from './pages/student-checks/components/send-check/send-check.component';
 import {InfoCheckComponent} from './pages/student-checks/components/info-check/info-check.component';
 import {DashboardModule} from "../dashboard/dashboard.module";
+import {StudentLoadingComponent} from './components/student-loading/student-loading.component';
 
 
 @NgModule({
     declarations: [
         StudentSidebarComponent,
+        StudentLoadingComponent,
+
         StudentScheduleComponent,
+
         StudentGroupComponent,
+
         StudentProfileComponent,
+
         StudentChecksComponent,
         SendCheckComponent,
         InfoCheckComponent,
+        StudentLoadingComponent,
     ],
     imports: [
         CommonModule,

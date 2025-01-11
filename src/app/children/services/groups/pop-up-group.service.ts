@@ -10,6 +10,7 @@ import {IStudentItemResponseModel} from '../../../data/response-models/students/
 
 @Injectable()
 export class PopUpGroupService {
+    protected isLoading: boolean = true;
     protected groups: IGetGroupResponseModel | null = null;
     protected groupById: IGroupResponseModel | null = null;
     protected students: IStudentItemResponseModel[] | null = null;
@@ -94,8 +95,11 @@ export class PopUpGroupService {
             next: (groups: IGetGroupResponseModel | null): void => {
                 this.groups = groups;
 
-                this._cdr.detectChanges();
+                this.timeout(1500);
             },
+            error: (): void => {
+                this.timeout(1500);
+            }
         });
     }
 
@@ -106,7 +110,10 @@ export class PopUpGroupService {
             next: (students: IStudentItemResponseModel[] | null): void => {
                 this.students = students;
 
-                this._cdr.detectChanges();
+                this.timeout(1500);
+            },
+            error: (): void => {
+                this.timeout(1500);
             }
         });
     }
@@ -124,9 +131,16 @@ export class PopUpGroupService {
                     hallAddress: groupById.hallAddress,
                 })
                 this.hexColor = groupById.hexColor;
-
-                this._cdr.detectChanges();
             }
+
+            this.timeout(1500);
         });
+    }
+
+    protected timeout(time: number): void {
+        setTimeout((): void => {
+            this.isLoading = false;
+            this._cdr.detectChanges();
+        }, time);
     }
 }

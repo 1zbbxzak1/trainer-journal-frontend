@@ -2,89 +2,93 @@
     <app-sidebar/>
 
     <div class="second-container">
-        <div class="header">
-            <div class="second-header">
-                <div [style.background-color]="groupHexColor" class="ellipse"></div>
-                <p class="desktop-headline-4">{{ groupName }}</p>
+        <app-loading [isLoading]="isLoading"></app-loading>
+
+        <div *ngIf="!isLoading">
+            <div class="header">
+                <div class="second-header">
+                    <div [style.background-color]="groupHexColor" class="ellipse"></div>
+                    <p class="desktop-headline-4">{{ groupName }}</p>
+                </div>
+
+                <div class="button-week">
+                    <button (click)="prevMonth()" class="secondary-2-button left">
+                        <img alt="назад" height="24" ngSrc="assets/chevron-left.svg" width="24">
+                    </button>
+
+                    <button (click)="nextMonth()" class="secondary-2-button right">
+                        <img alt="назад" height="24" ngSrc="assets/chevron-right.svg" width="24">
+                    </button>
+
+                    <p class="desktop-headline-6 month">{{ currentMonth }}</p>
+                </div>
             </div>
 
-            <div class="button-week">
-                <button (click)="prevMonth()" class="secondary-2-button left">
-                    <img alt="назад" height="24" ngSrc="assets/chevron-left.svg" width="24">
-                </button>
 
-                <button (click)="nextMonth()" class="secondary-2-button right">
-                    <img alt="назад" height="24" ngSrc="assets/chevron-right.svg" width="24">
-                </button>
-
-                <p class="desktop-headline-6 month">{{ currentMonth }}</p>
-            </div>
-        </div>
-
-        <div class="table-container">
-            <!-- Static Table -->
-            <div class="static-table">
-                <table>
-                    <thead>
-                    <tr>
-                        <th class="mobile-headline-5">№</th>
-                        <th class="mobile-headline-5">Фамилия И.О.</th>
-                        <th class="mobile-headline-5">Баланс на начало месяца</th>
-                        <th class="mobile-headline-5">
-                            <p>Списано</p>
-                            <p class="desktop-description">Посещено</p>
-                        </th>
-                        <th class="mobile-headline-5">Зачислено</th>
-                        <th class="mobile-headline-5">Текущий баланс</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let student of students; let i = index" [attr.data-index]="i"
-                        class="stroke-table-groups">
-                        <td class="desktop-body-1">{{ i + 1 }}</td>
-                        <td class="desktop-body-1">{{ formatterFullName(student.fullName) }}</td>
-                        <td class="desktop-body-1">{{ student.startBalance }}</td>
-                        <td class="desktop-body-1">
-                            <p>{{ student.expenses }}</p>
-                            <p class="desktop-body-2">{{ student.length }}</p>
-                        </td>
-                        <td class="desktop-body-1">{{ student.payments }}</td>
-                        <td [style.color]="getColorForBalance(student.endBalance)"
-                            class="desktop-body-1">
-                            {{ student.endBalance }}
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Scrollable Table -->
-            <div [style.width.px]="checkboxTableWidth" class="scrollable-table">
-                <div class="scrollable-table-wrapper">
+            <div class="table-container">
+                <!-- Static Table -->
+                <div class="static-table">
                     <table>
                         <thead>
                         <tr>
-                            <th *ngFor="let session of sessions" class="mobile-headline-5">
-                                {{ session + " " + formatShortMonth(currentDate) }}
+                            <th class="mobile-headline-5">№</th>
+                            <th class="mobile-headline-5">Фамилия И.О.</th>
+                            <th class="mobile-headline-5">Баланс на начало месяца</th>
+                            <th class="mobile-headline-5">
+                                <p>Списано</p>
+                                <p class="desktop-description">Посещено</p>
                             </th>
+                            <th class="mobile-headline-5">Зачислено</th>
+                            <th class="mobile-headline-5">Текущий баланс</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr *ngFor="let student of students; let i = index" [attr.data-index]="i"
                             class="stroke-table-groups">
-                            <td *ngFor="let session of sessions">
-                                <input (change)="toggleAttendance(i, session, $event)"
-                                       [checked]="student.attendance[session]"
-                                       [disabled]="dayBlocked[session]"
-                                       class="custom-checkbox-mini"
-                                       type="checkbox"/>
+                            <td class="desktop-body-1">{{ i + 1 }}</td>
+                            <td class="desktop-body-1">{{ formatterFullName(student.fullName) }}</td>
+                            <td class="desktop-body-1">{{ student.startBalance }}</td>
+                            <td class="desktop-body-1">
+                                <p>{{ student.expenses }}</p>
+                                <p class="desktop-body-2">{{ student.length }}</p>
+                            </td>
+                            <td class="desktop-body-1">{{ student.payments }}</td>
+                            <td [style.color]="getColorForBalance(student.endBalance)"
+                                class="desktop-body-1">
+                                {{ student.endBalance }}
                             </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
+
+                <!-- Scrollable Table -->
+                <div [style.width.px]="checkboxTableWidth" class="scrollable-table">
+                    <div class="scrollable-table-wrapper">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th *ngFor="let session of sessions" class="mobile-headline-5">
+                                    {{ session + " " + formatShortMonth(currentDate) }}
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let student of students; let i = index" [attr.data-index]="i"
+                                class="stroke-table-groups">
+                                <td *ngFor="let session of sessions">
+                                    <input (change)="toggleAttendance(i, session, $event)"
+                                           [checked]="student.attendance[session]"
+                                           [disabled]="dayBlocked[session]"
+                                           class="custom-checkbox-mini"
+                                           type="checkbox"/>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
 </div>

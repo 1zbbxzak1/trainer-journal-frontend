@@ -21,6 +21,7 @@ import {forkJoin} from 'rxjs';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StudentScheduleComponent implements OnInit {
+    protected isLoading: boolean = true;
     protected groupsId: string[] = [];
     protected practice: IPracticeModel | null = null;
     protected currentWeek = '';
@@ -68,7 +69,7 @@ export class StudentScheduleComponent implements OnInit {
                 next: (practice: IPracticeModel): void => {
                     this.practice = practice;
 
-                    this._cdr.detectChanges();
+                    this._cdr.markForCheck();
                 }
             });
         }
@@ -278,10 +279,10 @@ export class StudentScheduleComponent implements OnInit {
 
                 this.initializeTimeSlots();
 
-                this._cdr.detectChanges();
+                this.timeout(1500);
             },
-            error: (err) => {
-                console.error('Failed to load schedules', err);
+            error: (): void => {
+                this.timeout(1500);
             }
         });
     }
@@ -294,7 +295,10 @@ export class StudentScheduleComponent implements OnInit {
 
                 this.getGroups(student.username);
 
-                this._cdr.detectChanges();
+                this.timeout(1500);
+            },
+            error: (): void => {
+                this.timeout(1500);
             }
         });
     }
@@ -310,7 +314,10 @@ export class StudentScheduleComponent implements OnInit {
 
                 this.loadSchedule();
 
-                this._cdr.detectChanges();
+                this.timeout(1500);
+            },
+            error: (): void => {
+                this.timeout(1500);
             }
         });
     }
@@ -318,5 +325,12 @@ export class StudentScheduleComponent implements OnInit {
     private isToday(date: Date): boolean {
         const today: Date = new Date();
         return date.toDateString() === today.toDateString();
+    }
+
+    private timeout(time: number): void {
+        setTimeout((): void => {
+            this.isLoading = false;
+            this._cdr.detectChanges();
+        }, time);
     }
 }

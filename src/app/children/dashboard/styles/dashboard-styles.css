@@ -27,6 +27,7 @@
 .table-students .group {
     max-width: 200px;
     margin-left: 24px;
+    text-align: center;
 }
 
 .table-students .gender {

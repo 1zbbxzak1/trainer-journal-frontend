@@ -10,7 +10,7 @@ export class AuthGuard {
 
     public canActivate(router: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
         const isAuthorized: string | null = this._authManagerService.getAccessToken();
-        const roles = this._authManagerService.getUserRoles();
+        const roles: string[] | null = this._authManagerService.getUserRoles();
 
         if (state.url === '/auth') {
             if (isAuthorized) {
@@ -37,7 +37,7 @@ export class AuthGuard {
         }
 
         if ((roles?.includes('Trainer') || roles?.includes('Admin')) && state.url.startsWith('/student-dashboard')) {
-            // Если тренер или администратор пытается попасть на страницу студента, перенаправляем его на страницы для тренеров
+            // Если тренер или администратор пытается попасть на страницу студента, перенаправляем его на страницу для тренера
             this._router.navigate(["dashboard/groups"]);
             return of(false);
         }

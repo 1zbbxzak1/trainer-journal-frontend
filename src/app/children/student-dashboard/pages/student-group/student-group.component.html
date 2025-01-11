@@ -2,80 +2,84 @@
     <app-student-sidebar/>
 
     <div class="second-container">
-        <div class="header">
-            <div class="second-header">
-                <div [style.background-color]="groupById?.hexColor" class="ellipse"></div>
-                <p class="desktop-headline-4">{{ groupById?.name }}</p>
-            </div>
-        </div>
+        <app-student-loading [isLoading]="isLoading"></app-student-loading>
 
-        <div class="details-group">
-            <div class="details-group-item">
-                <p class="desktop-headline-6 desc">Количество учеников</p>
-                <p class="desktop-body-1">{{ groupById?.studentsCount }}</p>
+        <div *ngIf="!isLoading">
+            <div class="header">
+                <div class="second-header">
+                    <div [style.background-color]="groupById?.hexColor" class="ellipse"></div>
+                    <p class="desktop-headline-4">{{ groupById?.name }}</p>
+                </div>
             </div>
 
-            <div class="details-group-item">
-                <p class="desktop-headline-6 desc">Цена одного занятия</p>
-                <p class="desktop-body-1">{{ groupById?.price }}</p>
+            <div class="details-group">
+                <div class="details-group-item">
+                    <p class="desktop-headline-6 desc">Количество учеников</p>
+                    <p class="desktop-body-1">{{ groupById?.studentsCount }}</p>
+                </div>
+
+                <div class="details-group-item">
+                    <p class="desktop-headline-6 desc">Цена одного занятия</p>
+                    <p class="desktop-body-1">{{ groupById?.price }}</p>
+                </div>
+
+                <div class="details-group-item">
+                    <p class="desktop-headline-6 desc">Место проведения</p>
+                    <p class="desktop-body-1">{{ groupById?.hallAddress }}</p>
+                </div>
             </div>
 
-            <div class="details-group-item">
-                <p class="desktop-headline-6 desc">Место проведения</p>
-                <p class="desktop-body-1">{{ groupById?.hallAddress }}</p>
+            <div class="input-container">
+                <input [(ngModel)]="search" class="input-default search" placeholder="" type="text">
+                <img alt="Поиск" class="search-icon" height="24" ngSrc="assets/search.svg" width="24"/>
             </div>
-        </div>
 
-        <div class="input-container">
-            <input [(ngModel)]="search" class="input-default search" placeholder="" type="text">
-            <img alt="Поиск" class="search-icon" height="24" ngSrc="assets/search.svg" width="24"/>
-        </div>
-
-        <div *ngIf="students && students.length > 0">
-            <div class="table-scroll-container">
-                <table class="table-students">
-                    <thead>
-                    <tr>
-                        <th class="desktop-headline-6 number">№</th>
-                        <th class="desktop-headline-6 fullName">ФИО</th>
-                        <th (click)="toggleKyuSort()"
-                            class="desktop-headline-6 center-tr kyu">
-                            <div class="sort">
-                                <p class="label">Кю</p>
-                                <img alt="Сортировка" class="icon" height="24" ngSrc="{{ getKyuSortIcon() }}"
-                                     width="24">
-                            </div>
-                        </th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let student of searchStudents(); let index = index"
-                        class="stroke-table-students">
-                        <td class="table-groups-name number">
-                            <p class="desktop-body-1">{{ index + 1 }}</p>
-                        </td>
-                        <td class="desktop-body-1 fullName">{{ student.fullName }}
-                        </td>
-                        <td class="desktop-body-1 center-tr kyu">
-                            {{ student.kyu === null ? "нет" : student.kyu }}
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    </tbody>
-                </table>
+            <div *ngIf="students && students.length > 0">
+                <div class="table-scroll-container">
+                    <table class="table-students">
+                        <thead>
+                        <tr>
+                            <th class="desktop-headline-6 number">№</th>
+                            <th class="desktop-headline-6 fullName">ФИО</th>
+                            <th (click)="toggleKyuSort()"
+                                class="desktop-headline-6 center-tr kyu">
+                                <div class="sort">
+                                    <p class="label">Кю</p>
+                                    <img alt="Сортировка" class="icon" height="24" ngSrc="{{ getKyuSortIcon() }}"
+                                         width="24">
+                                </div>
+                            </th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let student of searchStudents(); let index = index"
+                            class="stroke-table-students">
+                            <td class="table-groups-name number">
+                                <p class="desktop-body-1">{{ index + 1 }}</p>
+                            </td>
+                            <td class="desktop-body-1 fullName">{{ student.fullName }}
+                            </td>
+                            <td class="desktop-body-1 center-tr kyu">
+                                {{ student.kyu === null ? "нет" : student.kyu }}
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

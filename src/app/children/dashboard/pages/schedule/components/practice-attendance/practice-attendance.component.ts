@@ -94,7 +94,7 @@ export class PracticeAttendanceComponent implements OnChanges {
                 // Сохранение исходного состояния
                 this.originalAttendance = {...this.attendance};
 
-                this._cdr.detectChanges();
+                this._cdr.markForCheck();
             }
         });
     }

@@ -28,6 +28,7 @@ export class ChecksDetailsComponent {
 
     protected groupId: string = '';
     protected groupById: IGroupResponseModel | null = null;
+    protected isLoading: boolean = true;
 
     protected search: string = '';
     protected statusSortOrder: 'На проверке' | 'Проверено' | 'Принят' | 'Отклонен' | null = null;
@@ -214,8 +215,6 @@ export class ChecksDetailsComponent {
                     this.closeModalEdit();
 
                     this.refreshReceipts(this.groupId);
-
-                    this._cdr.detectChanges();
                 }
             });
         }
@@ -243,7 +242,10 @@ export class ChecksDetailsComponent {
             next: (receipts: IPaymentReceiptResponseModel[]): void => {
                 this.checks = receipts;
 
-                this._cdr.detectChanges();
+                this.timeout(1500);
+            },
+            error: (): void => {
+                this.timeout(1500);
             }
         })
     }
@@ -255,8 +257,18 @@ export class ChecksDetailsComponent {
             next: (info: IGroupResponseModel): void => {
                 this.groupById = info;
 
-                this._cdr.detectChanges();
+                this.timeout(1500);
+            },
+            error: (): void => {
+                this.timeout(1500);
             }
         })
+    }
+
+    private timeout(time: number): void {
+        setTimeout((): void => {
+            this.isLoading = false;
+            this._cdr.detectChanges();
+        }, time);
     }
 }

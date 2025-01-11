@@ -13,140 +13,148 @@
             </button>
         </div>
 
-        <div class="input-container">
-            <input [(ngModel)]="search" class="input-default search" placeholder="" type="text">
-            <img alt="Поиск" class="search-icon" height="24" ngSrc="assets/search.svg" width="24"/>
-        </div>
+        <app-loading [isLoading]="isLoading"></app-loading>
 
-        <div class="students-no-with-group">
-            <input (change)="getStudents()"
-                   [(ngModel)]="showStudentsWithoutGroup"
-                   class="custom-checkbox-mini"
-                   id="students-no-groups"
-                   type="checkbox"/>
-            <label class="desktop-body-2">
-                Показать учеников без группы
-            </label>
-        </div>
+        <div *ngIf="!isLoading">
+            <div class="input-container">
+                <input [(ngModel)]="search" class="input-default search" placeholder="" type="text">
+                <img alt="Поиск" class="search-icon" height="24" ngSrc="assets/search.svg" width="24"/>
+            </div>
 
-        <div *ngIf="allStudents && allStudents.length > 0; else noStudents">
-            <div class="table-scroll-container">
-                <table class="table-students">
-                    <thead>
-                    <tr>
-                        <th *ngIf="columnsVisibility['number']" class="desktop-headline-6 number">№</th>
-                        <th *ngIf="columnsVisibility['fullName']" class="desktop-headline-6 fullName">ФИО</th>
-                        <th *ngIf="columnsVisibility['group']" class="desktop-headline-6 group">Группа</th>
-                        <th (click)="toggleGenderSort()" *ngIf="columnsVisibility['gender']"
-                            class="desktop-headline-6 center-tr gender">
-                            <div class="sort">
-                                <p class="label">Пол</p>
-                                <img alt="Сортировка" class="icon" height="24" ngSrc="{{ getGenderSortIcon() }}"
-                                     width="24">
-                            </div>
-                        </th>
-                        <th *ngIf="columnsVisibility['schoolGrade']" class="desktop-headline-6 center-tr class">Класс
-                        </th>
-                        <th *ngIf="columnsVisibility['birthDate']" class="desktop-headline-6 center-tr birth">Д.Р.</th>
-                        <th (click)="toggleAgeSort()" *ngIf="columnsVisibility['age']"
-                            class="desktop-headline-6 center-tr age">
-                            <div class="sort">
-                                <p class="label">Возраст</p>
-                                <img alt="Сортировка" class="icon" height="24" ngSrc="{{ getAgeSortIcon() }}"
-                                     width="24">
-                            </div>
-                        </th>
-                        <th (click)="toggleKyuSort()" *ngIf="columnsVisibility['kyu']"
-                            class="desktop-headline-6 center-tr kyu">
-                            <div class="sort">
-                                <p class="label">Кю</p>
-                                <img alt="Сортировка" class="icon" height="24" ngSrc="{{ getKyuSortIcon() }}"
-                                     width="24">
-                            </div>
-                        </th>
-                        <th *ngIf="columnsVisibility['address']" class="desktop-headline-6 address">Адрес</th>
-                        <th *ngIf="columnsVisibility['contact']" class="desktop-headline-6 contacts">Контакт</th>
-                        <th>
-                            <button (click)="toggleDropdownSettings()" class="tertiary-button-icon settings">
-                                <img alt="Редактировать" height="24" ngSrc="assets/settings.svg" width="24">
-                            </button>
+            <div class="students-no-with-group">
+                <input (change)="getStudents()"
+                       [(ngModel)]="showStudentsWithoutGroup"
+                       class="custom-checkbox-mini"
+                       id="students-no-groups"
+                       type="checkbox"/>
+                <label class="desktop-body-2">
+                    Показать учеников без группы
+                </label>
+            </div>
 
-                            <div *ngIf="dropdownOpen" class="dropdown-menu settings-dropdown">
-                                <div *ngFor="let column of columnNames">
-                                    <input [(ngModel)]="columnsVisibility[column.key]"
-                                           class="custom-checkbox-mini"
-                                           id="checkbox-{{ column.key }}"
-                                           type="checkbox"/>
-                                    <label class="desktop-body-2" for="checkbox-{{ column.key }}">
-                                        {{ column.label }}
-                                    </label>
+            <div *ngIf="allStudents && allStudents.length > 0; else noStudents">
+                <div class="table-scroll-container">
+                    <table class="table-students">
+                        <thead>
+                        <tr>
+                            <th *ngIf="columnsVisibility['number']" class="desktop-headline-6 number">№</th>
+                            <th *ngIf="columnsVisibility['fullName']" class="desktop-headline-6 fullName">ФИО</th>
+                            <th *ngIf="columnsVisibility['group']" class="desktop-headline-6 group">Группа</th>
+                            <th (click)="toggleGenderSort()" *ngIf="columnsVisibility['gender']"
+                                class="desktop-headline-6 center-tr gender">
+                                <div class="sort">
+                                    <p class="label">Пол</p>
+                                    <img alt="Сортировка" class="icon" height="24" ngSrc="{{ getGenderSortIcon() }}"
+                                         width="24">
                                 </div>
-                            </div>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr (click)="navigateToStudentProfile(student.username); $event.stopPropagation()"
-                        *ngFor="let student of searchStudents(); let index = index"
-                        class="stroke-table-students">
-                        <td *ngIf="columnsVisibility['number']" class="table-groups-name number">
-                            <p class="desktop-body-1">{{ index + 1 }}</p>
-                        </td>
-                        <td *ngIf="columnsVisibility['fullName']"
-                            class="desktop-body-1 fullName">{{ student.fullName }}
-                        </td>
-                        <td *ngIf="columnsVisibility['group']" class="desktop-desc-group group">
-                            <ng-container *ngIf="studentGroups[student.username].length > 0; else noGroup">
-                                <div *ngFor="let group of studentGroups[student.username]"
-                                     [style.background-color]="group.hexColor"
-                                     class="bg-group">
-                                    <p>{{ group.name }}</p>
+                            </th>
+                            <th *ngIf="columnsVisibility['schoolGrade']" class="desktop-headline-6 center-tr class">
+                                Класс
+                            </th>
+                            <th *ngIf="columnsVisibility['birthDate']" class="desktop-headline-6 center-tr birth">Д.Р.
+                            </th>
+                            <th (click)="toggleAgeSort()" *ngIf="columnsVisibility['age']"
+                                class="desktop-headline-6 center-tr age">
+                                <div class="sort">
+                                    <p class="label">Возраст</p>
+                                    <img alt="Сортировка" class="icon" height="24" ngSrc="{{ getAgeSortIcon() }}"
+                                         width="24">
                                 </div>
-                            </ng-container>
-                            <ng-template #noGroup>
-                                <p class="desktop-body-1 bg-group-none group">Нет</p>
-                            </ng-template>
-                        </td>
-                        <td *ngIf="columnsVisibility['gender']"
-                            class="desktop-body-1 center-tr gender">{{ student.gender }}
-                        </td>
-                        <td *ngIf="columnsVisibility['schoolGrade']" class="desktop-body-1 center-tr class">
-                            {{ student.schoolGrade }}
-                        </td>
-                        <td *ngIf="columnsVisibility['birthDate']" class="desktop-body-1 center-tr birth">
-                            {{ formatBirthDate(student.birthDate) }}
-                        </td>
-                        <td *ngIf="columnsVisibility['age']" class="desktop-body-1 center-tr age">{{ student.age }}</td>
-                        <td *ngIf="columnsVisibility['kyu']" class="desktop-body-1 center-tr kyu">
-                            {{ student.kyu === null ? "нет" : student.kyu }}
-                        </td>
-                        <td *ngIf="columnsVisibility['address']"
-                            class="desktop-body-1 address">{{ student.address }}
-                        </td>
-                        <td *ngIf="columnsVisibility['contact']" class="desktop-body-1 contacts">
-                            {{ formatPhoneNumber(student.contact.phone || '') }}
-                            <p class="desktop-description">{{ student.contact.relation }}
-                                · {{ student.contact.name }}</p>
-                        </td>
-
-                        <td class="table-students-more">
-                            <button (click)="toggleDropdown(student.username); $event.stopPropagation()"
-                                    [ngClass]="{'active': selectedStudentUsername === student.username}"
-                                    class="tertiary-button-icon second-button">
-                                <img alt="Дополнительно" height="24" ngSrc="assets/dots-horizontal.svg" width="24">
-                            </button>
-
-                            <div *ngIf="selectedStudentUsername === student.username" class="dropdown-menu more">
-                                <button
-                                    (click)="toggleModal('delete', true, student.groupIds.at(0), student.username); $event.stopPropagation()"
-                                    class="desktop-body-2">
-                                    Удалить аккаунт
+                            </th>
+                            <th (click)="toggleKyuSort()" *ngIf="columnsVisibility['kyu']"
+                                class="desktop-headline-6 center-tr kyu">
+                                <div class="sort">
+                                    <p class="label">Кю</p>
+                                    <img alt="Сортировка" class="icon" height="24" ngSrc="{{ getKyuSortIcon() }}"
+                                         width="24">
+                                </div>
+                            </th>
+                            <th *ngIf="columnsVisibility['address']" class="desktop-headline-6 address">Адрес</th>
+                            <th *ngIf="columnsVisibility['contact']" class="desktop-headline-6 contacts">Контакт</th>
+                            <th>
+                                <button (click)="toggleDropdownSettings()" class="tertiary-button-icon settings">
+                                    <img alt="Редактировать" height="24" ngSrc="assets/settings.svg" width="24">
                                 </button>
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+
+                                <div *ngIf="dropdownOpen" class="dropdown-menu settings-dropdown">
+                                    <div *ngFor="let column of columnNames">
+                                        <input [(ngModel)]="columnsVisibility[column.key]"
+                                               class="custom-checkbox-mini"
+                                               id="checkbox-{{ column.key }}"
+                                               type="checkbox"/>
+                                        <label class="desktop-body-2" for="checkbox-{{ column.key }}">
+                                            {{ column.label }}
+                                        </label>
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr (click)="navigateToStudentProfile(student.username); $event.stopPropagation()"
+                            *ngFor="let student of searchStudents(); let index = index"
+                            class="stroke-table-students">
+                            <td *ngIf="columnsVisibility['number']" class="table-groups-name number">
+                                <p class="desktop-body-1">{{ index + 1 }}</p>
+                            </td>
+                            <td *ngIf="columnsVisibility['fullName']"
+                                class="desktop-body-1 fullName">{{ student.fullName }}
+                            </td>
+                            <td *ngIf="columnsVisibility['group']" class="desktop-desc-group group">
+                                <ng-container *ngIf="studentGroups[student.username].length > 0; else noGroup">
+                                    <div *ngFor="let group of studentGroups[student.username]"
+                                         [style.background-color]="group.hexColor"
+                                         class="bg-group">
+                                        <p>{{ group.name }}</p>
+                                    </div>
+                                </ng-container>
+                                <ng-template #noGroup>
+                                    <p class="desktop-body-1 bg-group-none group">Нет</p>
+                                </ng-template>
+                            </td>
+                            <td *ngIf="columnsVisibility['gender']"
+                                class="desktop-body-1 center-tr gender">{{ student.gender }}
+                            </td>
+                            <td *ngIf="columnsVisibility['schoolGrade']" class="desktop-body-1 center-tr class">
+                                {{ student.schoolGrade }}
+                            </td>
+                            <td *ngIf="columnsVisibility['birthDate']" class="desktop-body-1 center-tr birth">
+                                {{ formatBirthDate(student.birthDate) }}
+                            </td>
+                            <td *ngIf="columnsVisibility['age']"
+                                class="desktop-body-1 center-tr age">{{ student.age }}
+                            </td>
+                            <td *ngIf="columnsVisibility['kyu']" class="desktop-body-1 center-tr kyu">
+                                {{ student.kyu === null ? "нет" : student.kyu }}
+                            </td>
+                            <td *ngIf="columnsVisibility['address']"
+                                class="desktop-body-1 address">{{ student.address }}
+                            </td>
+                            <td *ngIf="columnsVisibility['contact']" class="desktop-body-1 contacts">
+                                {{ formatPhoneNumber(student.contact.phone || '') }}
+                                <p class="desktop-description">{{ student.contact.relation }}
+                                    · {{ student.contact.name }}</p>
+                            </td>
+
+                            <td class="table-students-more">
+                                <button (click)="toggleDropdown(student.username); $event.stopPropagation()"
+                                        [ngClass]="{'active': selectedStudentUsername === student.username}"
+                                        class="tertiary-button-icon second-button">
+                                    <img alt="Дополнительно" height="24" ngSrc="assets/dots-horizontal.svg" width="24">
+                                </button>
+
+                                <div *ngIf="selectedStudentUsername === student.username" class="dropdown-menu more">
+                                    <button
+                                        (click)="toggleModal('delete', true, student.groupIds.at(0), student.username); $event.stopPropagation()"
+                                        class="desktop-body-2">
+                                        Удалить аккаунт
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

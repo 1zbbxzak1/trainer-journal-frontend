@@ -14,6 +14,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 })
 export class ChecksComponent {
     protected groups: IGetGroupResponseModel | null = null;
+    protected isLoading: boolean = true;
 
     protected readonly _router: Router = inject(Router);
     protected readonly _destroyRef: DestroyRef = inject(DestroyRef);
@@ -31,12 +32,22 @@ export class ChecksComponent {
             next: (groups: IGetGroupResponseModel | null): void => {
                 this.groups = groups;
 
-                this._cdr.detectChanges();
+                this.timeout(1500);
             },
+            error: (): void => {
+                this.timeout(1500);
+            }
         });
     }
 
     protected navigateToChecksDetails(groupId: string): void {
         this._router.navigate(['dashboard/checks/checks-details/', groupId])
+    }
+
+    private timeout(time: number): void {
+        setTimeout((): void => {
+            this.isLoading = false;
+            this._cdr.detectChanges();
+        }, time);
     }
 }

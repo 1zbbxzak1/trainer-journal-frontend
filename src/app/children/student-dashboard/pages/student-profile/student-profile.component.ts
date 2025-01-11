@@ -11,6 +11,7 @@ import {AuthManagerService} from '../../../../data/services/auth/auth.manager.se
     styleUrls: ['./styles/student-profile.component.css', '../../styles/student-dashboard-styles.css']
 })
 export class StudentProfileComponent implements OnInit {
+    protected isLoading: boolean = true;
     protected infoMe!: IFullInfoModel | null;
     protected readonly _destroyRef: DestroyRef = inject(DestroyRef);
     protected readonly _formatter: FormatterService = inject(FormatterService);
@@ -50,8 +51,15 @@ export class StudentProfileComponent implements OnInit {
             next: (profile: IFullInfoModel | null): void => {
                 this.infoMe = profile;
 
-                this._cdr.detectChanges();
+                this.timeout(1500);
             }
         })
+    }
+
+    private timeout(time: number): void {
+        setTimeout((): void => {
+            this.isLoading = false;
+            this._cdr.detectChanges();
+        }, time);
     }
 }

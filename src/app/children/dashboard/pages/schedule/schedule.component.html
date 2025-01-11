@@ -24,43 +24,47 @@
             <p class="desktop-headline-6">{{ currentWeek }}</p>
         </div>
 
-        <div class="calendar">
-            <table>
-                <thead>
-                <tr>
-                    <th></th>
-                    <th *ngFor="let day of weekDays" [class.today-th]="day.isToday">
-                        <p [class.today-th]="day.isToday" class="desktop-headline-6 inactive">{{ day.day }}</p>
-                        <p [class.today-th]="day.isToday" class="desktop-description inactive">{{ day.weekDay }}</p>
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let slot of timeSlots">
-                    <td class="desktop-description time-slot">{{ slot }}</td>
-                    <td *ngFor="let day of weekDays" [class.today]="day.isToday" class="table-cell">
-                        <div *ngIf="scheduleData!.length > 0">
-                            <div (click)="toggleSidebarInfo(item.id, item.startTime)"
-                                 *ngFor="let item of getScheduleForSlot(day.date, slot)"
-                                 [ngStyle]="{'top': calculateTop(item.startTime) + 'px', 'height': item.duration + 'px'}"
-                                 [style.background]="item.colorKey.background"
-                                 [style.border-left-color]="item.colorKey.sideRectangle"
-                                 class="schedule-item">
-                                <p [style.color]="item.colorKey.time"
-                                   class="time">
-                                    {{ _formatter.formatTime(item.startTime) + " - " + _formatter.formatTime(item.endTime) }}
-                                </p>
-                                <p [style.color]="item.colorKey.nameTeam"
-                                   class="name-team">
-                                    {{ item.groupName }}
-                                </p>
-                            </div>
-                        </div>
+        <app-loading [isLoading]="isLoading"></app-loading>
 
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+        <div *ngIf="!isLoading">
+            <div class="calendar">
+                <table>
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th *ngFor="let day of weekDays" [class.today-th]="day.isToday">
+                            <p [class.today-th]="day.isToday" class="desktop-headline-6 inactive">{{ day.day }}</p>
+                            <p [class.today-th]="day.isToday" class="desktop-description inactive">{{ day.weekDay }}</p>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let slot of timeSlots">
+                        <td class="desktop-description time-slot">{{ slot }}</td>
+                        <td *ngFor="let day of weekDays" [class.today]="day.isToday" class="table-cell">
+                            <div *ngIf="scheduleData!.length > 0">
+                                <div (click)="toggleSidebarInfo(item.id, item.startTime)"
+                                     *ngFor="let item of getScheduleForSlot(day.date, slot)"
+                                     [ngStyle]="{'top': calculateTop(item.startTime) + 'px', 'height': item.duration + 'px'}"
+                                     [style.background]="item.colorKey.background"
+                                     [style.border-left-color]="item.colorKey.sideRectangle"
+                                     class="schedule-item">
+                                    <p [style.color]="item.colorKey.time"
+                                       class="time">
+                                        {{ _formatter.formatTime(item.startTime) + " - " + _formatter.formatTime(item.endTime) }}
+                                    </p>
+                                    <p [style.color]="item.colorKey.nameTeam"
+                                       class="name-team">
+                                        {{ item.groupName }}
+                                    </p>
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 

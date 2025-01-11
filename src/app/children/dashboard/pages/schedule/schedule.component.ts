@@ -29,6 +29,7 @@ import {ColorGroup, ColorKey, ColorSchedule} from './types/types-color';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ScheduleComponent implements OnInit {
+    protected isLoading: boolean = true;
     protected groups: IGetGroupResponseModel | null = null;
     protected practice: IPracticeModel | null = null;
     protected selectedGroup: string | null = null;
@@ -56,7 +57,7 @@ export class ScheduleComponent implements OnInit {
     private readonly _groupsManagerService: GroupsManagerService = inject(GroupsManagerService);
     private readonly _scheduleManagerService: ScheduleManagerService = inject(ScheduleManagerService);
     private readonly _practicesManagerService: PracticeManagerService = inject(PracticeManagerService);
-    private colorSchedule = new ColorSchedule();
+    private colorSchedule: ColorSchedule = new ColorSchedule();
 
     constructor(
         private readonly practiceManagerService: PracticeManagerService,
@@ -174,7 +175,7 @@ export class ScheduleComponent implements OnInit {
                 next: (practice: IPracticeModel): void => {
                     this.practice = practice;
 
-                    this._cdr.detectChanges();
+                    this._cdr.markForCheck();
                 }
             });
         }
@@ -320,8 +321,11 @@ export class ScheduleComponent implements OnInit {
             next: (groups: IGetGroupResponseModel | null): void => {
                 this.groups = groups;
 
-                this._cdr.detectChanges();
+                this.timeout(1500);
             },
+            error: (): void => {
+                this.timeout(1500);
+            }
         });
     }
 
@@ -392,8 +396,11 @@ export class ScheduleComponent implements OnInit {
                     colorKey: this.getColorForSchedule(item.groupName), // Присваиваем цвет
                 }));
 
-                this._cdr.detectChanges();
+                this.timeout(1500);
             },
+            error: (): void => {
+                this.timeout(1500);
+            }
         });
     }
 
@@ -410,5 +417,12 @@ export class ScheduleComponent implements OnInit {
     private enableBodyScroll(): void {
         const body = document.querySelector('.global-container');
         this.renderer.removeClass(body, 'no-scroll'); // Убираем класс, восстанавливаем прокрутку
+    }
+
+    private timeout(time: number): void {
+        setTimeout((): void => {
+            this.isLoading = false;
+            this._cdr.detectChanges();
+        }, time);
     }
 }

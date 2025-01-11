@@ -13,6 +13,7 @@ import {GroupsManagerService} from '../../../../data/services/groups/groups.mana
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class JournalComponent {
+    protected isLoading: boolean = true;
     protected groups: IGetGroupResponseModel | null = null;
 
     protected readonly _router: Router = inject(Router);
@@ -31,12 +32,22 @@ export class JournalComponent {
             next: (groups: IGetGroupResponseModel | null): void => {
                 this.groups = groups;
 
-                this._cdr.detectChanges();
+                this.timeout(1500);
             },
+            error: (): void => {
+                this.timeout(1500);
+            }
         });
     }
 
     protected navigateToJournalDetails(groupId: string): void {
         this._router.navigate(['dashboard/journal/journal-details/', groupId])
+    }
+
+    private timeout(time: number): void {
+        setTimeout((): void => {
+            this.isLoading = false;
+            this._cdr.detectChanges();
+        }, time);
     }
 }

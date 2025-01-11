@@ -158,6 +158,7 @@
 .table-students .bg-group {
     border-radius: 36px;
     padding: 2px 12px;
+    max-width: 200px;
 }
 
 .table-students .bg-group-none {

@@ -20,6 +20,7 @@ import {IScheduleItemModel} from '../../../../../../data/models/schedule/ISchedu
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class JournalDetailsComponent implements OnInit {
+    protected isLoading: boolean = true;
     protected students: any[] = [];
     protected sessions: number[] = [];
     protected currentMonth: string = '';
@@ -164,6 +165,11 @@ export class JournalDetailsComponent implements OnInit {
                 if (group?.hexColor) {
                     this.groupHexColor = group.hexColor;
                 }
+
+                this.timeout(1500);
+            },
+            error: (): void => {
+                this.timeout(1500);
             }
         });
     }
@@ -205,8 +211,13 @@ export class JournalDetailsComponent implements OnInit {
                     this.updateDayBlockStatus();
                     this.loadSessions();
 
+                    this.timeout(1500);
+
                     this._cdr.markForCheck();
                 },
+                error: (): void => {
+                    this.timeout(1500);
+                }
             });
     }
 
@@ -284,5 +295,12 @@ export class JournalDetailsComponent implements OnInit {
     private formatMonth(date: Date): string {
         const options: Intl.DateTimeFormatOptions = {month: 'long', year: 'numeric'};
         return date.toLocaleDateString('ru-RU', options);
+    }
+
+    private timeout(time: number): void {
+        setTimeout((): void => {
+            this.isLoading = false;
+            this._cdr.detectChanges();
+        }, time);
     }
 }

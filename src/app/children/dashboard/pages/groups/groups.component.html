@@ -9,47 +9,51 @@
             </button>
         </div>
 
-        <div *ngIf="groups && groups.groups && groups.groups.length > 0; else noGroups">
-            <table class="table-groups">
-                <thead>
-                <tr>
-                    <th class="desktop-headline-6 name">Название</th>
-                    <th class="desktop-headline-6">Количество учеников</th>
-                    <th class="desktop-headline-6">Место проведения</th>
-                    <th class="desktop-headline-6">Цена одного занятия, ₽</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr (click)="navigateToGroupDetails(group.id)" *ngFor="let group of groups?.groups"
-                    class="stroke-table-groups">
-                    <td class="table-groups-name">
-                        <div [style.background-color]="group.hexColor" class="ellipse"></div>
-                        <p class="desktop-body-1">{{ group.name }}</p>
-                    </td>
-                    <td class="desktop-body-1">{{ group.studentsCount }}</td>
-                    <td class="desktop-body-1">{{ group.hallAddress }}</td>
-                    <td class="desktop-body-1">{{ group.price }}</td>
-                    <td class="table-groups-more">
-                        <button (click)="toggleDropdown(group.id); $event.stopPropagation()"
-                                [ngClass]="{'active': selectedGroupId === group.id}"
-                                class="tertiary-button-icon second-button">
-                            <img alt="Дополнительно" height="24" ngSrc="assets/dots-horizontal.svg" width="24">
-                        </button>
+        <app-loading [isLoading]="isLoading"></app-loading>
 
-                        <div *ngIf="selectedGroupId === group.id" class="dropdown-menu">
-                            <button (click)="toggleModal('groupEdit', true, group.id); $event.stopPropagation()"
-                                    class="desktop-body-2">
-                                Редактировать
+        <div *ngIf="!isLoading">
+            <div *ngIf="groups && groups.groups && groups.groups.length > 0; else noGroups">
+                <table class="table-groups">
+                    <thead>
+                    <tr>
+                        <th class="desktop-headline-6 name">Название</th>
+                        <th class="desktop-headline-6">Количество учеников</th>
+                        <th class="desktop-headline-6">Место проведения</th>
+                        <th class="desktop-headline-6">Цена одного занятия, ₽</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr (click)="navigateToGroupDetails(group.id)" *ngFor="let group of groups?.groups"
+                        class="stroke-table-groups">
+                        <td class="table-groups-name">
+                            <div [style.background-color]="group.hexColor" class="ellipse"></div>
+                            <p class="desktop-body-1">{{ group.name }}</p>
+                        </td>
+                        <td class="desktop-body-1">{{ group.studentsCount }}</td>
+                        <td class="desktop-body-1">{{ group.hallAddress }}</td>
+                        <td class="desktop-body-1">{{ group.price }}</td>
+                        <td class="table-groups-more">
+                            <button (click)="toggleDropdown(group.id); $event.stopPropagation()"
+                                    [ngClass]="{'active': selectedGroupId === group.id}"
+                                    class="tertiary-button-icon second-button">
+                                <img alt="Дополнительно" height="24" ngSrc="assets/dots-horizontal.svg" width="24">
                             </button>
-                            <button (click)="toggleModal('delete', true, group.id); $event.stopPropagation()"
-                                    class="desktop-body-2">Удалить
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+
+                            <div *ngIf="selectedGroupId === group.id" class="dropdown-menu">
+                                <button (click)="toggleModal('groupEdit', true, group.id); $event.stopPropagation()"
+                                        class="desktop-body-2">
+                                    Редактировать
+                                </button>
+                                <button (click)="toggleModal('delete', true, group.id); $event.stopPropagation()"
+                                        class="desktop-body-2">Удалить
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <ng-template #noGroups>

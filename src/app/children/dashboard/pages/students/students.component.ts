@@ -219,7 +219,10 @@ export class StudentsComponent extends PopUpGroupService implements OnInit {
                     });
                 }
 
-                this._cdr.detectChanges();
+                this.timeout(1500);
+            },
+            error: (): void => {
+                this.timeout(1500);
             }
         })
     }

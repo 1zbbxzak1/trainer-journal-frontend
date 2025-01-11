@@ -12,6 +12,7 @@ import {ActivatedRoute, Params} from '@angular/router';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StudentProfileGroupComponent implements OnInit {
+    protected isLoading: boolean = true;
     protected infoUser!: IFullInfoModel | null;
     protected kyu: string | null = null;
     protected readonly _formatter: FormatterService = inject(FormatterService);
@@ -73,8 +74,18 @@ export class StudentProfileGroupComponent implements OnInit {
                     this.kyu = ', ' + this.infoUser!.studentInfo!.kyu!.toString() + ' кю';
                 }
 
-                this._cdr.detectChanges();
+                this.timeout(1500);
+            },
+            error: (): void => {
+                this.timeout(1500);
             }
         })
+    }
+
+    private timeout(time: number): void {
+        setTimeout((): void => {
+            this.isLoading = false;
+            this._cdr.detectChanges();
+        }, time);
     }
 }

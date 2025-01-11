@@ -13,6 +13,7 @@ import {FormatterService} from '../../../services/formatter/formatter.service';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfileComponent implements OnInit {
+    protected isLoading: boolean = true;
     protected infoMe!: IFullInfoModel | null;
     protected readonly _destroyRef: DestroyRef = inject(DestroyRef);
     protected readonly _formatter: FormatterService = inject(FormatterService);
@@ -36,8 +37,18 @@ export class ProfileComponent implements OnInit {
             next: (profile: IFullInfoModel | null): void => {
                 this.infoMe = profile;
 
-                this._cdr.detectChanges();
+                this.timeout(1500);
+            },
+            error: (): void => {
+                this.timeout(1500);
             }
         })
+    }
+
+    private timeout(time: number): void {
+        setTimeout((): void => {
+            this.isLoading = false;
+            this._cdr.detectChanges();
+        }, time);
     }
 }

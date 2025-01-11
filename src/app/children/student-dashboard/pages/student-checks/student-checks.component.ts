@@ -16,6 +16,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StudentChecksComponent implements OnInit {
+    protected isLoading: boolean = true;
     protected infoMe!: IFullInfoModel | null;
     protected balanceReport: IBalanceChangeResponseModel | null = null;
     protected checks: IPaymentReceiptResponseModel[] | null = null;
@@ -146,7 +147,10 @@ export class StudentChecksComponent implements OnInit {
             next: (report: IBalanceChangeResponseModel): void => {
                 this.balanceReport = report;
 
-                this._cdr.detectChanges();
+                this.timeout(1500);
+            },
+            error: (): void => {
+                this.timeout(1500);
             }
         })
     }
@@ -158,8 +162,18 @@ export class StudentChecksComponent implements OnInit {
             next: (receipts: IPaymentReceiptResponseModel[]): void => {
                 this.checks = receipts;
 
-                this._cdr.detectChanges();
+                this.timeout(1500);
+            },
+            error: (): void => {
+                this.timeout(1500);
             }
         })
+    }
+
+    private timeout(time: number): void {
+        setTimeout((): void => {
+            this.isLoading = false;
+            this._cdr.detectChanges();
+        }, time);
     }
 }

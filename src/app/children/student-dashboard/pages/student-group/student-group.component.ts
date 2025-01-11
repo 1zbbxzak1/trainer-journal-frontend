@@ -17,6 +17,7 @@ import {StudentsManagerService} from '../../../../data/services/students/student
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StudentGroupComponent implements OnInit {
+    protected isLoading: boolean = true;
     protected students: IStudentItemResponseModel[] | null = null;
     protected groupById: IGroupResponseModel | null = null;
 
@@ -109,7 +110,7 @@ export class StudentGroupComponent implements OnInit {
             map((students: IGroupResponseModel[]) => {
                 this._groupId = students[0].id;
 
-                this._cdr.detectChanges();
+                this.timeout(1500);
 
                 return students;
             })
@@ -122,7 +123,7 @@ export class StudentGroupComponent implements OnInit {
             map((groupById: IGroupResponseModel) => {
                 this.groupById = groupById;
 
-                this._cdr.detectChanges();
+                this.timeout(1500);
 
                 return groupById;
             })
@@ -135,10 +136,17 @@ export class StudentGroupComponent implements OnInit {
             map((students: IStudentItemResponseModel[] | null) => {
                 this.students = students;
 
-                this._cdr.detectChanges();
+                this.timeout(1500);
 
                 return students;
             })
         );
+    }
+
+    private timeout(time: number): void {
+        setTimeout((): void => {
+            this.isLoading = false;
+            this._cdr.detectChanges();
+        }, time);
     }
 }

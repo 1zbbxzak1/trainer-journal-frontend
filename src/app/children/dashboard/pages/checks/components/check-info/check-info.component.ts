@@ -66,6 +66,7 @@ export class CheckInfoComponent implements OnChanges {
 
         this.verifyReceipt(this.id, data);
 
+        this.confirmAction.emit();
         this.closeModal();
     }
 

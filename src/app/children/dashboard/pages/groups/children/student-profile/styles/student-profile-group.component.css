@@ -126,7 +126,7 @@
 }
 
 .table-container-first table {
-    border-spacing: 0 12px;
+    border-spacing: 2px 2px;
     border-collapse: separate;
 }
 
@@ -136,6 +136,10 @@
     padding: 8px 25px;
 
     border-bottom: 2px solid var(--border-default);
+}
+
+.table-container-first td {
+    vertical-align: top;
 }
 
 .table-container-first th:nth-child(1),

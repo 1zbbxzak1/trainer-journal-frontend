@@ -74,9 +74,13 @@ export class StudentProfileComponent implements OnInit {
         newDate.setMonth(this.currentDate.getMonth() + 1);
         this.currentDate = newDate;
         this.currentMonth = this.formatMonth(newDate);
+        this.scheduleData = [];
 
         // Перезагрузка данных практики и сессий для нового месяца
         this.loadPractice();
+
+        // Обновление background и color для дней
+        this.updateAttendanceStyles();
     }
 
     protected prevMonth(): void {
@@ -84,9 +88,13 @@ export class StudentProfileComponent implements OnInit {
         newDate.setMonth(this.currentDate.getMonth() - 1);
         this.currentDate = newDate;
         this.currentMonth = this.formatMonth(newDate);
+        this.scheduleData = [];
 
         // Перезагрузка данных практики и сессий для нового месяца
         this.loadPractice();
+
+        // Обновление background и color для дней
+        this.updateAttendanceStyles();
     }
 
     protected getDayBackground(day: string, date: string): string {
@@ -106,7 +114,6 @@ export class StudentProfileComponent implements OnInit {
             background = '#ebffe1';  // День отмечен как посещённый
         }
 
-        console.log(`Day: ${day}, Date: ${date}, Background: ${background}`);
         return background;
     }
 
@@ -127,8 +134,14 @@ export class StudentProfileComponent implements OnInit {
             color = '#439f6e';  // День отмечен как посещённый
         }
 
-        console.log(`Day: ${day}, Date: ${date}, color: ${color}`);
         return color;
+    }
+
+    private updateAttendanceStyles(): void {
+        const startOfMonth: Date = this.getStartOfMonth(this.currentDate);
+        const endOfMonth: Date = this.getEndOfMonth(this.currentDate);
+        this.getStudentAttendance(this.infoMe!.username, startOfMonth, endOfMonth);
+        this._cdr.markForCheck();
     }
 
     private getInfoMe(): void {
@@ -242,7 +255,7 @@ export class StudentProfileComponent implements OnInit {
 
         this.scheduleData.forEach((item: IScheduleItemModel): void => {
             const scheduleDate: Date = new Date(item.start);
-            const dayOfWeek: string = daysOfWeek[scheduleDate.getDay() - 1];
+            const dayOfWeek: string = daysOfWeek[(scheduleDate.getDay() === 0 ? 6 : scheduleDate.getDay() - 1)];
             const formattedDate: string = this.formatDateToShort(scheduleDate);
             groupedSessions[dayOfWeek]?.push(formattedDate);
         });

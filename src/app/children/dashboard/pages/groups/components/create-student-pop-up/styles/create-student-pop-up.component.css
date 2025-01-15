@@ -20,7 +20,7 @@
 
 .modal-container {
     position: relative;
-    height: 95vh;
+    height: 900px;
     box-sizing: border-box;
     overflow-y: scroll;
     scrollbar-width: none;
